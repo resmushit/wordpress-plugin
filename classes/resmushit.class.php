@@ -70,10 +70,10 @@ Class reSmushit {
 					$data = file_get_contents($json->dest);
 				} else {
 					$ch = curl_init();
-				    curl_setopt($ch, CURLOPT_URL, $json->dest);
-				    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-				    $data = curl_exec($ch);
-				    curl_close($ch);
+					curl_setopt($ch, CURLOPT_URL, $json->dest);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+					$data = curl_exec($ch);
+					curl_close($ch);
 				}
 				if ($data) {
 					if($is_original){
