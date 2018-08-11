@@ -34,6 +34,18 @@ Once installed, the plugin will be able to optimize you assets. It will gather a
 Currently, reSmush.it Plugin doesn't use CRON to execute, you must remain on the Optimization page to make the optimization run.
 
 
+## Roadmap
+- [ ] Add EXIF preservation option
+- [ ] Add option to delete *unsmushed* pictures
+- [ ] Add a pre-requisites test before running
+- [ ] Provide a deeper log level
+- [ ] Manage error when a picture is referenced in the DB but the file is missing on the server
+- [ ] Enhance the old-jquery progress bar while optimizing
+- [ ] Fix individual Optimize Button
+- [ ] Provide a "restore" option if plugin is deactivated
+- [ ] Provide option to optimize only some image size
+- [ ] Provide a S3 support
+- [ ] Provide a warning message when using reSmush.it with incompatibles plugins
 
 
 ## Versioning
