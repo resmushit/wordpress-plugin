@@ -66,7 +66,15 @@ Class reSmushit {
 		$json = json_decode($data);
 		if($json){
 			if (!isset($json->error)) {
-				$data = file_get_contents($json->dest);
+				if (ini_get('allow_url_fopen')) {
+					$data = file_get_contents($json->dest);
+				} else {
+					$ch = curl_init();
+					curl_setopt($ch, CURLOPT_URL, $json->dest);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+					$data = curl_exec($ch);
+					curl_close($ch);
+				}
 				if ($data) {
 					if($is_original){
 						$originalFile = pathinfo($file_path);
