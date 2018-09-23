@@ -40,11 +40,13 @@ Currently, reSmush.it Plugin doesn't use CRON to execute, you must remain on the
 - [ ] Add a pre-requisites test before running
 - [ ] Provide a deeper log level
 - [ ] Manage error when a picture is referenced in the DB but the file is missing on the server
+- [ ] Manage error when there are server issues
 - [ ] Enhance the old-jquery progress bar while optimizing
 - [ ] Fix individual Optimize Button
 - [ ] Provide a "restore" option if plugin is deactivated
 - [ ] Provide option to optimize only some image size
 - [ ] Provide a S3 support
+- [ ] Provide an Azure Storage support
 - [ ] Provide a warning message when using reSmush.it with incompatibles plugins
 - [ ] Add a link to the future GPDR and Privacy Policy Page on https://resmush.it
 
