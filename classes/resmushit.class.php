@@ -315,9 +315,12 @@ Class reSmushit {
 				$tmp['ID'] = $image->ID;
 				$tmp['attachment_metadata'] = unserialize($image->file_meta);
 
-
+				if( !file_exists(get_attached_file( $image->ID )) ) {
+					$files_not_found[] = $tmp;
+					continue;
+				}
 				//If filesize > 5MB, we do not optimize this picture
-				if( filesize(get_attached_file( $image->ID )) > self::MAX_FILESIZE){
+				if( filesize(get_attached_file( $image->ID )) > self::MAX_FILESIZE ){
 					$files_too_big[] = $tmp;
 					continue;
 				}
@@ -326,7 +329,7 @@ Class reSmushit {
 			}
 				
 		}
-		return json_encode(array('nonoptimized' => $unsmushed_images, 'filestoobig' => $files_too_big));
+		return json_encode(array('nonoptimized' => $unsmushed_images, 'filestoobig' => $files_too_big, 'filesnotfound' => $files_not_found));
 	}
 
 
@@ -339,7 +342,7 @@ Class reSmushit {
       */
 	public static function getCountNonOptimizedPictures(){
 		$data = json_decode(self::getNonOptimizedPictures());
-		return array('nonoptimized' => sizeof($data->nonoptimized), 'filestoobig' => sizeof($data->filestoobig));
+		return array('nonoptimized' => sizeof($data->nonoptimized), 'filestoobig' => sizeof($data->filestoobig), 'filesnotfound' => sizeof($data->filesnotfound));
 	}
 
 
