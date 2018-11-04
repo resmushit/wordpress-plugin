@@ -16,7 +16,11 @@ require('resmushit.admin.php');
 */
 function rlog($str) {
 	if(get_option('resmushit_logs') == 0)
-		return false;
+		return FALSE;
+
+	if( !is_writable('../' . RESMUSHIT_LOGS_PATH) ) {
+		return FALSE;
+	}
 
 	// Preserve file size under a reasonable value
 	if(file_exists('../' . RESMUSHIT_LOGS_PATH)){

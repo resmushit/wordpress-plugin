@@ -3,7 +3,7 @@ Contributors: resmushit
 Tags: image, optimizer, image optimization, resmush.it, smush, jpg, png, gif, optimization, compression, Compress, Images, Pictures, Reduce Image Size, Smush, Smush.it
 Requires at least: 4.0.0
 Tested up to: 4.9.8
-Stable tag: 0.1.17
+Stable tag: 0.1.18
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ Use reSmush.it Image Optimizer for FREE to optimize your pictures file sizes. Im
 reSmush.it Image Optimizer allow to use **free Image optimization** based on [reSmush.it API](http://www.resmush.it/ "Image Optimization API, developped by Charles Bourgeaux"). reSmush.it provides image size reduction based on several advanced algorithms. The API accept JPG, PNG and GIF files up to **5MB**.
 
 This plugin includes a bulk operation to optimize all your pictures in 2 clicks ! Change your image optimization level to fit your needs !
-This service is used by more than **300,000** websites on different CMS (Drupal, Joomla, Magento, Prestashop...).
+This service is used by more than **300,000** websites on different CMS (Wordpress, Drupal, Joomla, Magento, Prestashop...).
 
 The plugin includes an option to exclude some pictures of the optimizer.
 
@@ -65,6 +65,12 @@ Yes ! Absolutely free, the only restriction is to send images below 5MB.
 1. The simple interface
 
 == Changelog ==
+
+= 0.1.18 =
+* Avoid `filesize () : stat failed` errors if a picture file is missing
+* Log check file permissions
+* Check extensions on upload (avoid using reSmush.it API if it's not a picture)
+* Increase API Timeout for big pictures (10 secs)
 
 = 0.1.17 =
 * Fix bug (non-working optimization) on bulk upload when "Optimize on upload" isn't selected

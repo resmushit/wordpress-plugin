@@ -10,7 +10,7 @@
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://resmush.it
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.1.17
+ * Version:           0.1.18
  * Timestamp:         2018.11.04
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
@@ -85,8 +85,15 @@ function resmushit_process_images($attachments, $force_keep_original = TRUE) {
 	if(reSmushit::getDisabledState($attachment_id))
 		return $attachments;
 
-	$basepath = dirname(get_attached_file( $attachment_id )) . '/';
+	$fileInfo = pathinfo(get_attached_file( $attachment_id ));
+	$basepath = $fileInfo['dirname'] . '/';
+	$extension = isset($fileInfo['extension']) ? $fileInfo['extension'] : NULL;
 	$basefile = basename($attachments[ 'file' ]);
+
+	// Optimize only pictures/files accepted by the API
+	if( !in_array($extension, resmushit::authorizedExtensions()) ) {
+		return TRUE;	
+	}
 
 	$statistics[] = reSmushit::optimize($basepath . $basefile, $force_keep_original );
 

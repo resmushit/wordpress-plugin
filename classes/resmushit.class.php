@@ -14,6 +14,17 @@ Class reSmushit {
 
 	/**
 	 *
+	 * returns the list of supported extensions by the API
+	 *
+	 * @return array 	List of extensions
+	 */
+	public static function authorizedExtensions() {
+		return array('jpg', 'jpeg', 'gif', 'png', 'bmp', 'tif', 'tiff');
+	}
+
+
+	/**
+	 *
 	 * Optimize a picture according to a filepath.
 	 *
 	 * @param  string $file_path the path to the file on the server

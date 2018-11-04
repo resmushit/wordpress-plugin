@@ -38,7 +38,7 @@ Currently, reSmush.it Plugin doesn't use CRON to execute, you must remain on the
 - [ ] Add EXIF preservation option
 - [ ] Add a pre-requisites test before running
 - [ ] Provide a deeper log level
-- [ ] Manage error when a picture is referenced in the DB but the file is missing on the server
+- [X] Manage error when a picture is referenced in the DB but the file is missing on the server
 - [ ] Manage error when there are server issues
 - [ ] Enhance the old-jquery progress bar while optimizing
 - [ ] Advanced option : move *unsmushed* pictures to another folder (not web accessible)
