@@ -43,7 +43,7 @@ Currently, reSmush.it Plugin doesn't use CRON to execute, you must remain on the
 - [ ] Enhance the old-jquery progress bar while optimizing
 - [ ] Advanced option : move *unsmushed* pictures to another folder (not web accessible)
 - [ ] Advanced option : not preserve *unsmushed* pictures
-- [ ] Fix individual Optimize Button
+- [X] Fix individual Optimize Button
 - [ ] Provide a "restore" option if plugin is deactivated
 - [ ] Provide option to optimize only some image size
 - [ ] Provide a S3 support

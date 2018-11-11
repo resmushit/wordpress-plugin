@@ -3,7 +3,7 @@ Contributors: resmushit
 Tags: image, optimizer, image optimization, resmush.it, smush, jpg, png, gif, optimization, compression, Compress, Images, Pictures, Reduce Image Size, Smush, Smush.it
 Requires at least: 4.0.0
 Tested up to: 4.9.8
-Stable tag: 0.1.18
+Stable tag: 0.1.19
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,7 +34,7 @@ This plugin has initially been developped by [Maecia Agency](http://www.maecia.c
 
 = How great is reSmush.it ? =
 
-Since we've optimized more than 3,000,000,000 pictures, we've risen new skills. Our service is still in development to bring you new crazy functionalities.
+Since we've optimized more than 4,000,000,000 pictures, we've risen new skills. Our service is still in development to bring you new crazy functionalities.
 
 = Is there an "Optimize on upload" feature ? =
 
@@ -65,6 +65,10 @@ Yes ! Absolutely free, the only restriction is to send images below 5MB.
 1. The simple interface
 
 == Changelog ==
+
+= 0.1.19 =
+* Fix JS on "Optimize" button for a single picture
+* Provide a new "Force Optimization" for a single picture
 
 = 0.1.18 =
 * Avoid `filesize () : stat failed` errors if a picture file is missing

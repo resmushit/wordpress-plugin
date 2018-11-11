@@ -353,6 +353,7 @@ Class reSmushitUI {
 		else{
 			$statistics = reSmushit::getStatistics($attachment_id);
 			$output = __('Reduced by', 'resmushit') . " ". $statistics['total_saved_size_nice'] ." (". $statistics['percent_reduction'] . ' ' . __('saved', 'resmushit') . ")";
+			$output .= '<input type="button" value="'. __('Force re-optimize', 'resmushit') .'" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send" />';
 		}
 
 		if($return)
