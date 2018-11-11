@@ -38,10 +38,12 @@ Class reSmushitUI {
 	 * @return none
 	 */
 	public static function fullWidthPanelWrapper($title = null, $html = null, $border = null) {
-		?>
-		<div class='rsmt-panel w100 <?php if($border) echo 'brdr-'.$border; ?>'>
-			<h2><?php echo $title; ?></h2>
-		<?php
+		$borderClass = NULL;
+
+		if($border) {
+			$borderClass = 'brdr-'.$border;
+		}
+		echo "<div class='rsmt-panel w100 $borderClass'><h2>$title</h2>";
 	}
 
 
@@ -55,9 +57,7 @@ Class reSmushitUI {
 	 * @return none
 	 */
 	public static function fullWidthPanelEndWrapper() {
-		?>
-		</div>
-		<?php
+		echo "</div>";
 	}
 
 
@@ -88,21 +88,21 @@ Class reSmushitUI {
 	 */
 	public static function settingsPanel() {
 		self::fullWidthPanelWrapper(__('Settings', 'resmushit'), null, 'orange');
-		?>
-		<div class="rsmt-settings">
-			<form method="post" action="options.php" id="rsmt-options-form">
-			    <?php settings_fields( 'resmushit-settings' ); ?>
-			    <?php do_settings_sections( 'resmushit-settings' ); ?>
-				<table class="form-table">
-					<?php self::addSetting("text", __("Image quality", 'resmushit'), __("Default value is 92. The quality factor must be between 0 (very weak) and 100 (best quality)", 'resmushit'), "resmushit_qlty") ?>
-					<?php self::addSetting("checkbox", __("Optimize on upload", 'resmushit'), __("All future images uploaded will be automatically optimized", 'resmushit'), "resmushit_on_upload") ?>
-					<?php self::addSetting("checkbox", __("Enable statistics", 'resmushit'), __("Generates statistics about optimized pictures", 'resmushit'), "resmushit_statistics") ?>
-					<?php self::addSetting("checkbox", __("Enable logs", 'resmushit'), __("Enable file logging (for developers)", 'resmushit'), "resmushit_logs") ?>
-				</table>
-			    <?php submit_button(); ?>
-			 </form>
-		</div>
-		<?php self::fullWidthPanelEndWrapper(); 		
+		
+		echo '<div class="rsmt-settings">
+			<form method="post" action="options.php" id="rsmt-options-form">';
+		settings_fields( 'resmushit-settings' );
+		do_settings_sections( 'resmushit-settings' );
+		
+		echo '<table class="form-table">' 
+				. self::addSetting("text", __("Image quality", 'resmushit'), __("Default value is 92. The quality factor must be between 0 (very weak) and 100 (best quality)", 'resmushit'), "resmushit_qlty")
+				. self::addSetting("checkbox", __("Optimize on upload", 'resmushit'), __("All future images uploaded will be automatically optimized", 'resmushit'), "resmushit_on_upload")
+				. self::addSetting("checkbox", __("Enable statistics", 'resmushit'), __("Generates statistics about optimized pictures", 'resmushit'), "resmushit_statistics")
+				. self::addSetting("checkbox", __("Enable logs", 'resmushit'), __("Enable file logging (for developers)", 'resmushit'), "resmushit_logs")
+				. '</table>' 
+				. submit_button()
+				. '</form></div>';
+		self::fullWidthPanelEndWrapper(); 		
 	}
 
 
@@ -118,23 +118,27 @@ Class reSmushitUI {
 		$dataCountNonOptimizedPictures = reSmushit::getCountNonOptimizedPictures();
 		$countNonOptimizedPictures = $dataCountNonOptimizedPictures['nonoptimized'];
 		self::fullWidthPanelWrapper(__('Optimize unsmushed pictures', 'resmushit'), null, 'blue');
-		?>
+		
+		$additionnalClassNeedOptimization = NULL;
+		$additionnalClassNoNeedOptimization = 'disabled';
+		if(!$countNonOptimizedPictures) {
+			$additionnalClassNeedOptimization = 'disabled';
+			$additionnalClassNoNeedOptimization = NULL;
+		} 
 
-		<div class="rsmt-bulk">
-			<div class="non-optimized-wrapper <?php if(!$countNonOptimizedPictures) echo 'disabled' ?>">
-				<h3 class="icon_message warning"><?php _e('There is currently', 'resmushit') ?> <em><?php echo $countNonOptimizedPictures; ?> <?php _e('non optimized pictures', 'resmushit') ?></em>.</h3>
-				<p><?php _e('This action will resmush all pictures which have not been optimized to the good Image Quality Rate.', 'resmushit') ?></p>
-				<p class="submit" id="bulk-resize-examine-button">
-					<button class="button-primary" onclick="resmushit_bulk_resize('bulk_resize_image_list');"><?php _e('Optimize all pictures', 'resmushit') ?></button>
-				</p>
-				<div id='bulk_resize_image_list'></div>
-			</div>
-
-			<div class="optimized-wrapper <?php if($countNonOptimizedPictures) echo 'disabled' ?>">
-				<h3 class="icon_message ok"><?php _e('Congrats ! All your pictures are correctly optimized', 'resmushit') ?></h3>
-			</div>
-		</div>
-		<?php self::fullWidthPanelEndWrapper(); 		
+		echo "<div class='rsmt-bulk'><div class='non-optimized-wrapper $additionnalClassNeedOptimization'><h3 class='icon_message warning'>"
+			. __('There is currently', 'resmushit')
+			. " <em>$countNonOptimizedPictures "
+			. __('non optimized pictures', 'resmushit')
+			. "</em>.</h3><p>"
+			. __('This action will resmush all pictures which have not been optimized to the good Image Quality Rate.', 'resmushit')
+			. "</p><p class='submit' id='bulk-resize-examine-button'><button class='button-primary' onclick='resmushit_bulk_resize(\"bulk_resize_image_list\");'>"
+			. __('Optimize all pictures', 'resmushit')
+			. "</button></p><div id='bulk_resize_image_list'></div></div>"
+			. "<div class='optimized-wrapper $additionnalClassNoNeedOptimization'><h3 class='icon_message ok'>"
+			. __('Congrats ! All your pictures are correctly optimized', 'resmushit')
+			. "</h3></div></div>";
+		self::fullWidthPanelEndWrapper(); 		
 	}
 
 
@@ -147,38 +151,44 @@ Class reSmushitUI {
 	 */
 	public static function bigFilesPanel() {
 		$getNonOptimizedPictures = json_decode(reSmushit::getNonOptimizedPictures());
-;
-		$countfilesTooBigPictures = sizeof($getNonOptimizedPictures->filestoobig);
+		$countfilesTooBigPictures = is_array($getNonOptimizedPictures->filestoobig) ? sizeof($getNonOptimizedPictures->filestoobig) : 0;
+
 		if(!$countfilesTooBigPictures)
 			return false;
 
 		self::fullWidthPanelWrapper(__('Files non optimized', 'resmushit'), null, 'grey');
-		?>
 
-		<div class="rsmt-bigfiles">
-			<div class="optimized-wrapper <?php if(!$countfilesTooBigPictures) echo 'disabled' ?>">
-				<h3 class="icon_message info">
-					<?php if($countfilesTooBigPictures > 1): ?>
-						<?php echo $countfilesTooBigPictures . ' ' ?><?php _e('pictures are too big (> 5MB) for the optimizer', 'resmushit') ?>
-					<?php else: ?>
-						<?php echo $countfilesTooBigPictures . ' ' ?><?php _e('picture is too big (> 5MB) for the optimizer', 'resmushit') ?>
-					<?php endif ?>
-				</h3>
-				<div class="list-accordion">
-					<h4><?php _e('List of files above 5MB', 'resmushit') ?></h4>
-					<ul>
-						<?php foreach($getNonOptimizedPictures->filestoobig as $file): ?>
-							<?php 
-								$fileInfo = pathinfo(get_attached_file( $file->ID )); 
-								$filesize = reSmushitUI::sizeFormat(filesize(get_attached_file( $file->ID ))); 
-							?>
-							<li><a href="<?php echo wp_get_attachment_url( $file->ID ); ?>" target="_blank"><?php echo wp_get_attachment_image($file->ID, 'thumbnail'); ?><span><?php echo $fileInfo['basename'] . ' (' . $filesize . ').' ?></span></a></li>
-						<?php endforeach; ?>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<?php self::fullWidthPanelEndWrapper(); 		
+		$additionnalClass = NULL;
+		if(!$countfilesTooBigPictures) {
+			$additionnalClass = 'disabled';
+		}
+
+		echo "<div class='rsmt-bigfiles'><div class='optimized-wrapper $additionnalClass'>
+					<h3 class='icon_message info'>";
+
+		if($countfilesTooBigPictures > 1) {
+			echo $countfilesTooBigPictures . ' ' . __('pictures are too big (> 5MB) for the optimizer', 'resmushit');
+		} else {
+			echo $countfilesTooBigPictures . ' ' . __('picture is too big (> 5MB) for the optimizer', 'resmushit');
+		}
+		echo "</h3><div class='list-accordion'><h4>"
+				. __('List of files above 5MB', 'resmushit')
+				. "</h4><ul>";
+
+		foreach($getNonOptimizedPictures->filestoobig as $file){
+			$fileInfo = pathinfo(get_attached_file( $file->ID )); 
+			$filesize = reSmushitUI::sizeFormat(filesize(get_attached_file( $file->ID ))); 
+
+			echo "<li><a href='"
+					. wp_get_attachment_url( $file->ID )
+					. "' target='_blank'>"
+					. wp_get_attachment_image($file->ID, 'thumbnail')
+					. "<span>"
+					. $fileInfo['basename'] . ' (' . $filesize . ').</span></a></li>';
+		}
+		echo '</ul></div></div></div>';
+		
+		self::fullWidthPanelEndWrapper(); 		
 	}
 
 
@@ -195,22 +205,41 @@ Class reSmushitUI {
 		if(!get_option('resmushit_statistics'))
 			return false;
 		self::fullWidthPanelWrapper(__('Statistics', 'resmushit'), null, 'green');
-		?>
+		$resmushit_stat = reSmushit::getStatistics();
 
-		<div class="rsmt-statistics">
-			<?php $resmushit_stat = reSmushit::getStatistics();
-			if($resmushit_stat['files_optimized'] != 0):
-			?>
-			<p><strong><?php _e('Space saved :', 'resmushit') ?></strong> <span id="rsmt-statistics-space-saved"><?php echo self::sizeFormat($resmushit_stat['total_saved_size'])?></span></p>
-			<p><strong><?php _e('Total reduction :', 'resmushit') ?></strong> <span id="rsmt-statistics-percent-reduction"><?php echo $resmushit_stat['percent_reduction'] ?></span></p>
-			<p><strong><?php _e('Attachments optimized :', 'resmushit') ?></strong> <span id="rsmt-statistics-files-optimized"><?php echo $resmushit_stat['files_optimized'] ?></span>/<span id="rsmt-statistics-total-pictures"><?php echo $resmushit_stat['total_pictures'] ?></span></p>
-			<p><strong><?php _e('Image optimized (including thumbnails) :', 'resmushit') ?></strong> <span id="rsmt-statistics-files-optimized"><?php echo $resmushit_stat['files_optimized_with_thumbnails'] ?></span>/<span id="rsmt-statistics-total-pictures"><?php echo $resmushit_stat['total_pictures_with_thumbnails'] ?></span></p>
-			<p><strong><?php _e('Total images optimized :', 'resmushit') ?></strong> <span id="rsmt-statistics-total-optimizations"><?php echo $resmushit_stat['total_optimizations'] ?></span></p>
-			<?php else: ?>
-			<p><?php _e('No picture has been optimized yet ! Add pictures to your Wordpress Media Library.', 'resmushit') ?></p>
-			<?php endif; ?>
-		</div>
-		<?php self::fullWidthPanelEndWrapper(); 		
+		echo "<div class='rsmt-statistics'>";
+
+		if($resmushit_stat['files_optimized'] != 0) {
+			echo "<p><strong>"
+					. __('Space saved :', 'resmushit')
+					. "</strong> <span id='rsmt-statistics-space-saved'>"
+					. self::sizeFormat($resmushit_stat['total_saved_size'])
+					. "</span></p><p><strong>"
+					. __('Total reduction :', 'resmushit')
+					. "</strong> <span id='rsmt-statistics-percent-reduction'>"
+					. $resmushit_stat['percent_reduction']
+					. "</span></p><p><strong>"
+					. __('Attachments optimized :', 'resmushit')
+					. "</strong> <span id='rsmt-statistics-files-optimized'>"
+					. $resmushit_stat['files_optimized']
+					. "</span>/<span id='rsmt-statistics-total-picture'>"
+					. $resmushit_stat['total_pictures']
+					. "</span></p><p><strong>"
+					. __('Image optimized (including thumbnails) :', 'resmushit') 
+					. "</strong> <span id='rsmt-statistics-files-optimized'>"
+					. $resmushit_stat['files_optimized_with_thumbnails']
+					. "</span>/<span id='rsmt-statistics-total-pictures'>"
+					. $resmushit_stat['total_pictures_with_thumbnails']
+					. "</span></p><p><strong>"
+					. __('Total images optimized :', 'resmushit')
+					. "</strong> <span id='rsmt-statistics-total-optimizations'>"
+					. $resmushit_stat['total_optimizations'] 
+					. "</span></p>";
+			} else {
+				echo "<p>" . __('No picture has been optimized yet ! Add pictures to your Wordpress Media Library.', 'resmushit') . "</p>";
+			}
+		echo "</div>";
+		self::fullWidthPanelEndWrapper(); 		
 	}
 
 
@@ -224,10 +253,9 @@ Class reSmushitUI {
 	 */
 	public static function newsPanel() {
 		global $wp_version;
-		?>
-		<div class="rsmt-news">
 		
-		<?php
+		echo "<div class='rsmt-news'>";
+		
 		self::fullWidthPanelWrapper(__('News', 'resmushit'), null, 'red');
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, RESMUSHIT_NEWSFEED);
@@ -236,41 +264,51 @@ Class reSmushitUI {
 		$data_raw = curl_exec($ch);
 		curl_close($ch);
 		$data = json_decode($data_raw);
-		if($data):
-			foreach($data as $i=>$news):
-				if($i > 2)
+		
+		if($data) {
+			foreach($data as $i=>$news) {
+				if($i > 2){
 					break;
-			?>
-				<div class="news-item">
-					<span class="news-date"><?php echo date('d/m/Y', $news->date) ?></span>
-					<?php if($news->picture): ?>
-					<div class="news-img">
-						<a href="<?php echo $news->link ?>" target="_blank">
-							<img src="<?php echo $news->picture ?>" />
-						</a>
-					</div>
-					<?php endif; ?>
-					<h3><a href="<?php echo $news->link ?>" target="_blank"><?php echo $news->title ?></a></h3>
-					<div class="news-content">
-						<?php echo $news->content ?>
-					</div>
-				</div>
-			
-			<?php endforeach; ?>
-		<?php endif; ?>
-		<div class="social">
-			<a class="social-maecia" title="<?php _e('Maecia Agency - Paris France', 'resmushit') ?>" href="https://www.maecia.com" target="_blank">
-				<img src="<?php echo RESMUSHIT_BASE_URL ?>images/maecia.png" />
-			</a>
-			<a class="social-resmushit" title="<?php _e('Visit resmush.it for more informations', 'resmushit') ?>" href="https://www.resmush.it" target="_blank">
-				<img src="<?php echo RESMUSHIT_BASE_URL ?>images/logo.png" />
-			</a>
-			<a class="social-twitter" title="<?php _e('Follow reSmush.it on Twitter', 'resmushit') ?>" href="https://www.twitter.com/resmushit" target="_blank">
-				<img src="<?php echo RESMUSHIT_BASE_URL ?>images/twitter.png" />
-			</a>
-		</div>
-		</div>
-		<?php self::fullWidthPanelEndWrapper(); 		
+				}
+
+				echo "<div class='news-item'><span class='news-date'>"
+						. date('d/m/Y', $news->date)
+						. "</span>";
+				if($news->picture) {
+					echo "<div class='news-img'><a href='" 
+							. $news->link
+							. "' target='_blank'><img src='"
+							. $news->picture
+							. "' /></a></div>";
+				}
+				echo "<h3><a href='"
+						. $news->link
+						. "' target='_blank'>"
+						. $news->title
+						. "</a></h3><div class='news-content'>"
+						. $news->content 
+						. "</div>";
+			}
+		}
+
+		echo "<div class='social'>"
+				. "<a class='social-maecia' title='"
+				. __('Maecia Agency - Paris France', 'resmushit')
+				. "' href='https://www.maecia.com' target='_blank'>"
+				. "<img src='"
+				. RESMUSHIT_BASE_URL . "images/maecia.png' /></a>"
+				. "<a class='social-resmushit' title='"
+				. __('Visit resmush.it for more informations', 'resmushit')
+				. "' href='https://resmush.it' target='_blank'>"
+				. "<img src='"
+				. RESMUSHIT_BASE_URL . "images/logo.png' /></a>"
+				. "<a class='social-twitter' title='"
+				. __('Follow reSmush.it on Twitter', 'resmushit')
+				. "' href='https://www.twitter.com/resmushit' target='_blank'>"
+				. "<img src='"
+				. RESMUSHIT_BASE_URL . "images/twitter.png' /></a></div></div>";
+		
+		self::fullWidthPanelEndWrapper(); 		
 	}
 
 
@@ -287,19 +325,20 @@ Class reSmushitUI {
 	 * @return none
 	 */
 	public static function addSetting($type, $name, $extra, $machine_name) {
-		echo "<div class='setting-row type-$type'>";
-		echo "<label for='$machine_name'>$name<p>$extra</p></label>";
+		$output = "	<div class='setting-row type-$type'>
+					<label for='$machine_name'>$name<p>$extra</p></label>";
 		switch($type){
 			case 'text':
-				echo "<input type='text' name='$machine_name' id='$machine_name' value='". get_option( $machine_name ) ."'/>";
+				$output .= "<input type='text' name='$machine_name' id='$machine_name' value='". get_option( $machine_name ) ."'/>";
 				break;
 			case 'checkbox':
 				$additionnal = null;
 				if ( 1 == get_option( $machine_name ) ) $additionnal = 'checked="checked"'; 
-				echo "<input type='checkbox' name='$machine_name' id='$machine_name' value='1' ".  $additionnal ."/>";
+				$output .= "<input type='checkbox' name='$machine_name' id='$machine_name' value='1' ".  $additionnal ."/>";
 				break;
 		}
-		echo '</div>';
+		$output .= '</div>';
+		return $output;
 	}
 
 
