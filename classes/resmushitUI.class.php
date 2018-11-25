@@ -99,9 +99,9 @@ Class reSmushitUI {
 				. self::addSetting("checkbox", __("Optimize on upload", 'resmushit'), __("All future images uploaded will be automatically optimized", 'resmushit'), "resmushit_on_upload")
 				. self::addSetting("checkbox", __("Enable statistics", 'resmushit'), __("Generates statistics about optimized pictures", 'resmushit'), "resmushit_statistics")
 				. self::addSetting("checkbox", __("Enable logs", 'resmushit'), __("Enable file logging (for developers)", 'resmushit'), "resmushit_logs")
-				. '</table>' 
-				. submit_button()
-				. '</form></div>';
+				. '</table>';
+		submit_button();
+		echo '</form></div>';
 		self::fullWidthPanelEndWrapper(); 		
 	}
 

@@ -275,7 +275,8 @@ Class reSmushit {
 		$files_too_big = array();
 		$already_optimized_images_array = array();
 		$disabled_images_array = array();
-
+		$files_not_found = array();
+		
 		$queryAllPictures = $wpdb->prepare( 
 			"select
 				$wpdb->posts.ID as ID,

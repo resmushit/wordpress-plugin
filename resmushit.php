@@ -10,8 +10,8 @@
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://resmush.it
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.1.19
- * Timestamp:         2018.11.11
+ * Version:           0.1.20
+ * Timestamp:         2018.11.25
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
  * Author:            Charles Bourgeaux
