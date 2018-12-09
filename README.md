@@ -50,7 +50,7 @@ Currently, reSmush.it Plugin doesn't use CRON to execute, you must remain on the
 - [ ] Provide an Azure Storage support
 - [ ] Provide a warning message when using reSmush.it with incompatibles plugins
 - [ ] Add a link to the future GPDR and Privacy Policy Page on https://resmush.it
-
+- [X] Wordpress 5.x support
 
 ## Versioning
 
