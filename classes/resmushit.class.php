@@ -33,8 +33,8 @@ Class reSmushit {
 	public static function getPictureQualitySetting() {
 		if(get_option( 'resmushit_qlty' )) {
 			return get_option( 'resmushit_qlty' );
-		} else{
-			if (!defined('RESMUSHIT_QLTY') {
+		} else {
+			if (!defined('RESMUSHIT_QLTY')) {
 			  return RESMUSHIT_DEFAULT_QLTY;
 			}
 			return RESMUSHIT_QLTY;
