@@ -60,6 +60,9 @@ add_action( 'manage_media_custom_column', 'resmushit_media_list_add_column_value
 
 /* Add custom field to attachment */
 function resmushit_image_attachment_add_status_button($form_fields, $post) {
+	if ( !preg_match("/image.*/", $post->post_mime_type) )
+		return $form_fields;
+
 	$form_fields["rsmt-disabled-checkbox"] = array(
 		"label" => __("Disable of reSmush.it"),
 		"input" => "html",
