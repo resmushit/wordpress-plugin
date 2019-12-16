@@ -31,10 +31,14 @@ Class reSmushit {
 	 * @return bool 	TRUE if the resmush operation worked
 	 */
 	public static function getPictureQualitySetting() {
-		if(get_option( 'resmushit_qlty' ))
+		if(get_option( 'resmushit_qlty' )) {
 			return get_option( 'resmushit_qlty' );
-		else
+		} else{
+			if (!defined('RESMUSHIT_QLTY') {
+			  return RESMUSHIT_DEFAULT_QLTY;
+			}
 			return RESMUSHIT_QLTY;
+		}
 	}
 
 	/**
