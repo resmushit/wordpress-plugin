@@ -3,7 +3,7 @@ Contributors: resmushit
 Tags: image, optimizer, image optimization, resmush.it, smush, jpg, png, gif, optimization, compression, Compress, Images, Pictures, Reduce Image Size, Smush, Smush.it
 Requires at least: 4.0.0
 Tested up to: 5.3.1
-Stable tag: 0.1.22
+Stable tag: 0.1.23
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,6 +65,11 @@ Yes ! Absolutely free, the only restriction is to send images below 5MB.
 1. The simple interface
 
 == Changelog ==
+
+= 0.1.23 =
+* Add Settings link to Plugin page
+* Limit reSmush.it options to image attachments only
+* Fix `RESMUSHIT_QLTY is not defined`
 
 = 0.1.22 =
 * Fix on attachment metadata incorrectly returned (will fix issues with other media libraries)
