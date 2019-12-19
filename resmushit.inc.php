@@ -14,7 +14,21 @@ require('resmushit.admin.php');
 * @param string $str text to log in file
 * @return none
 */
-function rlog($str) {
+function rlog($str, $level = 'SUCCESS') {
+	global $is_cron;
+
+	if(isset($is_cron) && $is_cron) {
+		switch ($level) {
+			case 'WARNING':
+				$prefix = "[\033[33m!\033[0m]"; break;
+			case 'ERROR':
+				$prefix = "[\033[31m!\033[0m]"; break;
+			default:
+			case 'SUCCESS':
+				$prefix = "[\033[32m+\033[0m]"; break;
+		}
+		echo "$prefix $str\n";
+	}
 	if(get_option('resmushit_logs') == 0)
 		return FALSE;
 

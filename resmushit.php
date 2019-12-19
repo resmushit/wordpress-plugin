@@ -60,6 +60,8 @@ function resmushit_activate() {
 			update_option( 'resmushit_statistics', '1' );
 		if(!get_option('resmushit_total_optimized'))
 			update_option( 'resmushit_total_optimized', '0' );
+		if(!get_option('resmushit_cron'))
+			update_option( 'resmushit_cron', '0' );
 	}
 }
 register_activation_hook( __FILE__, 'resmushit_activate' );
@@ -267,3 +269,55 @@ function resmushit_add_plugin_page_settings_link($links) {
 	return $links;
 }
 add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'resmushit_add_plugin_page_settings_link');
+
+
+
+
+/**
+ * Declare a new time interval to run Cron
+ * @param array $schedules
+ * @return array
+ */
+function resmushit_add_cron_interval( $schedules ) {
+	$schedules['resmushit_interval'] = array(
+		'interval' => RESMUSHIT_CRON_FREQUENCY,
+		'display' => esc_html__( 'Every ' . (int)gmdate("i", RESMUSHIT_CRON_FREQUENCY) . ' minutes' ),
+	);
+	return $schedules;
+}
+add_filter( 'cron_schedules', 'resmushit_add_cron_interval' );
+
+if(!get_option('resmushit_cron') || get_option('resmushit_cron') === 0) {
+	if (wp_next_scheduled ( 'resmushit_optimize' )) { 
+		wp_clear_scheduled_hook('resmushit_optimize');
+	}
+	//wp_unschedule_event(time(), 'resmushit_optimize');
+} else {
+	if (! wp_next_scheduled ( 'resmushit_optimize' )) {   
+	    wp_schedule_event(time(), 'resmushit_interval', 'resmushit_optimize');
+	} 
+}
+
+
+/**
+ * Declare a new crontask for optimization bulk
+ */
+function resmushit_cron_process() {
+	global $is_cron;
+	add_filter('wp_generate_attachment_metadata', 'resmushit_process_images'); 
+	$is_cron = TRUE;
+	rlog('Gathering unoptimized pictures from CRON');
+	$unoptimized_pictures = json_decode(reSmushit::getNonOptimizedPictures(TRUE));
+	rlog('Found ' . count($unoptimized_pictures->nonoptimized) . ' attachments');
+	foreach($unoptimized_pictures->nonoptimized as $el) {
+		if (wp_next_scheduled ( 'resmushit_optimize' )) { 
+			//avoid to collapse two crons
+			wp_unschedule_event(wp_next_scheduled('resmushit_optimize'), 'resmushit_optimize');
+		}
+		rlog('CRON Processing attachments #' . $el->ID);
+		reSmushit::revert($el->ID);
+	}
+}
+add_action('resmushit_optimize', 'resmushit_cron_process');
+
+

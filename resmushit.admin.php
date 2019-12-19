@@ -28,6 +28,7 @@ function resmushit_settings_declare() {
 	register_setting( 'resmushit-settings', 'resmushit_qlty' );
 	register_setting( 'resmushit-settings', 'resmushit_statistics' );
 	register_setting( 'resmushit-settings', 'resmushit_logs' );
+	register_setting( 'resmushit-settings', 'resmushit_cron' );
 }
 add_action( 'admin_init', 'resmushit_settings_declare' );
 

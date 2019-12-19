@@ -9,3 +9,6 @@ define('RESMUSHIT_LOGS_PATH', 'resmushit.log');
 define('RESMUSHIT_LOGS_MAX_FILESIZE', '102400');
 define('RESMUSHIT_NEWSFEED', 'https://feed.resmush.it/');
 define('RESMUSHIT_BASE_URL', plugin_dir_url( __FILE__ ));
+define('RESMUSHIT_CRON_FREQUENCY', 300);
+
+global $is_cron;

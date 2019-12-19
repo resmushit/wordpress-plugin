@@ -11,6 +11,7 @@
 Class reSmushit {
 
 	const MAX_FILESIZE = 5242880;
+	const MAX_ATTACHMENTS_REQ = 1000;
 
 	/**
 	 *
@@ -52,7 +53,7 @@ Class reSmushit {
 		global $wp_version;
 
 		if(filesize($file_path) > self::MAX_FILESIZE){
-			rlog('Error! Picture ' . $file_path . ' cannot be optimized, file size is above 5MB ('. reSmushitUI::sizeFormat(filesize($file_path)) .')');
+			rlog('Error! Picture ' . str_replace(ABSPATH, '/', $file_path) . ' cannot be optimized, file size is above 5MB ('. reSmushitUI::sizeFormat(filesize($file_path)) .')', 'WARNING');
 			return false;
 		}
 
@@ -97,14 +98,14 @@ Class reSmushit {
 			 			copy($file_path, $newPath);
 			 		}
 				  	file_put_contents($file_path, $data);
-					rlog("Picture " . $file_path . " optimized from " . reSmushitUI::sizeFormat($json->src_size) . " to " . reSmushitUI::sizeFormat($json->dest_size));
+					rlog("Optimized file " . str_replace(ABSPATH, '/', $file_path) . " from " . reSmushitUI::sizeFormat($json->src_size) . " to " . reSmushitUI::sizeFormat($json->dest_size));
 				  	return $json;
 				}
 			} else {
-				rlog("Webservice returned the following error while optimizing $file_path : Code #" . $json->error . " - " . $json->error_long);
+				rlog("Webservice returned the following error while optimizing $file_path : Code #" . $json->error . " - " . $json->error_long, 'ERROR');
 			}
 		} else {
-			rlog("Cannot establish connection with reSmush.it webservice while optimizing $file_path (timeout of " . RESMUSHIT_TIMEOUT . "sec.)");
+			rlog("Cannot establish connection with reSmush.it webservice while optimizing $file_path (timeout of " . RESMUSHIT_TIMEOUT . "sec.)", 'ERROR');
 		}
 		return false;
 	}
@@ -132,7 +133,7 @@ Class reSmushit {
 		$fileInfo = pathinfo(get_attached_file( $attachment_id ));
 
 		$originalFile = $basepath . $fileInfo['filename'] . '-unsmushed.' . $fileInfo['extension'];
-		rlog('Revert original image for : ' . get_attached_file( $attachment_id ));
+		rlog('Revert original image for : ' . str_replace(ABSPATH, '/', get_attached_file( $attachment_id )));
 	
 		if(file_exists($originalFile))
 			copy($originalFile, get_attached_file( $attachment_id ));
@@ -272,7 +273,7 @@ Class reSmushit {
       * @param none
       * @return json of unsmushed pictures attachments ID
       */
-	public static function getNonOptimizedPictures(){
+	public static function getNonOptimizedPictures($id_only = FALSE){
 		global $wpdb;
 		$tmp = array();
 		$unsmushed_images = array();
@@ -280,70 +281,55 @@ Class reSmushit {
 		$already_optimized_images_array = array();
 		$disabled_images_array = array();
 		$files_not_found = array();
-		
-		$queryAllPictures = $wpdb->prepare( 
-			"select
-				$wpdb->posts.ID as ID,
-				$wpdb->posts.guid as guid,
-				$wpdb->postmeta.meta_value as file_meta
-				from $wpdb->posts
-				inner join $wpdb->postmeta on $wpdb->posts.ID = $wpdb->postmeta.post_id and $wpdb->postmeta.meta_key = %s
-				where $wpdb->posts.post_type = %s
-				and $wpdb->posts.post_mime_type like %s
-				and ($wpdb->posts.post_mime_type = 'image/jpeg' OR $wpdb->posts.post_mime_type = 'image/gif' OR $wpdb->posts.post_mime_type = 'image/png')",
-				array('_wp_attachment_metadata','attachment', 'image%')
+		$extra_select = "";
+		if($id_only == FALSE) {
+			$extra_select = ",POSTS.guid as guid, METAATTACH.meta_value as file_meta";
+		}
+
+		$queryUnoptimizedPicture = $wpdb->prepare(
+			"SELECT ATTACHMENTS.* FROM (
+				select 
+					POSTS.ID as ID, METAQLTY.meta_value as qlty, METADISABLED.meta_value as disabled
+					$extra_select
+				from wp_posts as POSTS
+				inner join 
+					wp_postmeta as METAATTACH on POSTS.ID = METAATTACH.post_id 
+					and METAATTACH.meta_key = %s 
+				left join 
+					wp_postmeta as METAQLTY on POSTS.ID = METAQLTY.post_id 
+					and METAQLTY.meta_key = %s
+				left join 
+					wp_postmeta as METADISABLED on POSTS.ID = METADISABLED.post_id 
+					and METADISABLED.meta_key = %s
+				where 
+					POSTS.post_type = %s
+					and (POSTS.post_mime_type = 'image/jpeg' OR POSTS.post_mime_type = 'image/gif' OR POSTS.post_mime_type = 'image/png')
+				) as ATTACHMENTS
+				WHERE 
+					(ATTACHMENTS.qlty != '%s' OR ATTACHMENTS.qlty IS NULL)
+					AND ATTACHMENTS.disabled IS NULL
+				LIMIT %d",
+				array('_wp_attachment_metadata','resmushed_quality','resmushed_disabled','attachment', self::getPictureQualitySetting(), self::MAX_ATTACHMENTS_REQ)
 		);
-
-		$queryAlreadyOptimizedPictures = $wpdb->prepare( 
-			"select
-				$wpdb->posts.ID as ID
-				from $wpdb->posts
-				inner join $wpdb->postmeta on $wpdb->posts.ID = $wpdb->postmeta.post_id and $wpdb->postmeta.meta_key = %s
-				where $wpdb->postmeta.meta_value = %s",
-				array('resmushed_quality', self::getPictureQualitySetting())
-		);	
-
-		$queryDisabledPictures = $wpdb->prepare( 
-			"select
-				$wpdb->posts.ID as ID
-				from $wpdb->posts
-				inner join $wpdb->postmeta on $wpdb->posts.ID = $wpdb->postmeta.post_id and $wpdb->postmeta.meta_key = %s",
-				array('resmushed_disabled')
-		);	
-
-
-		
 		// Get the images in the attachement table
-		$all_images = $wpdb->get_results($queryAllPictures);
-		$already_optimized_images = $wpdb->get_results($queryAlreadyOptimizedPictures);
-		$disabled_images = $wpdb->get_results($queryDisabledPictures);
-
-		foreach($already_optimized_images as $image)
-			$already_optimized_images_array[] = $image->ID;
-
-		foreach($disabled_images as $image)
-			$disabled_images_array[] = $image->ID;
-		
+		$all_images = $wpdb->get_results($queryUnoptimizedPicture);
 
 		foreach($all_images as $image){
-			if(!in_array($image->ID, $already_optimized_images_array) && !in_array($image->ID, $disabled_images_array)){
-				$tmp = array();
-				$tmp['ID'] = $image->ID;
-				$tmp['attachment_metadata'] = unserialize($image->file_meta);
+			$tmp = array();
+			$tmp['ID'] = $image->ID;
+			$tmp['attachment_metadata'] = unserialize($image->file_meta);
 
-				if( !file_exists(get_attached_file( $image->ID )) ) {
-					$files_not_found[] = $tmp;
-					continue;
-				}
-				//If filesize > 5MB, we do not optimize this picture
-				if( filesize(get_attached_file( $image->ID )) > self::MAX_FILESIZE ){
-					$files_too_big[] = $tmp;
-					continue;
-				}
-				
-				$unsmushed_images[] = $tmp;
+			if( !file_exists(get_attached_file( $image->ID )) ) {
+				$files_not_found[] = $tmp;
+				continue;
 			}
-				
+			//If filesize > 5MB, we do not optimize this picture
+			if( filesize(get_attached_file( $image->ID )) > self::MAX_FILESIZE ){
+				$files_too_big[] = $tmp;
+				continue;
+			}
+			
+			$unsmushed_images[] = $tmp;
 		}
 		return json_encode(array('nonoptimized' => $unsmushed_images, 'filestoobig' => $files_too_big, 'filesnotfound' => $files_not_found));
 	}

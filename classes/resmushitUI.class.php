@@ -99,6 +99,7 @@ Class reSmushitUI {
 				. self::addSetting("checkbox", __("Optimize on upload", 'resmushit'), __("All future images uploaded will be automatically optimized", 'resmushit'), "resmushit_on_upload")
 				. self::addSetting("checkbox", __("Enable statistics", 'resmushit'), __("Generates statistics about optimized pictures", 'resmushit'), "resmushit_statistics")
 				. self::addSetting("checkbox", __("Enable logs", 'resmushit'), __("Enable file logging (for developers)", 'resmushit'), "resmushit_logs")
+				. self::addSetting("checkbox", __("Process optimize on CRON", 'resmushit'), __("Will perform image optimization process through CRON tasks", 'resmushit'), "resmushit_cron")
 				. '</table>';
 		submit_button();
 		echo '</form></div>';
@@ -124,7 +125,9 @@ Class reSmushitUI {
 		if(!$countNonOptimizedPictures) {
 			$additionnalClassNeedOptimization = 'disabled';
 			$additionnalClassNoNeedOptimization = NULL;
-		} 
+		} else if ($countNonOptimizedPictures == reSmushit::MAX_ATTACHMENTS_REQ) {
+			$countNonOptimizedPictures .= '+';
+		}
 
 		echo "<div class='rsmt-bulk'><div class='non-optimized-wrapper $additionnalClassNeedOptimization'><h3 class='icon_message warning'>"
 			. __('There is currently', 'resmushit')
