@@ -92,3 +92,46 @@ function logtail($filepath, $lines = 1, $adaptive = true) {
 	fclose($f);
 	return trim($output);
 }
+
+
+/**
+* 
+* Calculates time ago
+*
+* @param string $datetime time input
+* @param boolean $full number of lines to keep
+* @param string $adaptative will preserve line memory
+* @return string
+* @author Glavić
+* @link https://stackoverflow.com/questions/1416697/converting-timestamp-to-time-ago-in-php-e-g-1-day-ago-2-days-ago
+*/
+function time_elapsed_string($duration, $full = false) {
+	$datetime = "@" . (time() - $duration);
+
+    $now = new DateTime;
+    $ago = new DateTime($datetime);
+    $diff = $now->diff($ago);
+
+    $diff->w = floor($diff->d / 7);
+    $diff->d -= $diff->w * 7;
+
+    $string = array(
+        'y' => __('year', 'resmushit'),
+        'm' => __('month', 'resmushit'),
+        'w' => __('week', 'resmushit'),
+        'd' => __('day', 'resmushit'),
+        'h' => __('hour', 'resmushit'),
+        'i' => __('minute', 'resmushit'),
+        's' => __('second', 'resmushit'),
+    );
+    foreach ($string as $k => &$v) {
+        if ($diff->$k) {
+            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+        } else {
+            unset($string[$k]);
+        }
+    }
+
+    if (!$full) $string = array_slice($string, 0, 1);
+    return $string ? implode(', ', $string) : __('just now', 'resmushit');
+}

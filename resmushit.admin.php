@@ -33,7 +33,6 @@ function resmushit_settings_declare() {
 add_action( 'admin_init', 'resmushit_settings_declare' );
 
 
-
 function resmushit_media_list_add_column( $columns ) {
 	$columns["resmushit_disable"] 	= __('Disable of reSmush.it', 'resmushit');
 	$columns["resmushit_status"] 	= __('reSmush.it status', 'resmushit');
@@ -95,6 +94,7 @@ function resmushit_settings_page() {
 	<div class='rsmt-panels'>	
 		<div class="rsmt-cols w66 iln-block">
 			<?php reSmushitUI::headerPanel();?>
+			<?php reSmushitUI::alertPanel();?>
 			<?php reSmushitUI::bulkPanel();?>
 			<?php reSmushitUI::bigFilesPanel();?>
 			<?php reSmushitUI::statisticsPanel();?>
