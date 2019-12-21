@@ -340,7 +340,7 @@ Class reSmushitUI {
 	 * @return none
 	 */
 	public static function alertPanel() {
-		if ((defined('DISABLE_WP_CRON') && DISABLE_WP_CRON == true) && (resmushit_get_cron_status() == 'DISABLED' || resmushit_get_cron_status() == 'OK')) {
+		if (resmushit_get_cron_status() == 'DISABLED' || resmushit_get_cron_status() == 'OK') {
 			return TRUE;
 		}
 
@@ -354,9 +354,9 @@ Class reSmushitUI {
 
 		if (resmushit_get_cron_status() == 'MISCONFIGURED') {
 			echo "<p>"
-				. __('Cronjobs are not correctly configured. The variable DISABLE_WP_CRON must be set to TRUE in wp-config.php. Please install them by reading the following <a href="https://resmush.it/wordpress/howto-configure-cronjobs" target="_blank">instruction page</a>.', 'resmushit')
+				. __('Cronjobs are not correctly configured. The variable <em>DISABLE_WP_CRON</em> must be set to <em>TRUE</em> in <em>wp-config.php</em>. Please install them by reading the following <a href="https://resmush.it/wordpress/howto-configure-cronjobs" target="_blank">instruction page</a>.', 'resmushit')
 				. "</p><p>"
-				. __('We advice to disable Remush.it CRON as long as Cron jobs are incorrectly set up.', 'resmushit')
+				. __('We advice to disable Remush.it option "Process optimize on CRON" as long as Cron jobs are incorrectly set up.', 'resmushit')
 				. "</p>";
 		} else if (resmushit_get_cron_status() == 'NEVER_RUN') {
 			echo "<p>"
