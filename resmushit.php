@@ -287,7 +287,6 @@ add_action('update_option_resmushit_cron', 'resmushit_on_cron_activation', 100, 
 
 
 
-
 /**
  * Declare a new time interval to run Cron
  * @param array $schedules
@@ -342,6 +341,10 @@ add_action('resmushit_optimize', 'resmushit_cron_process');
 
 
 
+/**
+ * Return the RESMUSHIT CRON status according to last_execution variables
+ * @return string
+ */
 function resmushit_get_cron_status() {
 	if(get_option('resmushit_cron') == 0) {
 		return 'DISABLED';
@@ -358,4 +361,3 @@ function resmushit_get_cron_status() {
 	}
 	return 'OK';
 }
-

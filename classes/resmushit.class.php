@@ -146,9 +146,6 @@ Class reSmushit {
 
 
 
-
-
-
 	/**
 	 *
 	 * Delete Original file (-unsmushed)
@@ -261,8 +258,6 @@ Class reSmushit {
 			return 0;
 		return $data->count;
 	}
-
-
 
 
 
