@@ -3,11 +3,11 @@ Contributors: resmushit
 Tags: image, optimizer, image optimization, resmush.it, smush, jpg, png, gif, optimization, compression, Compress, Images, Pictures, Reduce Image Size, Smush, Smush.it
 Requires at least: 4.0.0
 Tested up to: 5.3.2
-Stable tag: 0.1.23
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Use reSmush.it Image Optimizer for FREE to optimize your pictures file sizes. Improve your performances by using reSmush.it, the 4 billion images API optimizer.
+Use reSmush.it Image Optimizer for FREE to optimize your pictures file sizes. Improve your performances by using reSmush.it, the 7 billion images API optimizer.
 
 == Description ==
 
@@ -34,11 +34,15 @@ This plugin has initially been developped by [Maecia Agency](http://www.maecia.c
 
 = How great is reSmush.it ? =
 
-Since we've optimized more than 6,000,000,000 pictures, we've risen new skills. Our service is still in development to bring you new crazy functionalities.
+Since we've optimized more than 7,000,000,000 pictures, we've risen new skills. Our service is still in development to bring you new crazy functionalities.
 
 = Is there an "Optimize on upload" feature ? =
 
 Absolutely, this feature is enabled for all new pictures to be added, and can be disabled on will.
+
+= Is there a CRON feature ? =
+
+Yes, for big (and even for small) media Libraries, you can optimize your pictures using Cronjobs.
 
 = Can I choose an optimisation level ? =
 
@@ -65,6 +69,12 @@ Yes ! Absolutely free, the only restriction is to send images below 5MB.
 1. The simple interface
 
 == Changelog ==
+
+= 0.2.0 =
+* Add CRON feature
+* Code refactoring
+* Fix issue for big Media library, with a limitation while fetching attachments
+* Fix log path issues
 
 = 0.1.23 =
 * Add Settings link to Plugin page
