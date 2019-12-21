@@ -29,18 +29,18 @@ function rlog($str, $level = 'SUCCESS') {
 		}
 		echo "$prefix $str\n";
 	}
+
 	if(get_option('resmushit_logs') == 0)
 		return FALSE;
 
-	if( !is_writable('../' . RESMUSHIT_LOGS_PATH) ) {
+	if( !is_writable(ABSPATH . RESMUSHIT_LOGS_PATH) ) {
 		return FALSE;
 	}
-
 	// Preserve file size under a reasonable value
-	if(file_exists('../' . RESMUSHIT_LOGS_PATH)){
-		if(filesize('../' . RESMUSHIT_LOGS_PATH) > RESMUSHIT_LOGS_MAX_FILESIZE) {
-			$logtailed = logtail('../' . RESMUSHIT_LOGS_PATH, 20);
-			$fp = fopen('../' . RESMUSHIT_LOGS_PATH, 'w');
+	if(file_exists(ABSPATH . RESMUSHIT_LOGS_PATH)){
+		if(filesize(ABSPATH . RESMUSHIT_LOGS_PATH) > RESMUSHIT_LOGS_MAX_FILESIZE) {
+			$logtailed = logtail(ABSPATH . RESMUSHIT_LOGS_PATH, 20);
+			$fp = fopen(ABSPATH . RESMUSHIT_LOGS_PATH, 'w');
 			fwrite($fp, $logtailed);
 			fclose($fp);
 		}
@@ -48,7 +48,7 @@ function rlog($str, $level = 'SUCCESS') {
 	
 	$str = "[".date('d-m-Y H:i:s')."] " . $str;
 	$str = print_r($str, true) . "\n";
-	$fp = fopen('../' . RESMUSHIT_LOGS_PATH, 'a+');
+	$fp = fopen(ABSPATH . RESMUSHIT_LOGS_PATH, 'a+');
 	fwrite($fp, $str);
 	fclose($fp);
 }
