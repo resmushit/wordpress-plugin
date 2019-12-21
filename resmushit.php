@@ -10,8 +10,8 @@
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://resmush.it
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.1.23
- * Timestamp:         2019.12.16
+ * Version:           0.2.0
+ * Timestamp:         2019.12.21
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
  * Author:            Charles Bourgeaux
@@ -20,11 +20,7 @@
  * Domain Path: 	  /languages
  */
 
-
 require('resmushit.inc.php'); 
-
-
-
 
 
 /**
@@ -60,10 +56,16 @@ function resmushit_activate() {
 			update_option( 'resmushit_statistics', '1' );
 		if(!get_option('resmushit_total_optimized'))
 			update_option( 'resmushit_total_optimized', '0' );
+		if(!get_option('resmushit_cron'))
+			update_option( 'resmushit_cron', 0 );
+		if(!get_option('resmushit_cron_lastrun'))
+			update_option( 'resmushit_cron_lastrun', 0 );
+		if(!get_option('resmushit_cron_firstactivation'))
+			update_option( 'resmushit_cron_firstactivation', 0 );
 	}
 }
 register_activation_hook( __FILE__, 'resmushit_activate' );
-
+add_action( 'admin_init', 'resmushit_activate' );
 
 
 
@@ -267,3 +269,95 @@ function resmushit_add_plugin_page_settings_link($links) {
 	return $links;
 }
 add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'resmushit_add_plugin_page_settings_link');
+
+
+
+/**
+ * Trigger when the cron are activated for the first time
+ * @param mixed old value for cron_activation option
+ * @param mixed new value for cron_activation option
+ */
+
+function resmushit_on_cron_activation($old_value, $value) {
+	if($value == 1 && (!get_option('resmushit_cron_firstactivation') || get_option('resmushit_cron_firstactivation') === 0)) {
+		update_option( 'resmushit_cron_firstactivation', time() );
+	}
+}
+add_action('update_option_resmushit_cron', 'resmushit_on_cron_activation', 100, 2);
+
+
+
+/**
+ * Declare a new time interval to run Cron
+ * @param array $schedules
+ * @return array
+ */
+function resmushit_add_cron_interval( $schedules ) {
+	$schedules['resmushit_interval'] = array(
+		'interval' => RESMUSHIT_CRON_FREQUENCY,
+		'display' => esc_html__( 'Every ' . time_elapsed_string(RESMUSHIT_CRON_FREQUENCY) ),
+	);
+	return $schedules;
+}
+add_filter( 'cron_schedules', 'resmushit_add_cron_interval' );
+
+if(!get_option('resmushit_cron') || get_option('resmushit_cron') === 0) {
+	if (wp_next_scheduled ( 'resmushit_optimize' )) { 
+		wp_clear_scheduled_hook('resmushit_optimize');
+	}
+} else {
+	if (! wp_next_scheduled ( 'resmushit_optimize' )) {   
+	    wp_schedule_event(time(), 'resmushit_interval', 'resmushit_optimize');
+	} 
+}
+
+
+
+/**
+ * Declare a new crontask for optimization bulk
+ */
+function resmushit_cron_process() {
+	global $is_cron;
+	$is_cron = TRUE;
+	update_option( 'resmushit_cron_lastrun', time() );
+	
+	// required if launch through wp-cron.php
+	include_once( ABSPATH . 'wp-admin/includes/image.php' );
+
+	add_filter('wp_generate_attachment_metadata', 'resmushit_process_images'); 
+	rlog('Gathering unoptimized pictures from CRON');
+	$unoptimized_pictures = json_decode(reSmushit::getNonOptimizedPictures(TRUE));
+	rlog('Found ' . count($unoptimized_pictures->nonoptimized) . ' attachments');
+	foreach($unoptimized_pictures->nonoptimized as $el) {
+		if (wp_next_scheduled ( 'resmushit_optimize' )) { 
+			//avoid to collapse two crons
+			wp_unschedule_event(wp_next_scheduled('resmushit_optimize'), 'resmushit_optimize');
+		}
+		rlog('CRON Processing attachments #' . $el->ID);
+		reSmushit::revert($el->ID);
+	}
+}
+add_action('resmushit_optimize', 'resmushit_cron_process');
+
+
+
+/**
+ * Return the RESMUSHIT CRON status according to last_execution variables
+ * @return string
+ */
+function resmushit_get_cron_status() {
+	if(get_option('resmushit_cron') == 0) {
+		return 'DISABLED';
+	}
+	if(!defined('DISABLE_WP_CRON') OR DISABLE_WP_CRON == false) {
+		return 'MISCONFIGURED';
+	}
+
+	if(get_option('resmushit_cron_lastrun') == 0 && (time() - get_option('resmushit_cron_firstactivation') > 2*RESMUSHIT_CRON_FREQUENCY)) {
+		return 'NEVER_RUN';
+	}
+	if(get_option('resmushit_cron_lastrun') != 0 && (time() - get_option('resmushit_cron_lastrun') > 2*RESMUSHIT_CRON_FREQUENCY)) {
+		return 'NO_LATELY_RUN';
+	}
+	return 'OK';
+}

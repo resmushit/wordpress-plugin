@@ -46,11 +46,25 @@
   .rsmt-panels img{
     max-width: 100%;
   }
+  .rsmt-panels em{
+    font-weight: bold;
+    font-style: normal;
+  }
+  .rsmt-panels ul {
+    list-style-type: disc;
+    list-style-position: inside;
+  }
 
 
 .rsmt-settings .setting-row{
   margin-bottom: 20px;
 }
+  .rsmt-settings .new {
+    background-color: #c30000;
+    color: white;
+    padding: 1px 3px;
+    margin-right: 5px;
+  }
   .rsmt-settings .setting-row.type-checkbox{
     display: flex;
   }
@@ -87,6 +101,7 @@
   display: none;
 }
 .rsmt-bigfiles .icon_message,
+.rsmt-alert .icon_message,
 .rsmt-bulk .icon_message{
   background-repeat: no-repeat;
   padding: 13px 0 0 60px;
@@ -95,10 +110,12 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.rsmt-bulk .warning{
+.rsmt-bulk .warning,
+.rsmt-alert .warning{
   background-image: url(../images/warning.png);
 }
-.rsmt-bulk .ok{
+.rsmt-bulk .ok,
+.rsmt-alert .ok{
   background-image: url(../images/ok.png);
 }
 .rsmt-bulk .bulk--back-progressionbar{

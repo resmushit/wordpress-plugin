@@ -88,7 +88,7 @@ Class reSmushitUI {
 	 */
 	public static function settingsPanel() {
 		self::fullWidthPanelWrapper(__('Settings', 'resmushit'), null, 'orange');
-		
+		$new_label = "<span class='new'>" . __("New!", 'resmushit') . "</span>";
 		echo '<div class="rsmt-settings">
 			<form method="post" action="options.php" id="rsmt-options-form">';
 		settings_fields( 'resmushit-settings' );
@@ -99,6 +99,7 @@ Class reSmushitUI {
 				. self::addSetting("checkbox", __("Optimize on upload", 'resmushit'), __("All future images uploaded will be automatically optimized", 'resmushit'), "resmushit_on_upload")
 				. self::addSetting("checkbox", __("Enable statistics", 'resmushit'), __("Generates statistics about optimized pictures", 'resmushit'), "resmushit_statistics")
 				. self::addSetting("checkbox", __("Enable logs", 'resmushit'), __("Enable file logging (for developers)", 'resmushit'), "resmushit_logs")
+				. self::addSetting("checkbox", $new_label . __("Process optimize on CRON", 'resmushit'), __("Will perform image optimization process through CRON tasks", 'resmushit'), "resmushit_cron")
 				. '</table>';
 		submit_button();
 		echo '</form></div>';
@@ -124,20 +125,39 @@ Class reSmushitUI {
 		if(!$countNonOptimizedPictures) {
 			$additionnalClassNeedOptimization = 'disabled';
 			$additionnalClassNoNeedOptimization = NULL;
-		} 
+		} else if ($countNonOptimizedPictures == reSmushit::MAX_ATTACHMENTS_REQ) {
+			$countNonOptimizedPictures .= '+';
+		}
 
-		echo "<div class='rsmt-bulk'><div class='non-optimized-wrapper $additionnalClassNeedOptimization'><h3 class='icon_message warning'>"
-			. __('There is currently', 'resmushit')
+		echo "<div class='rsmt-bulk'><div class='non-optimized-wrapper $additionnalClassNeedOptimization'><h3 class='icon_message warning'>";
+
+		if(get_option('resmushit_cron') && get_option('resmushit_cron') == 1) {
+			echo  "<em>$countNonOptimizedPictures "
+			. __('non optimized pictures will be automatically optimized', 'resmushit')
+			. "</em>.</h3><p>"
+			. __('These pictures will be automatically using schedule tasks (cronjobs).', 'resmushit')
+			. " "
+			. __('Image optimization process can be launched <b>manually</b> by clicking on the button below :', 'resmushit');
+		} else {
+			echo  __('There is currently', 'resmushit')
 			. " <em>$countNonOptimizedPictures "
 			. __('non optimized pictures', 'resmushit')
 			. "</em>.</h3><p>"
-			. __('This action will resmush all pictures which have not been optimized to the good Image Quality Rate.', 'resmushit')
-			. "</p><p class='submit' id='bulk-resize-examine-button'><button class='button-primary' onclick='resmushit_bulk_resize(\"bulk_resize_image_list\");'>"
-			. __('Optimize all pictures', 'resmushit')
-			. "</button></p><div id='bulk_resize_image_list'></div></div>"
-			. "<div class='optimized-wrapper $additionnalClassNoNeedOptimization'><h3 class='icon_message ok'>"
-			. __('Congrats ! All your pictures are correctly optimized', 'resmushit')
-			. "</h3></div></div>";
+			. __('This action will resmush all pictures which have not been optimized to the good Image Quality Rate.', 'resmushit');
+		}
+
+		echo "</p><p class='submit' id='bulk-resize-examine-button'><button class='button-primary' onclick='resmushit_bulk_resize(\"bulk_resize_image_list\");'>";
+		
+		if(get_option('resmushit_cron') && get_option('resmushit_cron') == 1) {
+			echo __('Optimize all pictures manually', 'resmushit');
+		} else {
+			echo __('Optimize all pictures', 'resmushit');
+		}
+
+		echo "</button></p><div id='bulk_resize_image_list'></div></div>"
+		. "<div class='optimized-wrapper $additionnalClassNoNeedOptimization'><h3 class='icon_message ok'>"
+		. __('Congrats ! All your pictures are correctly optimized', 'resmushit')
+		. "</h3></div></div>";
 		self::fullWidthPanelEndWrapper(); 		
 	}
 
@@ -308,6 +328,49 @@ Class reSmushitUI {
 				. "<img src='"
 				. RESMUSHIT_BASE_URL . "images/twitter.png' /></a></div></div>";
 		
+		self::fullWidthPanelEndWrapper(); 		
+	}
+
+
+	/**
+	 *
+	 * Generate ALERT panel
+	 *
+	 * @param  none
+	 * @return none
+	 */
+	public static function alertPanel() {
+		if (resmushit_get_cron_status() == 'DISABLED' || resmushit_get_cron_status() == 'OK') {
+			return TRUE;
+		}
+
+		self::fullWidthPanelWrapper(__('Important informations', 'resmushit'), null, 'red');
+		echo "<div class='rsmt-alert'>";
+
+
+		echo "<h3 class='icon_message warning'>"
+		. __('Cronjobs seems incorrectly configured', 'resmushit')
+		. "</h3>";
+
+		if (resmushit_get_cron_status() == 'MISCONFIGURED') {
+			echo "<p>"
+				. __('Cronjobs are not correctly configured. The variable <em>DISABLE_WP_CRON</em> must be set to <em>TRUE</em> in <em>wp-config.php</em>. Please install them by reading the following <a href="https://resmush.it/wordpress/howto-configure-cronjobs" target="_blank">instruction page</a>.', 'resmushit')
+				. "</p><p>"
+				. __('We advice to disable Remush.it option "Process optimize on CRON" as long as Cron jobs are incorrectly set up.', 'resmushit')
+				. "</p>";
+		} else if (resmushit_get_cron_status() == 'NEVER_RUN') {
+			echo "<p>"
+				. __('Cronjobs seems to have never been launched. Please install them by reading the following <a href="https://resmush.it/wordpress/howto-configure-cronjobs" target="_blank">instruction page</a>.', 'resmushit')
+				. "</p>";
+		} else if (resmushit_get_cron_status() == 'NO_LATELY_RUN') {
+			echo "<p>"
+				. __('Cronjobs seems not to have run lately. Please read the following <a href="https://resmush.it/wordpress/howto-configure-cronjobs" target="_blank">instruction page</a> to install them correctly.', 'resmushit')
+				. "<ul><li><em>" . __('Expected Frequency :', 'resmushit') . "</em> " . __('Every', 'resmushit') . " " . time_elapsed_string(RESMUSHIT_CRON_FREQUENCY) . "</li>"
+				. "<ul><li><em>" . __('Last run :', 'resmushit') . "</em> " . time_elapsed_string(time() - get_option('resmushit_cron_lastrun')) . " " . __('ago', 'resmushit') . "</li>"
+				. "</p>";
+		}
+		echo "</div>";
+
 		self::fullWidthPanelEndWrapper(); 		
 	}
 
