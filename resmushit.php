@@ -69,6 +69,13 @@ register_activation_hook( __FILE__, 'resmushit_activate' );
 add_action( 'admin_init', 'resmushit_activate' );
 
 
+/**
+ * Run using the 'init' action.
+ */
+function resmushit_init() {
+	load_plugin_textdomain( 'resmushit-image-optimizer', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}
+add_action( 'admin_init', 'resmushit_init' );
 
 
 /**

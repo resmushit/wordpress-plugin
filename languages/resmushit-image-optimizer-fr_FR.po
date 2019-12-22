@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-22 08:03+0100\n"
-"PO-Revision-Date: 2019-12-22 08:13+0100\n"
+"PO-Revision-Date: 2019-12-22 11:14+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -84,8 +84,8 @@ msgid ""
 "These pictures will be automatically optimized using schedule tasks "
 "(cronjobs)."
 msgstr ""
-"Ces images seront  automatiquement optimisées lors de l’exécution des des "
-"tâches planifiées (cronjobs)"
+"Ces images seront  automatiquement optimisées lors de l’exécution des tâches "
+"planifiées (cronjobs)"
 
 #: classes/resmushitUI.class.php:140
 msgid ""
@@ -239,11 +239,11 @@ msgstr ""
 
 #: classes/resmushitUI.class.php:368
 msgid "Expected Frequency :"
-msgstr "Fréquence attendue :"
+msgstr "Fréquence :"
 
 #: classes/resmushitUI.class.php:368 resmushit.php:299
 msgid "Every"
-msgstr "Chaque"
+msgstr "Toutes les"
 
 #: classes/resmushitUI.class.php:369
 msgid "Last run :"
