@@ -116,13 +116,13 @@ function time_elapsed_string($duration, $full = false) {
     $diff->d -= $diff->w * 7;
 
     $string = array(
-        'y' => __('year', 'resmushit'),
-        'm' => __('month', 'resmushit'),
-        'w' => __('week', 'resmushit'),
-        'd' => __('day', 'resmushit'),
-        'h' => __('hour', 'resmushit'),
-        'i' => __('minute', 'resmushit'),
-        's' => __('second', 'resmushit'),
+        'y' => __('year', 'resmushit-image-optimizer'),
+        'm' => __('month', 'resmushit-image-optimizer'),
+        'w' => __('week', 'resmushit-image-optimizer'),
+        'd' => __('day', 'resmushit-image-optimizer'),
+        'h' => __('hour', 'resmushit-image-optimizer'),
+        'i' => __('minute', 'resmushit-image-optimizer'),
+        's' => __('second', 'resmushit-image-optimizer'),
     );
     foreach ($string as $k => &$v) {
         if ($diff->$k) {
@@ -133,5 +133,5 @@ function time_elapsed_string($duration, $full = false) {
     }
 
     if (!$full) $string = array_slice($string, 0, 1);
-    return $string ? implode(', ', $string) : __('just now', 'resmushit');
+    return $string ? implode(', ', $string) : __('just now', 'resmushit-image-optimizer');
 }

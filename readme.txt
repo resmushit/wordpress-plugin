@@ -3,7 +3,7 @@ Contributors: resmushit
 Tags: image, optimizer, image optimization, resmush.it, smush, jpg, png, gif, optimization, compression, Compress, Images, Pictures, Reduce Image Size, Smush, Smush.it
 Requires at least: 4.0.0
 Tested up to: 5.3.2
-Stable tag: 0.2.0
+Stable tag: 0.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,7 +54,7 @@ Yes, by excluding/reverting this asset you'll have your original image available
 
 = Is it possible to exclude some pictures from the optimizer ? =
 
-Yes, since version 0.12, you can easily exclude an asset from the optimizer.
+Yes, since version 0.1.2, you can easily exclude an asset from the optimizer.
 
 = Have I a risk to lose my existing pictures ? =
 
@@ -69,6 +69,10 @@ Yes ! Absolutely free, the only restriction is to send images below 5MB.
 1. The simple interface
 
 == Changelog ==
+
+= 0.2.1 =
+* Complete French translation
+* Plugin translation fix
 
 = 0.2.0 =
 * Add CRON feature

@@ -8,16 +8,17 @@
  *
  * @wordpress-plugin
  * Plugin Name:       reSmush.it Image Optimizer
- * Plugin URI:        https://resmush.it
+ * Plugin URI:        https://wordpress.org/plugins/resmushit-image-optimizer/
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.2.0
- * Timestamp:         2019.12.21
+ * Version:           0.2.1
+ * Timestamp:         2019.12.22
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
  * Author:            Charles Bourgeaux
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Domain Path: 	  /languages
+ * Text Domain:		  resmushit-image-optimizer
  */
 
 require('resmushit.inc.php'); 
@@ -265,7 +266,7 @@ add_action( 'wp_ajax_resmushit_update_statistics', 'resmushit_update_statistics'
  * @return string
  */
 function resmushit_add_plugin_page_settings_link($links) {
-	$links[] = '<a href="' . admin_url( 'upload.php?page=resmushit_options' ) . '">' . __('Settings') . '</a>';
+	$links[] = '<a href="' . admin_url( 'upload.php?page=resmushit_options' ) . '">' . __('Settings', "resmushit-image-optimizer") . '</a>';
 	return $links;
 }
 add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'resmushit_add_plugin_page_settings_link');
@@ -295,7 +296,7 @@ add_action('update_option_resmushit_cron', 'resmushit_on_cron_activation', 100, 
 function resmushit_add_cron_interval( $schedules ) {
 	$schedules['resmushit_interval'] = array(
 		'interval' => RESMUSHIT_CRON_FREQUENCY,
-		'display' => esc_html__( 'Every ' . time_elapsed_string(RESMUSHIT_CRON_FREQUENCY) ),
+		'display' => esc_html__( __('Every', 'resmushit-image-optimizer') . ' ' . time_elapsed_string(RESMUSHIT_CRON_FREQUENCY) ),
 	);
 	return $schedules;
 }

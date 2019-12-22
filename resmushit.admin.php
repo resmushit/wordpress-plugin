@@ -40,8 +40,8 @@ add_action( 'admin_init', 'resmushit_settings_declare' );
 * @return $columns
 */
 function resmushit_media_list_add_column( $columns ) {
-	$columns["resmushit_disable"] 	= __('Disable of reSmush.it', 'resmushit');
-	$columns["resmushit_status"] 	= __('reSmush.it status', 'resmushit');
+	$columns["resmushit_disable"] 	= __('Disable of reSmush.it', 'resmushit-image-optimizer');
+	$columns["resmushit_status"] 	= __('reSmush.it status', 'resmushit-image-optimizer');
 	return $columns;
 }
 add_filter( 'manage_media_columns', 'resmushit_media_list_add_column' );
@@ -95,14 +95,14 @@ function resmushit_image_attachment_add_status_button($form_fields, $post) {
 		return $form_fields;
 
 	$form_fields["rsmt-disabled-checkbox"] = array(
-		"label" => __("Disable of reSmush.it"),
+		"label" => __("Disable of reSmush.it", "resmushit-image-optimizer"),
 		"input" => "html",
 		"value" => '',
 		"html"  => reSmushitUI::mediaListCustomValuesDisable($post->ID, true)
 	);
 
 	$form_fields["rsmt-status-button"] = array(
-		"label" => __("reSmush.it status"),
+		"label" => __("reSmush.it status", "resmushit-image-optimizer"),
 		"input" => "html",
 		"value" => '',
 		"html"  => reSmushitUI::mediaListCustomValuesStatus($post->ID, true)
