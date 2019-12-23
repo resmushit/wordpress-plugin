@@ -49,19 +49,19 @@ add_action( 'plugins_loaded', 'resmushit_load_plugin_textdomain' );
 */
 function resmushit_activate() {
 	if ( is_super_admin() ) {
-		if(!get_option('resmushit_qlty'))
+		if(get_option('resmushit_qlty') === null)
 			update_option( 'resmushit_qlty', RESMUSHIT_DEFAULT_QLTY );
-		if(!get_option('resmushit_on_upload'))
+		if(get_option('resmushit_on_upload') === null)
 			update_option( 'resmushit_on_upload', '1' );
-		if(!get_option('resmushit_statistics'))
+		if(get_option('resmushit_statistics') === null)
 			update_option( 'resmushit_statistics', '1' );
-		if(!get_option('resmushit_total_optimized'))
+		if(get_option('resmushit_total_optimized') === null)
 			update_option( 'resmushit_total_optimized', '0' );
-		if(!get_option('resmushit_cron'))
+		if(get_option('resmushit_cron') === null)
 			update_option( 'resmushit_cron', 0 );
-		if(!get_option('resmushit_cron_lastrun'))
+		if(get_option('resmushit_cron_lastrun') === null)
 			update_option( 'resmushit_cron_lastrun', 0 );
-		if(!get_option('resmushit_cron_firstactivation'))
+		if(get_option('resmushit_cron_firstactivation') === null)
 			update_option( 'resmushit_cron_firstactivation', 0 );
 	}
 }
