@@ -100,6 +100,7 @@ Class reSmushitUI {
 				. self::addSetting("checkbox", __("Enable statistics", 'resmushit-image-optimizer'), __("Generates statistics about optimized pictures", 'resmushit-image-optimizer'), "resmushit_statistics")
 				. self::addSetting("checkbox", __("Enable logs", 'resmushit-image-optimizer'), __("Enable file logging (for developers)", 'resmushit-image-optimizer'), "resmushit_logs")
 				. self::addSetting("checkbox", $new_label . __("Process optimize on CRON", 'resmushit-image-optimizer'), __("Will perform image optimization process through CRON tasks", 'resmushit-image-optimizer'), "resmushit_cron")
+				. self::addSetting("checkbox", $new_label . __("Preserve EXIF", 'resmushit-image-optimizer'), __("Will preserve EXIF data during optimization", 'resmushit-image-optimizer'), "resmushit_preserve_exif")
 				. '</table>';
 		submit_button();
 		echo '</form></div>';

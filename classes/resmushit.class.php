@@ -72,7 +72,10 @@ Class reSmushit {
 			  'files' => $cfile,
 			);
 		}
-
+		if(get_option( 'resmushit_preserve_exif' ) && get_option( 'resmushit_preserve_exif' ) == 1) {
+			$arg['exif'] = 'true';
+		}
+		
 		$arg['qlty'] = self::getPictureQualitySetting();
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $arg);
 
