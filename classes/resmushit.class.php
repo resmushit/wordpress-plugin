@@ -286,15 +286,15 @@ Class reSmushit {
 				select 
 					POSTS.ID as ID, METAQLTY.meta_value as qlty, METADISABLED.meta_value as disabled
 					$extra_select
-				from wp_posts as POSTS
+				from $wpdb->posts as POSTS
 				inner join 
-					wp_postmeta as METAATTACH on POSTS.ID = METAATTACH.post_id 
+					$wpdb->postmeta as METAATTACH on POSTS.ID = METAATTACH.post_id 
 					and METAATTACH.meta_key = %s 
 				left join 
-					wp_postmeta as METAQLTY on POSTS.ID = METAQLTY.post_id 
+					$wpdb->postmeta as METAQLTY on POSTS.ID = METAQLTY.post_id 
 					and METAQLTY.meta_key = %s
 				left join 
-					wp_postmeta as METADISABLED on POSTS.ID = METADISABLED.post_id 
+					$wpdb->postmeta as METADISABLED on POSTS.ID = METADISABLED.post_id 
 					and METADISABLED.meta_key = %s
 				where 
 					POSTS.post_type = %s

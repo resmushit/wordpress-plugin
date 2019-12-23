@@ -3,7 +3,7 @@ Contributors: resmushit
 Tags: image, optimizer, image optimization, resmush.it, smush, jpg, png, gif, optimization, compression, Compress, Images, Pictures, Reduce Image Size, Smush, Smush.it
 Requires at least: 4.0.0
 Tested up to: 5.3.2
-Stable tag: 0.2.3
+Stable tag: 0.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,9 @@ Yes ! Absolutely free, the only restriction is to send images below 5MB.
 1. The simple interface
 
 == Changelog ==
+
+= 0.2.4 =
+* Fix issue on SQL request for table prefix different from 'wp_'
 
 = 0.2.3 =
 * Version number issue
