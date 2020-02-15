@@ -135,3 +135,25 @@ function time_elapsed_string($duration, $full = false) {
     if (!$full) $string = array_slice($string, 0, 1);
     return $string ? implode(', ', $string) : __('just now', 'resmushit-image-optimizer');
 }
+
+
+/**
+* 
+* Find recursively files based on pattern
+*
+* @param string $pattern file search
+* @param boolean $flags 
+* @return array
+* @author Mike
+* @link https://www.php.net/manual/en/function.glob.php#106595
+*/
+function glob_recursive($pattern, $flags = 0) {
+    $files = glob($pattern, $flags);
+   
+    foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir)
+    {
+        $files = array_merge($files, glob_recursive($dir.'/'.basename($pattern), $flags));
+    }
+   
+    return $files;
+}

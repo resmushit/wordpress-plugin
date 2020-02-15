@@ -101,6 +101,7 @@ Class reSmushitUI {
 				. self::addSetting("checkbox", __("Enable logs", 'resmushit-image-optimizer'), __("Enable file logging (for developers)", 'resmushit-image-optimizer'), "resmushit_logs")
 				. self::addSetting("checkbox", $new_label . __("Process optimize on CRON", 'resmushit-image-optimizer'), __("Will perform image optimization process through CRON tasks", 'resmushit-image-optimizer'), "resmushit_cron")
 				. self::addSetting("checkbox", $new_label . __("Preserve EXIF", 'resmushit-image-optimizer'), __("Will preserve EXIF data during optimization", 'resmushit-image-optimizer'), "resmushit_preserve_exif")
+				. self::addSetting("checkbox", $new_label . __("Do not keep backups", 'resmushit-image-optimizer'), __("Will not preserve a backup of the original file (save space)", 'resmushit-image-optimizer'), "resmushit_remove_unsmushed")
 				. '</table>';
 		submit_button();
 		echo '</form></div>';
@@ -341,36 +342,63 @@ Class reSmushitUI {
 	 * @return none
 	 */
 	public static function alertPanel() {
-		if (resmushit_get_cron_status() == 'DISABLED' || resmushit_get_cron_status() == 'OK') {
+		if (
+				(	get_option('resmushit_remove_unsmushed') == 0
+					|| (get_option('resmushit_remove_unsmushed') == 1 && get_option('resmushit_has_no_backup_files') == 1))
+				&& (resmushit_get_cron_status() == 'DISABLED' || resmushit_get_cron_status() == 'OK')) {
 			return TRUE;
 		}
 
 		self::fullWidthPanelWrapper(__('Important informations', 'resmushit-image-optimizer'), null, 'red');
-		echo "<div class='rsmt-alert'>";
 
+		if(resmushit_get_cron_status() != 'DISABLED' && resmushit_get_cron_status() != 'OK') {
+			
+			echo "<div class='rsmt-alert'>";
+			echo "<h3 class='icon_message warning'>"
+			. __('Cronjobs seems incorrectly configured', 'resmushit-image-optimizer')
+			. "</h3>";
 
-		echo "<h3 class='icon_message warning'>"
-		. __('Cronjobs seems incorrectly configured', 'resmushit-image-optimizer')
-		. "</h3>";
-
-		if (resmushit_get_cron_status() == 'MISCONFIGURED') {
-			echo "<p>"
-				. __('Cronjobs are not correctly configured. The variable <em>DISABLE_WP_CRON</em> must be set to <em>TRUE</em> in <em>wp-config.php</em>. Please install them by reading the following <a href="https://resmush.it/wordpress/howto-configure-cronjobs" target="_blank">instruction page</a>.', 'resmushit-image-optimizer')
-				. "</p><p>"
-				. __('We advice to disable Remush.it option "Process optimize on CRON" as long as Cron jobs are incorrectly set up.', 'resmushit-image-optimizer')
-				. "</p>";
-		} else if (resmushit_get_cron_status() == 'NEVER_RUN') {
-			echo "<p>"
-				. __('Cronjobs seems to have never been launched. Please install them by reading the following <a href="https://resmush.it/wordpress/howto-configure-cronjobs" target="_blank">instruction page</a>.', 'resmushit-image-optimizer')
-				. "</p>";
-		} else if (resmushit_get_cron_status() == 'NO_LATELY_RUN') {
-			echo "<p>"
-				. __('Cronjobs seems not to have run lately. Please read the following <a href="https://resmush.it/wordpress/howto-configure-cronjobs" target="_blank">instruction page</a> to install them correctly.', 'resmushit-image-optimizer')
-				. "<ul><li><em>" . __('Expected Frequency :', 'resmushit-image-optimizer') . "</em> " . __('Every', 'resmushit-image-optimizer') . " " . time_elapsed_string(RESMUSHIT_CRON_FREQUENCY) . "</li>"
-				. "<ul><li><em>" . __('Last run :', 'resmushit-image-optimizer') . "</em> " . time_elapsed_string(time() - get_option('resmushit_cron_lastrun')) . " " . __('ago', 'resmushit-image-optimizer') . "</li>"
-				. "</p>";
+			if (resmushit_get_cron_status() == 'MISCONFIGURED') {
+				echo "<p>"
+					. __('Cronjobs are not correctly configured. The variable <em>DISABLE_WP_CRON</em> must be set to <em>TRUE</em> in <em>wp-config.php</em>. Please install them by reading the following <a href="https://resmush.it/wordpress/howto-configure-cronjobs" target="_blank">instruction page</a>.', 'resmushit-image-optimizer')
+					. "</p><p>"
+					. __('We advice to disable Remush.it option "Process optimize on CRON" as long as Cron jobs are incorrectly set up.', 'resmushit-image-optimizer')
+					. "</p>";
+			} else if (resmushit_get_cron_status() == 'NEVER_RUN') {
+				echo "<p>"
+					. __('Cronjobs seems to have never been launched. Please install them by reading the following <a href="https://resmush.it/wordpress/howto-configure-cronjobs" target="_blank">instruction page</a>.', 'resmushit-image-optimizer')
+					. "</p>";
+			} else if (resmushit_get_cron_status() == 'NO_LATELY_RUN') {
+				echo "<p>"
+					. __('Cronjobs seems not to have run lately. Please read the following <a href="https://resmush.it/wordpress/howto-configure-cronjobs" target="_blank">instruction page</a> to install them correctly.', 'resmushit-image-optimizer')
+					. "<ul><li><em>" . __('Expected Frequency :', 'resmushit-image-optimizer') . "</em> " . __('Every', 'resmushit-image-optimizer') . " " . time_elapsed_string(RESMUSHIT_CRON_FREQUENCY) . "</li>"
+					. "<li><em>" . __('Last run :', 'resmushit-image-optimizer') . "</em> " . time_elapsed_string(time() - get_option('resmushit_cron_lastrun')) . " " . __('ago', 'resmushit-image-optimizer') . "</li></ul>"
+					. "</p>";
+			}
+			echo "</div>";
 		}
-		echo "</div>";
+		if(get_option('resmushit_remove_unsmushed') == 1 && get_option('resmushit_has_no_backup_files') == 0) {
+			$files_to_delete = count(detect_unsmushed_files());
+
+			if($files_to_delete) {
+				echo "<div class='rsmt-alert'>";
+				echo "<h3 class='icon_message warning'>"
+				. __('Backup files can be removed.', 'resmushit-image-optimizer')
+				. "</h3>";
+
+				echo 
+					'<p>'
+					. __('Keep these files and turn off Remove Backups option if you want to restore your unoptimized files in the future', 'resmushit-image-optimizer')
+					. '</p><p>'
+
+					. sprintf( __( 'We have found %s files ready to be removed', 'resmushit-image-optimizer' ), count(detect_unsmushed_files()) )
+					. '</p><p>'
+					. '<input type="button" value="'. __('Remove backup files', 'resmushit-image-optimizer') .'" class="rsmt-trigger--remove-backup-files button media-button  select-mode-toggle-button" name="resmushit" class="button wp-smush-send" />';
+
+				echo "</div>";
+			}
+		}
+
 
 		self::fullWidthPanelEndWrapper(); 		
 	}

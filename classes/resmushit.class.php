@@ -95,7 +95,7 @@ Class reSmushit {
 					curl_close($ch);
 				}
 				if ($data) {
-					if($is_original){
+					if($is_original && get_option('resmushit_remove_unsmushed') == 0){
 						$originalFile = pathinfo($file_path);
 						$newPath = $originalFile['dirname'] . '/' . $originalFile['filename'] . '-unsmushed.' . $originalFile['extension'];
 			 			copy($file_path, $newPath);
@@ -166,7 +166,24 @@ Class reSmushit {
 			unlink($originalFile);
 	}
 
-
+	/**
+      * 
+      * Detect if optimization process was already launched one time
+      *
+      * @return boolean
+      */
+	public static function hasAlreadyRunOnce(){
+		global $wpdb;
+		$query = $wpdb->prepare( 
+			"select
+				count($wpdb->posts.ID) as count
+				from $wpdb->posts
+				inner join $wpdb->postmeta on $wpdb->posts.ID = $wpdb->postmeta.post_id and $wpdb->postmeta.meta_key = %s $extraSQL
+				limit 1",
+				array('resmushed_cumulated_original_sizes')
+		);
+		return (boolean)$wpdb->get_var($query);
+	}
 	/**
       * 
       * Return optimization statistics

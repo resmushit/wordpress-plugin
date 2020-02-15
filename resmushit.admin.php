@@ -28,6 +28,7 @@ function resmushit_settings_declare() {
 	register_setting( 'resmushit-settings', 'resmushit_logs' );
 	register_setting( 'resmushit-settings', 'resmushit_cron' );
 	register_setting( 'resmushit-settings', 'resmushit_preserve_exif' );
+	register_setting( 'resmushit-settings', 'resmushit_remove_unsmushed' );
 }
 add_action( 'admin_init', 'resmushit_settings_declare' );
 
@@ -158,3 +159,17 @@ function resmushit_register_plugin_assets(){
     wp_enqueue_script( 'resmushit-js' );
 }
 add_action( 'admin_head', 'resmushit_register_plugin_assets' );
+
+
+
+/**
+* 
+* Detect unsmushed files by browsing the library directory
+*
+* @param none
+* @return none
+*/
+function detect_unsmushed_files() {
+	$wp_upload_dir=wp_upload_dir();
+	return glob_recursive($wp_upload_dir['basedir'] . '/*-unsmushed.*');
+}
