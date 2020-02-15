@@ -63,6 +63,8 @@ function resmushit_activate() {
 			update_option( 'resmushit_cron_lastrun', 0 );
 		if(get_option('resmushit_cron_firstactivation') === null)
 			update_option( 'resmushit_cron_firstactivation', 0 );
+		if(!get_option('resmushit_preserve_exif'))
+			update_option( 'resmushit_preserve_exif', 0 );
 	}
 }
 register_activation_hook( __FILE__, 'resmushit_activate' );
