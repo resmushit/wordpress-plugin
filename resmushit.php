@@ -4,14 +4,14 @@
  * @author    Charles Bourgeaux <hello@resmush.it>
  * @license   GPL-2.0+
  * @link      http://www.resmush.it
- * @copyright 2019 Resmush.it
+ * @copyright 2020 Resmush.it
  *
  * @wordpress-plugin
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://wordpress.org/plugins/resmushit-image-optimizer/
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.2.4
- * Timestamp:         2019.12.23
+ * Version:           0.2.5
+ * Timestamp:         2020.02.15
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
  * Author:            Charles Bourgeaux
