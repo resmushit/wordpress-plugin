@@ -101,7 +101,7 @@ Class reSmushitUI {
 				. self::addSetting("checkbox", __("Enable logs", 'resmushit-image-optimizer'), __("Enable file logging (for developers)", 'resmushit-image-optimizer'), "resmushit_logs")
 				. self::addSetting("checkbox", $new_label . __("Process optimize on CRON", 'resmushit-image-optimizer'), __("Will perform image optimization process through CRON tasks", 'resmushit-image-optimizer'), "resmushit_cron")
 				. self::addSetting("checkbox", $new_label . __("Preserve EXIF", 'resmushit-image-optimizer'), __("Will preserve EXIF data during optimization", 'resmushit-image-optimizer'), "resmushit_preserve_exif")
-				. self::addSetting("checkbox", $new_label . __("Do not keep backups", 'resmushit-image-optimizer'), __("Will not preserve a backup of the original file (save space)", 'resmushit-image-optimizer'), "resmushit_remove_unsmushed")
+				. self::addSetting("checkbox", $new_label . __("Do not preserve backups", 'resmushit-image-optimizer'), sprintf(__("Will not preserve a backup of the original file (save space). <a href='%s' title='Should I remove backups?' target='_blank'>Read instructions</a> carefully before enabling.", 'resmushit-image-optimizer'), 'https://resmush.it/wordpress/why-keeping-backup-files'), "resmushit_remove_unsmushed")
 				. '</table>';
 		submit_button();
 		echo '</form></div>';
@@ -388,7 +388,7 @@ Class reSmushitUI {
 
 				echo 
 					'<p>'
-					. __('Keep these files and turn off Remove Backups option if you want to restore your unoptimized files in the future', 'resmushit-image-optimizer')
+					. sprintf(__('Keep these files and turn off "Do not preserve backups" option if you want to restore your unoptimized files in the future. Please <a href="%s" title="Should I remove backups? target="_blank">read instructions</a> before clicking.', 'resmushit-image-optimizer'), 'https://resmush.it/wordpress/why-keeping-backup-files')
 					. '</p><p>'
 
 					. sprintf( __( 'We have found %s files ready to be removed', 'resmushit-image-optimizer' ), count(detect_unsmushed_files()) )

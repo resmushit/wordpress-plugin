@@ -155,7 +155,7 @@ function resmushit_register_plugin_assets(){
 	wp_enqueue_style( 'resmushit-css' );
     wp_enqueue_style( 'prefix-style', esc_url_raw( 'https://fonts.googleapis.com/css?family=Roboto+Slab:700' ), array(), null  );
 
-    wp_register_script( 'resmushit-js', plugins_url( 'js/script.js', __FILE__ ) );
+    wp_register_script( 'resmushit-js', plugins_url( 'js/script.js?' . hash_file('crc32',  dirname(__FILE__) . '/js/script.js'), __FILE__ ) );
     wp_enqueue_script( 'resmushit-js' );
 }
 add_action( 'admin_head', 'resmushit_register_plugin_assets' );

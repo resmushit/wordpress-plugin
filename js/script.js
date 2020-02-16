@@ -229,7 +229,7 @@ function removeBackupFiles() {
 				}, 
 				function(response) {
 					var data = jQuery.parseJSON(response);
-					jQuery(current).val(data.success + ' backups files successfully removed');
+					jQuery(current).val(data.success + ' backup files successfully removed');
 					setTimeout(function(){ jQuery(current).parent().parent().slideUp() }, 3000);
 				}
 			);
