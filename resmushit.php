@@ -65,6 +65,10 @@ function resmushit_activate() {
 			update_option( 'resmushit_cron_firstactivation', 0 );
 		if(!get_option('resmushit_preserve_exif'))
 			update_option( 'resmushit_preserve_exif', 0 );
+		if(!get_option('resmushit_remove_unsmushed'))
+			update_option( 'resmushit_remove_unsmushed', 0 );
+		if(!get_option('resmushit_has_no_backup_files'))
+			update_option( 'resmushit_has_no_backup_files', 0 );
 	}
 }
 register_activation_hook( __FILE__, 'resmushit_activate' );
@@ -371,3 +375,56 @@ function resmushit_get_cron_status() {
 	}
 	return 'OK';
 }
+
+
+/**
+ * Trigger when the cron are activated for the first time
+ * @param mixed old value for cron_activation option
+ * @param mixed new value for cron_activation option
+ */
+
+function resmushit_on_remove_unsmushed_change($old_value, $value) {
+	$old_value = (boolean)$old_value;
+	$value = (boolean)$value;
+	if($old_value == $value) {
+		return TRUE;
+	} else {
+		//if remove backup is activated
+		if($value === TRUE) {
+			if(!resmushit::hasAlreadyRunOnce()) {
+				update_option( 'resmushit_has_no_backup_files', 1);
+			} else {
+				update_option( 'resmushit_has_no_backup_files', 0);
+			}
+		} else {
+			update_option( 'resmushit_has_no_backup_files', 0);
+		}
+	}
+}
+add_action('update_option_resmushit_remove_unsmushed', 'resmushit_on_remove_unsmushed_change', 100, 2);
+
+
+
+
+/**
+* 
+* add Ajax action to remove backups (-unsmushed) of the filesystem
+*
+* @param none
+* @return json object
+*/
+function resmushit_remove_backup_files() {
+	$files=detect_unsmushed_files();
+	$return = array('success' => 0);
+	
+	foreach($files as $f) {
+		if(unlink($f)) {
+			$return['success']++;
+		}
+	}
+	echo json_encode($return);
+	update_option( 'resmushit_has_no_backup_files', 1);
+
+	die();
+}	
+add_action( 'wp_ajax_resmushit_remove_backup_files', 'resmushit_remove_backup_files' );	
