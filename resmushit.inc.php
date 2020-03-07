@@ -33,7 +33,7 @@ function rlog($str, $level = 'SUCCESS') {
 	if(get_option('resmushit_logs') == 0)
 		return FALSE;
 
-	if( !is_writable(ABSPATH . RESMUSHIT_LOGS_PATH) ) {
+	if( !is_writable(ABSPATH) ) {
 		return FALSE;
 	}
 	// Preserve file size under a reasonable value
