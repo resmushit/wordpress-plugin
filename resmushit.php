@@ -10,8 +10,8 @@
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://wordpress.org/plugins/resmushit-image-optimizer/
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.3.2
- * Timestamp:         2020.03.11
+ * Version:           0.3.4
+ * Timestamp:         2020.05.01
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
  * Author:            Charles Bourgeaux
@@ -59,6 +59,8 @@ function resmushit_activate() {
 			update_option( 'resmushit_total_optimized', '0' );
 		if(get_option('resmushit_cron') === null)
 			update_option( 'resmushit_cron', 0 );
+		if(get_option('resmushit_cron_lastaction') === null)
+			update_option( 'resmushit_cron_lastaction', 0 );
 		if(get_option('resmushit_cron_lastrun') === null)
 			update_option( 'resmushit_cron_lastrun', 0 );
 		if(get_option('resmushit_cron_firstactivation') === null)
@@ -101,6 +103,11 @@ function resmushit_process_images($attachments, $force_keep_original = TRUE) {
 	if(reSmushit::getDisabledState($attachment_id))
 		return $attachments;
 
+	if(empty($attachments)) {
+		rlog("Error! Attachment #$attachment_id has no corresponding file on disk.", 'WARNING');
+		return $attachments;
+	}
+
 	$fileInfo = pathinfo(get_attached_file( $attachment_id ));
 	$basepath = $fileInfo['dirname'] . '/';
 	$extension = isset($fileInfo['extension']) ? $fileInfo['extension'] : NULL;
@@ -128,12 +135,9 @@ function resmushit_process_images($attachments, $force_keep_original = TRUE) {
 	if(!$error) {
 		$optimizations_successful_count = get_option('resmushit_total_optimized');
 		update_option( 'resmushit_total_optimized', $optimizations_successful_count + $count );
-
-		update_post_meta($attachment_id,'resmushed_quality', resmushit::getPictureQualitySetting());
-		if(get_option('resmushit_statistics')){
-			update_post_meta($attachment_id,'resmushed_cumulated_original_sizes', $cumulated_original_sizes);
-			update_post_meta($attachment_id,'resmushed_cumulated_optimized_sizes', $cumulated_optimized_sizes);
-		}
+		update_post_meta($attachment_id,'resmushed_quality', resmushit::getPictureQualitySetting());		
+		update_post_meta($attachment_id,'resmushed_cumulated_original_sizes', $cumulated_original_sizes);
+		update_post_meta($attachment_id,'resmushed_cumulated_optimized_sizes', $cumulated_optimized_sizes);
 	}
 	return $attachments;
 }
@@ -333,21 +337,29 @@ if(!get_option('resmushit_cron') || get_option('resmushit_cron') === 0) {
 function resmushit_cron_process() {
 	global $is_cron;
 	$is_cron = TRUE;
-	update_option( 'resmushit_cron_lastrun', time() );
 	
+	if(time() - get_option('resmushit_cron_lastrun') < RESMUSHIT_CRON_TIMEOUT) {
+		rlog('Another CRON process is running, process aborted.', 'WARNING');
+		return FALSE;
+	}
+	update_option( 'resmushit_cron_lastrun', time() );
+	update_option( 'resmushit_cron_lastaction', time() );
+
 	// required if launch through wp-cron.php
 	include_once( ABSPATH . 'wp-admin/includes/image.php' );
 
-	add_filter('wp_generate_attachment_metadata', 'resmushit_process_images'); 
+	add_filter('wp_generate_attachment_metadata', 'resmushit_process_images');
 	rlog('Gathering unoptimized pictures from CRON');
 	$unoptimized_pictures = json_decode(reSmushit::getNonOptimizedPictures(TRUE));
 	rlog('Found ' . count($unoptimized_pictures->nonoptimized) . ' attachments');
+
 	foreach($unoptimized_pictures->nonoptimized as $el) {
 		if (wp_next_scheduled ( 'resmushit_optimize' )) { 
 			//avoid to collapse two crons
 			wp_unschedule_event(wp_next_scheduled('resmushit_optimize'), 'resmushit_optimize');
 		}
 		rlog('CRON Processing attachments #' . $el->ID);
+		update_option( 'resmushit_cron_lastaction', time() );
 		reSmushit::revert($el->ID);
 	}
 }
