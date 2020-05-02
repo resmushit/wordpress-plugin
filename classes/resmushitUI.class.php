@@ -71,7 +71,7 @@ Class reSmushitUI {
 	 * @return none
 	 */
 	public static function headerPanel() {
-		$html = "<img src='". RESMUSHIT_BASE_URL . "images/header.jpg' />";
+		$html = "<img src='". RESMUSHIT_BASE_URL . "images/header.png' />";
 		self::fullWidthPanel($html);
 	}
 

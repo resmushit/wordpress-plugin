@@ -7,11 +7,11 @@
  * @copyright 2020 Resmush.it
  *
  * @wordpress-plugin
- * Plugin Name:       reSmush.it Image Optimizer
+ * Plugin Name:       reSmush.it : the only free Image Optimizer & compress plugin
  * Plugin URI:        https://wordpress.org/plugins/resmushit-image-optimizer/
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.3.4
- * Timestamp:         2020.05.01
+ * Version:           0.3.5
+ * Timestamp:         2020.05.02
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
  * Author:            Charles Bourgeaux
