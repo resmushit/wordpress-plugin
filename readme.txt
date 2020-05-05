@@ -1,4 +1,4 @@
-=== reSmush.it Image Optimizer  ===
+=== reSmush.it : the only free Image Optimizer & compress plugin  ===
 Contributors: resmushit
 Tags: image, optimizer, image optimization, resmush.it, smush, jpg, png, gif, optimization, compression, Compress, Images, Pictures, Reduce Image Size, Smush, Smush.it
 Requires at least: 4.0.0
