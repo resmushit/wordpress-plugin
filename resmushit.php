@@ -10,8 +10,8 @@
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://wordpress.org/plugins/resmushit-image-optimizer/
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.3.5
- * Timestamp:         2020.05.02
+ * Version:           0.3.6
+ * Timestamp:         2020.05.10
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
  * Author:            Charles Bourgeaux
@@ -337,8 +337,8 @@ if(!get_option('resmushit_cron') || get_option('resmushit_cron') === 0) {
 function resmushit_cron_process() {
 	global $is_cron;
 	$is_cron = TRUE;
-	
-	if(time() - get_option('resmushit_cron_lastrun') < RESMUSHIT_CRON_TIMEOUT) {
+
+	if((time() - get_option('resmushit_cron_lastaction')) < RESMUSHIT_CRON_TIMEOUT) {
 		rlog('Another CRON process is running, process aborted.', 'WARNING');
 		return FALSE;
 	}
