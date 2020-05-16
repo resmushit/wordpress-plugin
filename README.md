@@ -70,7 +70,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 More informations on the plugin on the [Wordpress Plugin Page](https://fr.wordpress.org/plugins/resmushit-image-optimizer/ "Wordpress Plugin Page")
 
-## Support on Beerpay
-Support us with a couple of :beers:!
+## Support us on our new platform
+Support us through Ko-Fi !
 
-[![Beerpay](https://beerpay.io/charlyie/resmushit-wordpress/badge.svg?style=beer-square)](https://beerpay.io/charlyie/resmushit-wordpress)  [![Beerpay](https://beerpay.io/charlyie/resmushit-wordpress/make-wish.svg?style=flat-square)](https://beerpay.io/charlyie/resmushit-wordpress?focus=wish)
+[![Beerpay](https://cdn.ko-fi.com/cdn/kofi4.png?v=2)](https://ko-fi.com/resmushit)
