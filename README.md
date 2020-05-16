@@ -73,4 +73,4 @@ More informations on the plugin on the [Wordpress Plugin Page](https://fr.wordpr
 ## Support us on our new platform
 Support us through Ko-Fi !
 
-[![Beerpay](https://cdn.ko-fi.com/cdn/kofi4.png?v=2)](https://ko-fi.com/resmushit)
+[![Beerpay](https://cdn.ko-fi.com/cdn/kofi4.png?v=2 | width=150)](https://ko-fi.com/resmushit)
