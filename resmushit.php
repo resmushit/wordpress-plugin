@@ -10,8 +10,8 @@
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://wordpress.org/plugins/resmushit-image-optimizer/
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.3.6
- * Timestamp:         2020.05.10
+ * Version:           0.3.7
+ * Timestamp:         2020.06.13
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
  * Author:            Charles Bourgeaux
@@ -283,6 +283,11 @@ add_action( 'wp_ajax_resmushit_update_statistics', 'resmushit_update_statistics'
  * @return string
  */
 function resmushit_add_plugin_page_settings_link($links) {
+	if(is_string($links)) {
+		$oneLink = $links;
+		$links = array();
+		$links[] = $oneLink; 
+	}
 	$links[] = '<a href="' . admin_url( 'upload.php?page=resmushit_options' ) . '">' . __('Settings', "resmushit-image-optimizer") . '</a>';
 	return $links;
 }

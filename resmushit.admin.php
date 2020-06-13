@@ -150,13 +150,22 @@ function resmushit_settings_page() {
 * @return none
 */
 function resmushit_register_plugin_assets(){
+ 	$allowed_pages = array(	'media_page_resmushit_options',
+ 							'upload', 
+ 							'attachment');
+ 	
+ 	if ( function_exists( 'get_current_screen' ) ) {
+		$current_page = get_current_screen();
+	}
 
-	wp_register_style( 'resmushit-css', plugins_url( 'css/resmushit.css', __FILE__ ) );
-	wp_enqueue_style( 'resmushit-css' );
-    wp_enqueue_style( 'prefix-style', esc_url_raw( 'https://fonts.googleapis.com/css?family=Roboto+Slab:700' ), array(), null  );
+	if ( isset( $current_page->id ) && in_array( $current_page->id, $allowed_pages ) ) {
+		wp_register_style( 'resmushit-css', plugins_url( 'css/resmushit.css', __FILE__ ) );
+		wp_enqueue_style( 'resmushit-css' );
+	    wp_enqueue_style( 'prefix-style', esc_url_raw( 'https://fonts.googleapis.com/css?family=Roboto+Slab:700' ), array(), null  );
 
-    wp_register_script( 'resmushit-js', plugins_url( 'js/script.js?' . hash_file('crc32',  dirname(__FILE__) . '/js/script.js'), __FILE__ ) );
-    wp_enqueue_script( 'resmushit-js' );
+	    wp_register_script( 'resmushit-js', plugins_url( 'js/script.js?' . hash_file('crc32',  dirname(__FILE__) . '/js/script.js'), __FILE__ ) );
+	    wp_enqueue_script( 'resmushit-js' );
+	}
 }
 add_action( 'admin_head', 'resmushit_register_plugin_assets' );
 
