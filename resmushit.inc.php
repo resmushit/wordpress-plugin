@@ -3,6 +3,8 @@
 require('resmushit.settings.php');
 require('classes/resmushit.class.php');
 require('classes/resmushitUI.class.php');
+require('classes/resmushitRouter.class.php');
+require('classes/resmushitTemplate.class.php');
 require('resmushit.admin.php');
 
 

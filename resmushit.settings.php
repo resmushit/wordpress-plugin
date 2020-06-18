@@ -10,5 +10,6 @@ define('RESMUSHIT_NEWSFEED', 'https://feed.resmush.it/');
 define('RESMUSHIT_BASE_URL', plugin_dir_url( __FILE__ ));
 define('RESMUSHIT_CRON_FREQUENCY', 600);
 define('RESMUSHIT_CRON_TIMEOUT', 60);
+define('RESMUSHIT_BASE_PATH', WP_PLUGIN_DIR . '/resmushit-image-optimizer/');
 
 global $is_cron;

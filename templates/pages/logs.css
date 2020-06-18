@@ -1,0 +1,4 @@
+.rsmt-page-logs .pre {
+	overflow: auto;
+	max-height: 500px;
+}

@@ -1,0 +1,103 @@
+/*GENERALITIES*/
+.text-center {
+	text-align: center;
+}
+.typcn-center {
+	position: relative;
+    margin-top: 5em;
+}
+.typcn-center:before {
+	font-size: 4em;
+    position: absolute;
+    top: -0.7em;
+    text-align: center;
+    left: calc(50% - 0.5em);
+}
+.brdr-dashed {
+	border: 2px dashed #ccc;
+    box-sizing: border-box;
+    padding: 20px;
+}
+.flex{
+  display: flex;
+  flex-direction:row;
+  justify-content:space-between;
+}
+.flex-start{
+  justify-content: flex-start;
+}
+.pre {
+	font-family: monospace;
+	font-size: 0.9em;
+}
+
+
+
+.rsmt-app{
+	margin-right: 20px;
+}
+.rsmt-header{
+	background:linear-gradient(to right, #8dcbd7, #93c9a3);
+	min-height: 130px;
+	padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+
+}
+.rsmt-header nav {
+	display: inline-block;
+	position: absolute;
+	top: 14px;
+	right: 20px;
+}
+.rsmt-header nav ul li {
+	display: inline;
+	margin-right: 10px;
+	font-size: 1.2em;
+}
+.rsmt-header nav ul li a{
+	display: inline-block;
+    border: 1px solid #fff;
+    padding: 5px 14px;
+    color: #fff;
+    text-decoration: none;
+    background: #0000000d;
+   	transition: all 0.5s;
+}
+.rsmt-header nav ul li a:hover{
+    background: #ffffff12;
+}
+.rsmt-header nav ul li a.typcn:before{
+	margin-right: 0.2em;
+	font-size: 1.2em;
+}
+
+
+.rsmt-logo {
+	position: relative;
+}
+.rsmt-logo img {
+	max-width: 170px
+}
+.rsmt-logo span {
+	background-color: red;
+	border-radius: 100px;
+	border: 1px solid #fff;
+	height: 15px;
+	width: 15px;
+	display: inline-block;
+	text-align: center;
+	color: #fff;
+	line-height: 14px;
+	position: absolute;
+}
+
+.rsmt-main-wrapper {
+	background-color: #fff;
+	border-radius: 3px 3px 0px 0px;
+	box-shadow: 0px 3px 9px -1px rgba(87,87,87,1);
+	margin: -50px 10px 0 10px;
+	padding: 10px 20px 20px;
+    box-sizing: border-box;
+    position: relative;
+}

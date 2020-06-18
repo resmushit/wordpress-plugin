@@ -123,24 +123,8 @@ add_filter("attachment_fields_to_edit", "resmushit_image_attachment_add_status_b
 * @return none
 */
 function resmushit_settings_page() {
-	?>
-	<div class='rsmt-panels'>	
-		<div class="rsmt-cols w66 iln-block">
-			<?php reSmushitUI::headerPanel();?>
-			<?php reSmushitUI::alertPanel();?>
-			<?php reSmushitUI::bulkPanel();?>
-			<?php reSmushitUI::bigFilesPanel();?>
-			<?php reSmushitUI::statisticsPanel();?>
-		</div>
-		<div class="rsmt-cols w33 iln-block">
-			<?php reSmushitUI::settingsPanel();?>
-			<?php reSmushitUI::newsPanel();?>
-		</div>
-	</div>
-	<?php
+	reSmushitRouter::loadRoute();
 }
-
-
 
 /**
 * 
@@ -161,6 +145,8 @@ function resmushit_register_plugin_assets(){
 	if ( isset( $current_page->id ) && in_array( $current_page->id, $allowed_pages ) ) {
 		wp_register_style( 'resmushit-css', plugins_url( 'css/resmushit.css', __FILE__ ) );
 		wp_enqueue_style( 'resmushit-css' );
+		wp_register_style( 'resmushit-icons-css', plugins_url( 'css/typicons.min.css', __FILE__ ) );
+		wp_enqueue_style( 'resmushit-icons-css' );
 	    wp_enqueue_style( 'prefix-style', esc_url_raw( 'https://fonts.googleapis.com/css?family=Roboto+Slab:700' ), array(), null  );
 
 	    wp_register_script( 'resmushit-js', plugins_url( 'js/script.js?' . hash_file('crc32',  dirname(__FILE__) . '/js/script.js'), __FILE__ ) );
