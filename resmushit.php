@@ -114,7 +114,7 @@ function resmushit_process_images($attachments, $force_keep_original = TRUE) {
 	$basefile = basename($attachments[ 'file' ]);
 
 	// Optimize only pictures/files accepted by the API
-	if( !in_array($extension, resmushit::authorizedExtensions()) ) {
+	if( !in_array(strtolower($extension), resmushit::authorizedExtensions()) ) {
 		return $attachments;	
 	}
 
