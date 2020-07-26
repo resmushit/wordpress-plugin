@@ -199,7 +199,7 @@ Class reSmushit {
 		$output = array();
 		$extraSQL = null;
 		if($attachment_id)
-			$extraSQL = "where $wpdb->postmeta.post_id = ". mysql_real_escape_string($attachment_id);
+			$extraSQL = "where $wpdb->postmeta.post_id = ". (int)($attachment_id);
 
 		$query = $wpdb->prepare( 
 			"select

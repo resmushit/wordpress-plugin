@@ -76,6 +76,9 @@ Yes ! Absolutely free, the only restriction is to send images below 5MB.
 
 == Changelog ==
 
+= 0.3.10 =
+* hotfix : deprecated function used
+
 = 0.3.9 =
 * Fix : OWASP & Security fix
 
