@@ -428,6 +428,8 @@ Class reSmushitUI {
 				if ( 1 == get_option( $machine_name ) ) $additionnal = 'checked="checked"'; 
 				$output .= "<input type='checkbox' name='$machine_name' id='$machine_name' value='1' ".  $additionnal ."/>";
 				break;
+			default:
+				break;
 		}
 		$output .= '</div>';
 		return $output;
