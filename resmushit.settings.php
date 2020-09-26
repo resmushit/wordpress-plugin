@@ -1,7 +1,7 @@
 <?php
 
 define('RESMUSHIT_ENDPOINT', 'http://api.resmush.it/');
-define('RESMUSHIT_VERSION', '0.3.10');
+define('RESMUSHIT_VERSION', '0.3.11');
 define('RESMUSHIT_DEFAULT_QLTY', '92');
 define('RESMUSHIT_TIMEOUT', '10');
 define('RESMUSHIT_LOGS_PATH', 'resmushit.log');

@@ -10,8 +10,8 @@
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://wordpress.org/plugins/resmushit-image-optimizer/
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.3.10
- * Timestamp:         2020.07.26
+ * Version:           0.3.11
+ * Timestamp:         2020.09.26
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
  * Author:            Charles Bourgeaux
@@ -49,27 +49,27 @@ add_action( 'plugins_loaded', 'resmushit_load_plugin_textdomain' );
 */
 function resmushit_activate() {
 	if ( is_super_admin() ) {
-		if(get_option('resmushit_qlty') === null)
+		if(get_option('resmushit_qlty') === false)
 			update_option( 'resmushit_qlty', RESMUSHIT_DEFAULT_QLTY );
-		if(get_option('resmushit_on_upload') === null)
+		if(get_option('resmushit_on_upload') === false)
 			update_option( 'resmushit_on_upload', '1' );
-		if(get_option('resmushit_statistics') === null)
+		if(get_option('resmushit_statistics') === false)
 			update_option( 'resmushit_statistics', '1' );
-		if(get_option('resmushit_total_optimized') === null)
+		if(get_option('resmushit_total_optimized') === false)
 			update_option( 'resmushit_total_optimized', '0' );
-		if(get_option('resmushit_cron') === null)
+		if(get_option('resmushit_cron') === false)
 			update_option( 'resmushit_cron', 0 );
-		if(get_option('resmushit_cron_lastaction') === null)
+		if(get_option('resmushit_cron_lastaction') === false)
 			update_option( 'resmushit_cron_lastaction', 0 );
-		if(get_option('resmushit_cron_lastrun') === null)
+		if(get_option('resmushit_cron_lastrun') === false)
 			update_option( 'resmushit_cron_lastrun', 0 );
-		if(get_option('resmushit_cron_firstactivation') === null)
+		if(get_option('resmushit_cron_firstactivation') === false)
 			update_option( 'resmushit_cron_firstactivation', 0 );
-		if(!get_option('resmushit_preserve_exif'))
+		if(get_option('resmushit_preserve_exif') === false)
 			update_option( 'resmushit_preserve_exif', 0 );
-		if(!get_option('resmushit_remove_unsmushed'))
+		if(get_option('resmushit_remove_unsmushed') === false)
 			update_option( 'resmushit_remove_unsmushed', 0 );
-		if(!get_option('resmushit_has_no_backup_files'))
+		if(get_option('resmushit_has_no_backup_files') === false)
 			update_option( 'resmushit_has_no_backup_files', 0 );
 	}
 }

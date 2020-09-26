@@ -152,6 +152,7 @@ function resmushit_settings_page() {
 function resmushit_register_plugin_assets(){
  	$allowed_pages = array(	'media_page_resmushit_options',
  							'upload', 
+ 							'post',
  							'attachment');
  	
  	if ( function_exists( 'get_current_screen' ) ) {
