@@ -2,6 +2,10 @@
 	max-width: 200px;
 	margin-right: 30px;
 }
+.rsmt-page-optimize .data {
+	flex-direction: column;
+	width: fit-content;
+}
 .rsmt-page-optimize .data .figure {
 	font-size: 3em;
 	font-weight: bold;
@@ -15,4 +19,5 @@
 	text-transform: uppercase;
 	color: #fff;
 	font-style: initial;
+	margin-top: -0.8em;
 }

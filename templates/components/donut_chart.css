@@ -1,0 +1,65 @@
+.donut-size {
+  font-size: 12em;
+}
+
+.pie-wrapper {
+  position: relative;
+  width: 1em;
+  height: 1em;
+  margin: 0px auto;
+}
+
+.pie-wrapper .pie {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  clip: rect(0, 1em, 1em, 0.5em);
+}
+
+.pie-wrapper .half-circle {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  border: 0.1em solid #1abc9c;
+  border-radius: 50%;
+  clip: rect(0em, 0.5em, 1em, 0em);
+}
+
+.pie-wrapper .right-side {
+  transform: rotate(0deg);
+}
+
+.pie-wrapper .label {
+  position: absolute;
+  top: 0.52em;
+  right: 0.4em;
+  bottom: 0.4em;
+  left: 0.4em;
+  display: block;
+  background: none;
+  border-radius: 50%;
+  color: #7F8C8D;
+  font-size: 0.25em;
+  line-height: 2.6em;
+  text-align: center;
+  cursor: default;
+  z-index: 2;
+}
+
+.pie-wrapper .smaller {
+  padding-bottom: 20px;
+  color: #BDC3C7;
+  font-size: .45em;
+  vertical-align: super;
+}
+
+.pie-wrapper .shadow {
+  width: 100%;
+  height: 100%;
+  border: 0.1em solid #BDC3C7;
+  border-radius: 50%;
+}

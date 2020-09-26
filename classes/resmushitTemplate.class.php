@@ -15,6 +15,7 @@ Class reSmushitTemplate {
 	const PAGES_PATH = RESMUSHIT_BASE_PATH . 'templates/pages/';
 	const PAGES_URL = RESMUSHIT_BASE_URL . 'templates/pages/';
 	const TEMPLATE_EXT = '.tpl.php';
+	const DEFAULT_PAGE = 'notfound';
 
 	const PAGES_CONTROLLERS_PATH = RESMUSHIT_BASE_PATH . 'controllers/pages/';
 	const COMPONENTS_CONTROLLERS_PATH = RESMUSHIT_BASE_PATH . 'controllers/components/';
@@ -64,7 +65,6 @@ Class reSmushitTemplate {
 		}
 
 		if(file_exists($templatePath . $elementName . self::TEMPLATE_EXT)) {
-
 			if(file_exists($templatePath . $elementName . '.css')) {
 				wp_register_style( 'resmushit-' . $elementType . '-' . $elementName . '-css', $templateURL . $elementName . '.css?' . hash_file('crc32', $templatePath . $elementName . '.css') );
 				wp_enqueue_style( 'resmushit-' . $elementType . '-' . $elementName . '-css' );
@@ -76,6 +76,9 @@ Class reSmushitTemplate {
 			}
 			return $templatePath . $elementName . self::TEMPLATE_EXT;
 		} else {
+			if($elementType == 'page') {
+				return self::loadTemplate(self::DEFAULT_PAGE, 'page');
+			}
 			return FALSE;
 		}
 	}

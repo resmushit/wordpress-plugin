@@ -221,6 +221,7 @@ Class reSmushit {
 				inner join $wpdb->postmeta on $wpdb->posts.ID = $wpdb->postmeta.post_id and $wpdb->postmeta.meta_key = %s $extraSQL",
 				array('resmushed_cumulated_optimized_sizes')
 		);	
+		var_dump($query);die;
 		$optimized_sizes = $wpdb->get_results($query);
 		$total_optimized_size = 0;
 		foreach($optimized_sizes as $s){
@@ -247,7 +248,9 @@ Class reSmushit {
 			$output['total_optimizations'] 		= get_option('resmushit_total_optimized');
 			$output['total_pictures'] 			= self::getCountAllPictures();
 			$output['total_pictures_with_thumbnails'] = self::getCountAllPictures() * (sizeof(get_intermediate_image_sizes()) + 1);
+			$output['percent_library_optimized'] = 100*round($output['files_optimized']/$output['total_pictures'] ,4) . ' %';
 		}
+		debug($output);die;
 		return $output;
 	}
 

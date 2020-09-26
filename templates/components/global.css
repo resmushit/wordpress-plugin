@@ -26,6 +26,12 @@
 .flex-start{
   justify-content: flex-start;
 }
+.w50{
+	width: 50%
+}
+.w100{
+	width: 100%
+}
 .pre {
 	font-family: monospace;
 	font-size: 0.9em;

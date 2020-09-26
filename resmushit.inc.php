@@ -2,6 +2,8 @@
 
 require('resmushit.settings.php');
 require('classes/resmushit.class.php');
+require('classes/resmushitStatistics.class.php');
+require('classes/resmushitHelpers.class.php');
 require('classes/resmushitUI.class.php');
 require('classes/resmushitRouter.class.php');
 require('classes/resmushitTemplate.class.php');
@@ -158,4 +160,17 @@ function glob_recursive($pattern, $flags = 0) {
     }
    
     return $files;
+}
+
+
+/**
+* 
+* Display a syntax-colorized debug
+*
+* @param object data to debug
+*/
+function debug($data) {
+	echo '<pre>';
+	highlight_string("<?php\n\$data =\n" . var_export($data, true) . ";\n?>");
+	echo '</pre>';
 }

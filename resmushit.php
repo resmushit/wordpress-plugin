@@ -445,3 +445,29 @@ function resmushit_remove_backup_files() {
 	die();
 }	
 add_action( 'wp_ajax_resmushit_remove_backup_files', 'resmushit_remove_backup_files' );	
+
+
+
+
+
+
+
+
+
+/* NEW FUNCTIONS */
+
+/**
+* 
+* add Ajax action to fetch all unsmushed pictures
+*
+* @param none
+* @return json object of ids
+*/
+function resmushit_webservice_get_unoptimized_attachments() {
+	echo reSmushit::getNonOptimizedPictures();
+	die();
+}	
+add_action( 'wp_ajax_resmushit_bulk_get_images', 'resmushit_bulk_get_images' );	
+
+
+
