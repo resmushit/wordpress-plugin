@@ -52,6 +52,8 @@ Currently, reSmush.it Plugin doesn't use CRON to execute, you must remain on the
 - [ ] Add a link to the future GDPR and Privacy Policy Page on https://resmush.it
 - [X] Wordpress 5.x support
 - [X] Provide a CRON feature
+- [] Support for Arabic file names
+- [] Auto-replace when JPG files is lower than an optimized PNG file
 
 ## Versioning
 
