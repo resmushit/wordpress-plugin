@@ -4,14 +4,14 @@
  * @author    Charles Bourgeaux <hello@resmush.it>
  * @license   GPL-2.0+
  * @link      http://www.resmush.it
- * @copyright 2020 Resmush.it
+ * @copyright 2021 Resmush.it
  *
  * @wordpress-plugin
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://wordpress.org/plugins/resmushit-image-optimizer/
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.3.11
- * Timestamp:         2020.09.26
+ * Version:           0.3.12
+ * Timestamp:         2021.05.02
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
  * Author:            Charles Bourgeaux
@@ -55,21 +55,21 @@ function resmushit_activate() {
 			update_option( 'resmushit_on_upload', '1' );
 		if(get_option('resmushit_statistics') === false)
 			update_option( 'resmushit_statistics', '1' );
-		if(get_option('resmushit_total_optimized') === false)
+		if(get_option('resmushit_total_optimized') === false || get_option('resmushit_total_optimized') == "")
 			update_option( 'resmushit_total_optimized', '0' );
-		if(get_option('resmushit_cron') === false)
+		if(get_option('resmushit_cron') === false || get_option('resmushit_cron') == "")
 			update_option( 'resmushit_cron', 0 );
-		if(get_option('resmushit_cron_lastaction') === false)
+		if(get_option('resmushit_cron_lastaction') === false  || get_option('resmushit_cron_lastaction') == "")
 			update_option( 'resmushit_cron_lastaction', 0 );
-		if(get_option('resmushit_cron_lastrun') === false)
+		if(get_option('resmushit_cron_lastrun') === false || get_option('resmushit_cron_lastrun') == "")
 			update_option( 'resmushit_cron_lastrun', 0 );
-		if(get_option('resmushit_cron_firstactivation') === false)
+		if(get_option('resmushit_cron_firstactivation') === false || get_option('resmushit_cron_firstactivation') == "")
 			update_option( 'resmushit_cron_firstactivation', 0 );
-		if(get_option('resmushit_preserve_exif') === false)
+		if(get_option('resmushit_preserve_exif') === false || get_option('resmushit_preserve_exif') == "")
 			update_option( 'resmushit_preserve_exif', 0 );
-		if(get_option('resmushit_remove_unsmushed') === false)
+		if(get_option('resmushit_remove_unsmushed') === false || get_option('resmushit_remove_unsmushed') == "")
 			update_option( 'resmushit_remove_unsmushed', 0 );
-		if(get_option('resmushit_has_no_backup_files') === false)
+		if(get_option('resmushit_has_no_backup_files') === false || get_option('resmushit_has_no_backup_files') == "")
 			update_option( 'resmushit_has_no_backup_files', 0 );
 	}
 }
