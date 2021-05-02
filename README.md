@@ -52,11 +52,11 @@ Currently, reSmush.it Plugin doesn't use CRON to execute, you must remain on the
 - [ ] Add a link to the future GDPR and Privacy Policy Page on https://resmush.it
 - [X] Wordpress 5.x support
 - [X] Provide a CRON feature
-- [] Support for Arabic file names : https://wordpress.org/support/topic/arabic-named-images-dont-get-optimized/#post-13607644
-- [] Auto-replace when JPG files is lower than an optimized PNG file
-- [] fix Optimize button KO : https://wordpress.org/support/topic/new-page-media-optimized-button-doesnt-work/#post-13607661
-- [] SQL bug? : https://wordpress.org/support/topic/bug-311/
-- [] Remove SQL entries and revert pictures if uninstalling the plugin
+- [ ] Support for Arabic file names : https://wordpress.org/support/topic/arabic-named-images-dont-get-optimized/#post-13607644
+- [ ] Auto-replace when JPG files is lower than an optimized PNG file
+- [ ] fix Optimize button KO : https://wordpress.org/support/topic/new-page-media-optimized-button-doesnt-work/#post-13607661
+- [ ] SQL bug? : https://wordpress.org/support/topic/bug-311/
+- [ ] Remove SQL entries and revert pictures if uninstalling the plugin
  
 ## Versioning
 
