@@ -35,6 +35,7 @@ jQuery( ".list-accordion h4" ).on('click', function(){
 updateDisabledState();
 optimizeSingleAttachment();
 removeBackupFiles();
+restoreBackupFiles();
 
 
 /** 
@@ -231,6 +232,31 @@ function removeBackupFiles() {
 					var data = jQuery.parseJSON(response);
 					jQuery(current).val(data.success + ' backup files successfully removed');
 					setTimeout(function(){ jQuery(current).parent().parent().slideUp() }, 3000);
+				}
+			);
+		}
+	});
+}
+
+
+/** 
+ * ajax to Optimize a single picture
+ */
+function restoreBackupFiles() {
+	jQuery(document).delegate(".rsmt-trigger--restore-backup-files","mouseup",function(e){
+		if ( confirm( "You're about to restore ALL your original image files. Are you sure to perform this operation ?" ) ) {
+   
+		    e.preventDefault();
+			var current = this;
+			jQuery(current).val('Restoring backups...');
+			jQuery(current).prop('disabled', true);
+			jQuery.post(
+				ajaxurl, { 
+					action: 'resmushit_restore_backup_files'
+				}, 
+				function(response) {
+					var data = jQuery.parseJSON(response);
+					jQuery(current).val(data.success + ' images successfully restored');
 				}
 			);
 		}

@@ -126,7 +126,7 @@ Class reSmushit {
 	 * @param  int 		$attachment_id 	ID of the attachment to revert
 	 * @return none
 	 */
-	public static function revert($id) {
+	public static function revert($id, $generateThumbnails = true) {
 		global $wp_version;
 		global $attachment_id;
 		$attachment_id = $id;
@@ -141,12 +141,15 @@ Class reSmushit {
 		$originalFile = $basepath . $fileInfo['filename'] . '-unsmushed.' . $fileInfo['extension'];
 		rlog('Revert original image for : ' . str_replace(ABSPATH, '/', get_attached_file( $attachment_id )));
 	
-		if(file_exists($originalFile))
+		if(file_exists($originalFile)) {
 			copy($originalFile, get_attached_file( $attachment_id ));
+		}
 
 		//Regenerate thumbnails
-		wp_generate_attachment_metadata($attachment_id, get_attached_file( $attachment_id ));
-		
+		if($generateThumbnails) {
+			wp_generate_attachment_metadata($attachment_id, get_attached_file( $attachment_id ));
+		}
+
 		return self::wasSuccessfullyUpdated( $attachment_id );
 	}
 

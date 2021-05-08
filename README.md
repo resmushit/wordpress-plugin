@@ -44,7 +44,7 @@ Currently, reSmush.it Plugin doesn't use CRON to execute, you must remain on the
 - [ ] Advanced option : move *unsmushed* pictures to another folder (not web accessible)
 - [X] Advanced option : not preserve *unsmushed* pictures
 - [X] Fix individual Optimize Button
-- [ ] Provide a "restore" option if plugin is deactivated
+- [X] Provide a "restore" option if plugin is deactivated
 - [ ] Provide option to optimize only some image size
 - [ ] Provide a S3 support
 - [ ] Provide an Azure Storage support

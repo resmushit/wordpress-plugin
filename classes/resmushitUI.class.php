@@ -265,6 +265,29 @@ Class reSmushitUI {
 	}
 
 
+/**
+	 *
+	 * Generate Statistics panel
+	 *
+	 * @param  none
+	 * @return none
+	 */
+	public static function restorePanel() {
+		if(get_option('resmushit_remove_unsmushed') == 1 ){
+			return FALSE;
+		}
+		self::fullWidthPanelWrapper(__('Restore Media Library', 'resmushit-image-optimizer'), null, 'black');
+
+		echo "<div class='rsmt-restore'>";
+
+		echo 
+			'<p><strong>'
+			. __('Warning! By clicking the button below, you will restore all the original pictures, as before reSmush.it Image Optimizer installation. You will not have your pictures optimized! We strongly advice to be sure to have a complete backup of your website before performing this action', 'resmushit-image-optimizer')
+			. '</strong></p><p>'
+			. '<input type="button" value="'. __('Restore ALL my original pictures', 'resmushit-image-optimizer') .'" class="rsmt-trigger--restore-backup-files button media-button  select-mode-toggle-button" name="resmushit" class="button wp-smush-send" />';
+		echo "</div>";
+		self::fullWidthPanelEndWrapper(); 		
+	}
 
 	/**
 	 *

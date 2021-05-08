@@ -131,6 +131,7 @@ function resmushit_settings_page() {
 			<?php reSmushitUI::bulkPanel();?>
 			<?php reSmushitUI::bigFilesPanel();?>
 			<?php reSmushitUI::statisticsPanel();?>
+			<?php reSmushitUI::restorePanel();?>
 		</div>
 		<div class="rsmt-cols w33 iln-block">
 			<?php reSmushitUI::settingsPanel();?>

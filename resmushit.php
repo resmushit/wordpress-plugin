@@ -10,8 +10,8 @@
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://wordpress.org/plugins/resmushit-image-optimizer/
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.3.12
- * Timestamp:         2021.05.02
+ * Version:           0.4.0
+ * Timestamp:         2021.05.08
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
  * Author:            Charles Bourgeaux
@@ -445,3 +445,48 @@ function resmushit_remove_backup_files() {
 	die();
 }	
 add_action( 'wp_ajax_resmushit_remove_backup_files', 'resmushit_remove_backup_files' );	
+
+
+/**
+* 
+* retrieve Attachment ID from Path
+* from : https://pippinsplugins.com/retrieve-attachment-id-from-image-url/
+*
+* @param imageURL
+* @return json object
+*/
+function resmushit_get_image_id($image_url) {
+	global $wpdb;
+	$attachment = $wpdb->get_col($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE guid='%s';", $image_url )); 
+        return $attachment[0]; 
+}
+
+/**
+* 
+* add Ajax action to restore backups (-unsmushed) from the filesystem
+*
+* @param none
+* @return json object
+*/
+function resmushit_restore_backup_files() {
+	$files=detect_unsmushed_files();
+	$return = array('success' => 0);
+	$wp_upload_dir=wp_upload_dir();
+
+	foreach($files as $f) {
+		$dest = str_replace('-unsmushed', '', $f);
+		$pictureURL = str_replace($wp_upload_dir['basedir'], $wp_upload_dir['baseurl'], $dest);
+		$attachementID = resmushit_get_image_id($pictureURL);
+
+		if(reSmushit::revert($attachementID, true)) {
+			if(unlink($f)) {
+				$return['success']++;
+			}
+		}
+	}
+	echo json_encode($return);
+	//update_option( 'resmushit_has_no_backup_files', 1);
+
+	die();
+}	
+add_action( 'wp_ajax_resmushit_restore_backup_files', 'resmushit_restore_backup_files' );	
