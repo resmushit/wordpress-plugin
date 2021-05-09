@@ -67,8 +67,6 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 * **Charles Bourgeaux** - *Initial work* - [reSmush.it](https://resmush.it)
 
-This plugin has initially been developped by [Maecia Agency](https://www.maecia.com/ "Maecia Drupal & Wordpress Agency"), Paris.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
