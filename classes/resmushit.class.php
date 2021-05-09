@@ -437,7 +437,6 @@ Class reSmushit {
 		if( self::getDisabledState( $attachment_id ))
 			return 'disabled';
 		if (!file_exists(get_attached_file( $attachment_id ))) {
-
 			rlog("Error! File " . get_attached_file( $attachment_id ) . " not found on disk.", 'WARNING');
 			return 'file_not_found';
 		}

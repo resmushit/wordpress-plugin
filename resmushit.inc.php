@@ -3,6 +3,9 @@
 require('resmushit.settings.php');
 require('classes/resmushit.class.php');
 require('classes/resmushitUI.class.php');
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+	require('classes/resmushitWPCLI.class.php');
+}
 require('resmushit.admin.php');
 
 

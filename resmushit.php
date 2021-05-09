@@ -10,8 +10,8 @@
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://wordpress.org/plugins/resmushit-image-optimizer/
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.4.0
- * Timestamp:         2021.05.08
+ * Version:           0.4.1
+ * Timestamp:         2021.05.09
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
  * Author:            Charles Bourgeaux
@@ -142,7 +142,7 @@ function resmushit_process_images($attachments, $force_keep_original = TRUE) {
 	return $attachments;
 }
 //Automatically optimize images if option is checked
-if(get_option('resmushit_on_upload') OR ( isset($_POST['action']) AND ($_POST['action'] === "resmushit_bulk_process_image" OR $_POST['action'] === "resmushit_optimize_single_attachment" )))
+if(get_option('resmushit_on_upload') OR ( isset($_POST['action']) AND ($_POST['action'] === "resmushit_bulk_process_image" OR $_POST['action'] === "resmushit_optimize_single_attachment" )) OR (defined( 'WP_CLI' ) && WP_CLI ) OR ($is_cron) )
 	add_filter('wp_generate_attachment_metadata', 'resmushit_process_images');   
  
 
@@ -490,3 +490,14 @@ function resmushit_restore_backup_files() {
 	die();
 }	
 add_action( 'wp_ajax_resmushit_restore_backup_files', 'resmushit_restore_backup_files' );	
+
+
+
+/**
+* 
+* Declares WPCLI extension if in WP_CLI context
+*
+*/
+if( defined( 'WP_CLI' ) && WP_CLI ) {
+	WP_CLI::add_command( 'resmushit', 'reSmushitWPCLI' );
+}

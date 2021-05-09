@@ -57,7 +57,7 @@ Currently, reSmush.it Plugin doesn't use CRON to execute, you must remain on the
 - [ ] fix Optimize button KO : https://wordpress.org/support/topic/new-page-media-optimized-button-doesnt-work/#post-13607661
 - [ ] SQL bug? : https://wordpress.org/support/topic/bug-311/
 - [ ] Remove SQL entries and revert pictures if uninstalling the plugin
-- [ ] Create a WP-CLI plugin
+- [X] Create a WP-CLI plugin
  
 ## Versioning
 
