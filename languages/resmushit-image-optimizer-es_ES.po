@@ -1,0 +1,335 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reSmush.it Image Optimizer\n"
+"POT-Creation-Date: 2019-12-22 08:03+0100\n"
+"PO-Revision-Date: 2022-06-11 16:23+0200\n"
+"Last-Translator: \n"
+"Language-Team: https://resmush.it\n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: resmushit.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: classes/resmushitUI.class.php:90 resmushit.php:269
+msgid "Settings"
+msgstr "Ajustes"
+
+#: classes/resmushitUI.class.php:91
+msgid "New!"
+msgstr "¡Nuevo!"
+
+#: classes/resmushitUI.class.php:98
+msgid "Image quality"
+msgstr "Calidad de imagen"
+
+#: classes/resmushitUI.class.php:98
+msgid ""
+"Default value is 92. The quality factor must be between 0 (very weak) and "
+"100 (best quality)"
+msgstr ""
+"El valor por defecto es 92. El valor del factor de calidad debe estar entre "
+"0 (muy baja) y 100 (mejor calidad)"
+
+#: classes/resmushitUI.class.php:99
+msgid "Optimize on upload"
+msgstr "Optimizar al subir"
+
+#: classes/resmushitUI.class.php:99
+msgid "All future images uploaded will be automatically optimized"
+msgstr "Todas las futuras imágenes cargadas se optimizarán automáticamente"
+
+#: classes/resmushitUI.class.php:100
+msgid "Enable statistics"
+msgstr "Activar las estadísticas"
+
+#: classes/resmushitUI.class.php:100
+msgid "Generates statistics about optimized pictures"
+msgstr "Genera estadísticas sobre las imágenes optimizadas"
+
+#: classes/resmushitUI.class.php:101
+msgid "Enable logs"
+msgstr "Activar los registros"
+
+#: classes/resmushitUI.class.php:101
+msgid "Enable file logging (for developers)"
+msgstr "Activar el registro de archivos (para desarrolladores)"
+
+#: classes/resmushitUI.class.php:102
+msgid "Process optimize on CRON"
+msgstr "Optimización del proceso en CRON"
+
+#: classes/resmushitUI.class.php:102
+msgid "Will perform image optimization process through CRON tasks"
+msgstr ""
+"Realizará el proceso de optimización de la imagen a través de tareas CRON"
+
+#: classes/resmushitUI.class.php:121
+msgid "Optimize unsmushed pictures"
+msgstr "Optimizar las imágenes no retocadas"
+
+#: classes/resmushitUI.class.php:136
+msgid "non optimized pictures will be automatically optimized"
+msgstr "las imágenes no optimizadas se optimizarán automáticamente"
+
+#: classes/resmushitUI.class.php:138
+msgid ""
+"These pictures will be automatically optimized using schedule tasks "
+"(cronjobs)."
+msgstr ""
+"Estas imágenes se optimizarán automáticamente mediante tareas programadas "
+"(cronjobs)."
+
+#: classes/resmushitUI.class.php:140
+msgid ""
+"Image optimization process can be launched <b>manually</b> by clicking on "
+"the button below :"
+msgstr ""
+"El proceso de optimización de imágenes puede iniciarse <b>manualmente</b> "
+"haciendo clic en el botón de abajo :"
+
+#: classes/resmushitUI.class.php:142
+msgid "There is currently"
+msgstr "Actualmente hay"
+
+#: classes/resmushitUI.class.php:144
+msgid "non optimized pictures"
+msgstr "imágenes no optimizadas"
+
+#: classes/resmushitUI.class.php:146
+msgid ""
+"This action will resmush all pictures which have not been optimized to the "
+"good Image Quality Rate."
+msgstr ""
+"Esta acción reajustará todas las imágenes que no hayan sido optimizadas a la "
+"buena tasa de calidad de imagen."
+
+#: classes/resmushitUI.class.php:152
+msgid "Optimize all pictures manually"
+msgstr "Optimizar todas las imágenes manualmente"
+
+#: classes/resmushitUI.class.php:154
+msgid "Optimize all pictures"
+msgstr "Optimizar todas las imágenes"
+
+#: classes/resmushitUI.class.php:159
+msgid "Congrats ! All your pictures are correctly optimized"
+msgstr "¡Felicidades! Todas tus fotos están correctamente optimizadas"
+
+#: classes/resmushitUI.class.php:179
+msgid "Files non optimized"
+msgstr "Archivos no optimizados"
+
+#: classes/resmushitUI.class.php:190
+msgid "pictures are too big (> 5MB) for the optimizer"
+msgstr "las imágenes son demasiado grandes (> 5MB) para el optimizador"
+
+#: classes/resmushitUI.class.php:192
+msgid "picture is too big (> 5MB) for the optimizer"
+msgstr "la imagen es demasiado grande (> 5MB) para el optimizador"
+
+#: classes/resmushitUI.class.php:195
+msgid "List of files above 5MB"
+msgstr "Lista de archivos de más de 5MB"
+
+#: classes/resmushitUI.class.php:227
+msgid "Statistics"
+msgstr "Estadísticas"
+
+#: classes/resmushitUI.class.php:234
+msgid "Space saved :"
+msgstr "Espacio ahorrado :"
+
+#: classes/resmushitUI.class.php:238
+msgid "Total reduction :"
+msgstr "Reducción total :"
+
+#: classes/resmushitUI.class.php:242
+msgid "Attachments optimized :"
+msgstr "Adjuntos optimizados :"
+
+#: classes/resmushitUI.class.php:248
+msgid "Image optimized (including thumbnails) :"
+msgstr "Imagen optimizada (incluidas las miniaturas) :"
+
+#: classes/resmushitUI.class.php:254
+msgid "Total images optimized :"
+msgstr "Total de imágenes optimizadas :"
+
+#: classes/resmushitUI.class.php:259
+msgid ""
+"No picture has been optimized yet ! Add pictures to your Wordpress Media "
+"Library."
+msgstr ""
+"Todavía no se ha optimizado ninguna imagen. Añade imágenes a tu biblioteca "
+"multimedia de WordPress."
+
+#: classes/resmushitUI.class.php:279
+msgid "News"
+msgstr "Novedades"
+
+#: classes/resmushitUI.class.php:316
+msgid "Maecia Agency - Paris France"
+msgstr "Maecia Agency - París, Francia"
+
+#: classes/resmushitUI.class.php:321
+msgid "Visit resmush.it for more informations"
+msgstr "Visite resmush.it para más información"
+
+#: classes/resmushitUI.class.php:326
+msgid "Follow reSmush.it on Twitter"
+msgstr "Follow reSmush.it on Twitter"
+
+#: classes/resmushitUI.class.php:347
+msgid "Important informations"
+msgstr "Información importante"
+
+#: classes/resmushitUI.class.php:352
+msgid "Cronjobs seems incorrectly configured"
+msgstr "Cronjobs parece estar mal configurado"
+
+#: classes/resmushitUI.class.php:357
+msgid ""
+"Cronjobs are not correctly configured. The variable <em>DISABLE_WP_CRON</em> "
+"must be set to <em>TRUE</em> in <em>wp-config.php</em>. Please install them "
+"by reading the following <a href=\"https://resmush.it/wordpress/howto-"
+"configure-cronjobs\" target=\"_blank\">instruction page</a>."
+msgstr ""
+"Los Cronjobs no están correctamente configurados. La variable "
+"<em>DISABLE_WP_CRON</em> debe estar ajustada a <em>TRUE</em> en <em>wp-"
+"config.php</em>. Por favor, instálelos leyendo la siguiente <a href="
+"\"https://resmush.it/wordpress/howto-configure-cronjobs\" target=\"_blank"
+"\">página de instrucciones</a>."
+
+#: classes/resmushitUI.class.php:359
+msgid ""
+"We advice to disable Remush.it option \"Process optimize on CRON\" as long "
+"as Cron jobs are incorrectly set up."
+msgstr ""
+"Aconsejamos desactivar la opción de Remush.it “Optimizar el proceso en CRON” "
+"mientras los trabajos Cron estén mal configurados."
+
+#: classes/resmushitUI.class.php:363
+msgid ""
+"Cronjobs seems to have never been launched. Please install them by reading "
+"the following <a href=\"https://resmush.it/wordpress/howto-configure-cronjobs"
+"\" target=\"_blank\">instruction page</a>."
+msgstr ""
+"Parece que Cronjobs nunca se ha puesto en marcha. Por favor, instálelos "
+"leyendo la siguiente <a href=\"https://resmush.it/wordpress/howto-configure-"
+"cronjobs\" target=\"_blank\">página de instrucciones</a>."
+
+#: classes/resmushitUI.class.php:367
+msgid ""
+"Cronjobs seems not to have run lately. Please read the following <a href="
+"\"https://resmush.it/wordpress/howto-configure-cronjobs\" target=\"_blank"
+"\">instruction page</a> to install them correctly."
+msgstr ""
+"Parece que los Cronjobs no funcionan últimamente. Por favor, lea la "
+"siguiente <a href=\"https://resmush.it/wordpress/howto-configure-cronjobs\" "
+"target=\"_blank\">página de instrucciones</a> para instalarlos correctamente."
+
+#: classes/resmushitUI.class.php:368
+msgid "Expected Frequency :"
+msgstr "Frecuencia esperada :"
+
+#: classes/resmushitUI.class.php:368 resmushit.php:299
+msgid "Every"
+msgstr "Cada"
+
+#: classes/resmushitUI.class.php:369
+msgid "Last run :"
+msgstr "Última ejecución :"
+
+#: classes/resmushitUI.class.php:369
+msgid "ago"
+msgstr "hace"
+
+#: classes/resmushitUI.class.php:454
+msgid "Optimize"
+msgstr "Optimizar"
+
+#: classes/resmushitUI.class.php:457
+msgid "Reduced by"
+msgstr "Reducido por"
+
+#: classes/resmushitUI.class.php:457
+msgid "saved"
+msgstr "guardado"
+
+#: classes/resmushitUI.class.php:458
+msgid "Force re-optimize"
+msgstr "Forzar la reoptimización"
+
+#: resmushit.admin.php:43 resmushit.admin.php:98
+msgid "Disable of reSmush.it"
+msgstr "Deshabilitar de reSmush.it"
+
+#: resmushit.admin.php:44 resmushit.admin.php:105
+msgid "reSmush.it status"
+msgstr "Estado de reSmush.it"
+
+#: resmushit.inc.php:119
+msgid "year"
+msgstr "año"
+
+#: resmushit.inc.php:120
+msgid "month"
+msgstr "mes"
+
+#: resmushit.inc.php:121
+msgid "week"
+msgstr "semana"
+
+#: resmushit.inc.php:122
+msgid "day"
+msgstr "dia"
+
+#: resmushit.inc.php:123
+msgid "hour"
+msgstr "hora"
+
+#: resmushit.inc.php:124
+msgid "minute"
+msgstr "minuto"
+
+#: resmushit.inc.php:125
+msgid "second"
+msgstr "segundo"
+
+#: resmushit.inc.php:136
+msgid "just now"
+msgstr "ahora mismo"
+
+#: resmushit.php:299
+msgid " "
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "reSmush.it Image Optimizer"
+msgstr "reSmush.it optimizador de imágenes"
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "https://resmush.it"
+msgstr "https://resmush.it"
+
+#. Description of the plugin/theme
+msgid "Image Optimization API. Provides image size optimization"
+msgstr ""
+"API de optimización de imágenes. Proporciona la optimización del tamaño de "
+"la imagen"
+
+#. Author of the plugin/theme
+msgid "reSmush.it"
+msgstr "reSmush.it"
