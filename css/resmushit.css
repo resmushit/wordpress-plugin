@@ -237,6 +237,10 @@
   .rsmt-news h3 a{
     text-decoration: none;
   }
+  .rsmt-news .social .datainformation{
+    color: #ccc;
+    font-style: italic;
+  }
   .rsmt-news .social{
     text-align: right;
   }

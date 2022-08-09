@@ -175,10 +175,6 @@ msgstr ""
 msgid "News"
 msgstr "Actualités"
 
-#: classes/resmushitUI.class.php:316
-msgid "Maecia Agency - Paris France"
-msgstr "Agence Maecia - Paris, France"
-
 #: classes/resmushitUI.class.php:321
 msgid "Visit resmush.it for more informations"
 msgstr "Visitez resmush.it pour plus d'informations"
@@ -329,9 +325,3 @@ msgstr "Image Optimization API. Optimisation de la taille des images"
 #. Author of the plugin/theme
 msgid "reSmush.it"
 msgstr "reSmush.it"
-
-#~ msgid "Maecia"
-#~ msgstr "Maecia"
-
-#~ msgid "https://www.maecia.com"
-#~ msgstr "https://www.maecia.com"

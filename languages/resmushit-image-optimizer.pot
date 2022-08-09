@@ -167,10 +167,6 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-#: classes/resmushitUI.class.php:316
-msgid "Maecia Agency - Paris France"
-msgstr ""
-
 #: classes/resmushitUI.class.php:321
 msgid "Visit resmush.it for more informations"
 msgstr ""

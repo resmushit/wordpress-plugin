@@ -337,11 +337,9 @@ Class reSmushitUI {
 		}
 
 		echo "<div class='social'>"
-				. "<a class='social-maecia' title='"
-				. __('Maecia Agency - Paris France', 'resmushit-image-optimizer')
-				. "' href='https://www.maecia.com' target='_blank'>"
-				. "<img src='"
-				. RESMUSHIT_BASE_URL . "images/maecia.png' /></a>"
+				. "<p class='datainformation'>"
+				. __('No user data nor any information is collected while requesting this news feed.', 'resmushit-image-optimizer')
+				. "<p>"
 				. "<a class='social-resmushit' title='"
 				. __('Visit resmush.it for more informations', 'resmushit-image-optimizer')
 				. "' href='https://resmush.it' target='_blank'>"

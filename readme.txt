@@ -2,8 +2,8 @@
 Contributors: resmushit
 Tags: image, optimizer, image optimization, resmush.it, smush, jpg, png, gif, optimization, compression, Compress, Images, Pictures, Reduce Image Size, Smush, Smush.it
 Requires at least: 4.0.0
-Tested up to: 5.8.2
-Stable tag: 0.4.2
+Tested up to: 6.0.1
+Stable tag: 0.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,7 +34,7 @@ Since Aug. 2016, reSmush.it allows to optimize pictures up to 5MB, for free !
 
 = How great is reSmush.it ? =
 
-Since we've optimized more than 8,000,000,000 pictures, we've risen new skills. Our service is still in development to bring you new crazy functionalities.
+Since we've optimized more than 15,000,000,000 pictures, we've risen new skills. Our service is still in development to bring you new crazy functionalities.
 
 = What about WebP and next generation image formats ? =
 
@@ -73,6 +73,13 @@ Yes ! Absolutely free, the only restriction is to send images below 5MB.
 1. The simple interface
 
 == Changelog ==
+
+= 0.4.3 =
+* Compatibility with WP 6.0.1
+* Security fix issues (https://www.pluginvulnerabilities.com/2022/02/01/wordpress-plugin-security-review-resmush-it-image-optimizer/)
+	* force int to ID in some SQL requests
+	* check that user is connected as admin/contributor for AJAX actions
+	* Message to indicate that there's no collection of data in contacting remote feed service
 
 = 0.4.2 =
 * Compatibility with PHP8+WP 5.8.2
