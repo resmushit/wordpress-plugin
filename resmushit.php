@@ -10,8 +10,8 @@
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://wordpress.org/plugins/resmushit-image-optimizer/
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.4.3
- * Timestamp:         2022.08.09
+ * Version:           0.4.4
+ * Timestamp:         2022.08.10
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
  * Author:            Charles Bourgeaux
@@ -193,7 +193,10 @@ if(get_option('resmushit_on_upload'))
 * @return json object
 */
 function resmushit_bulk_get_images() {
-
+	if(!is_super_admin() && !current_user_can('administrator')) {
+		return(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
+		die();
+	}
 	echo reSmushit::getNonOptimizedPictures();
 	die();
 }	
@@ -210,8 +213,8 @@ add_action( 'wp_ajax_resmushit_bulk_get_images', 'resmushit_bulk_get_images' );
 * @return json object
 */
 function resmushit_update_disabled_state() {
-	if( !is_admin() ){
-		return(json_encode(array('error' => 'User must be at least contributor to retrieve these data')));
+	if(!is_super_admin() && !current_user_can('administrator')) {
+		return(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
 		die();
 	}
 	if(isset($_POST['data']['id']) && $_POST['data']['id'] != null && isset($_POST['data']['disabled'])){
@@ -233,13 +236,13 @@ add_action( 'wp_ajax_resmushit_update_disabled_state', 'resmushit_update_disable
 * @return json object
 */
 function resmushit_optimize_single_attachment() {
-	if( !is_admin() ){
-		return(json_encode(array('error' => 'User must be at least contributor to retrieve these data')));
+	if(!is_super_admin() && !current_user_can('administrator')) {
+		return(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
 		die();
 	}
 	if(isset($_POST['data']['id']) && $_POST['data']['id'] != null){
 		reSmushit::revert(sanitize_text_field((int)$_POST['data']['id']));
-		echo json_encode(reSmushit::getStatistics((int)$_POST['data']['id']));
+		echo json_encode(reSmushit::getStatistics(sanitize_text_field((int)$_POST['data']['id'])));
 	}	
 	die();
 }	
@@ -257,8 +260,8 @@ add_action( 'wp_ajax_resmushit_optimize_single_attachment', 'resmushit_optimize_
 * @return boolean
 */	
 function resmushit_bulk_process_image() {
-	if( !is_admin() ){
-		return(json_encode(array('error' => 'User must be at least contributor to retrieve these data')));
+	if(!is_super_admin() && !current_user_can('administrator')) {
+		return(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
 		die();
 	}
 	rlog('Bulk optimization launched for file : ' . get_attached_file( sanitize_text_field((int)$_POST['data']['ID']) ));
@@ -279,8 +282,8 @@ add_action( 'wp_ajax_resmushit_bulk_process_image', 'resmushit_bulk_process_imag
 * @return json object
 */
 function resmushit_update_statistics() {
-	if( !is_admin() ){
-		return(json_encode(array('error' => 'User must be at least contributor to retrieve these data')));
+	if(!is_super_admin() && !current_user_can('administrator')) {
+		return(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
 		die();
 	}
 	$output = reSmushit::getStatistics();
@@ -449,7 +452,7 @@ add_action('update_option_resmushit_remove_unsmushed', 'resmushit_on_remove_unsm
 */
 function resmushit_remove_backup_files() {
 	$return = array('success' => 0);
-	if( !is_admin() ){
+	if(!is_super_admin() && !current_user_can('administrator')) {
 		return(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
 		die();
 	}
@@ -491,7 +494,7 @@ function resmushit_get_image_id($image_url) {
 * @return json object
 */
 function resmushit_restore_backup_files() {
-	if( !is_admin() ){
+	if(!is_super_admin() && !current_user_can('administrator')) {
 		return(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
 		die();
 	}

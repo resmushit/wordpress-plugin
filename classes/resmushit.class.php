@@ -65,6 +65,8 @@ Class reSmushit {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, RESMUSHIT_TIMEOUT);
 		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($ch, CURLOPT_USERAGENT, "Wordpress $wp_version/Resmush.it " . RESMUSHIT_VERSION . ' - ' . get_bloginfo('wpurl') );
 
 		if (!class_exists('CURLFile')) {
@@ -89,11 +91,14 @@ Class reSmushit {
 		if($json){
 			if (!isset($json->error)) {
 				if (ini_get('allow_url_fopen')) {
-					$data = file_get_contents($json->dest);
+					$arrContextOptions= array("ssl" => array("verify_peer" => false,"verify_peer_name" => false));
+					$data = file_get_contents( $json->dest, false, stream_context_create($arrContextOptions) );
 				} else {
 					$ch = curl_init();
 					curl_setopt($ch, CURLOPT_URL, $json->dest);
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 					$data = curl_exec($ch);
 					curl_close($ch);
 				}
