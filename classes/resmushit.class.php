@@ -59,7 +59,10 @@ Class reSmushit {
 			rlog('Error! Picture ' . str_replace(ABSPATH, '/', $file_path) . ' cannot be optimized, file size is above 5MB ('. reSmushitUI::sizeFormat(filesize($file_path)) .')', 'WARNING');
 			return false;
 		}
-
+		if(! in_array('curl', get_loaded_extensions())){
+			return false;
+		}
+		
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, RESMUSHIT_ENDPOINT);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

@@ -30,7 +30,7 @@ function rlog($str, $level = 'SUCCESS') {
 			case 'SUCCESS':
 				$prefix = "[\033[32m+\033[0m]"; break;
 		}
-		echo "$prefix $str\n";
+		echo esc_html("$prefix $str\n");
 	}
 
 	if(get_option('resmushit_logs') == 0)

@@ -21,7 +21,7 @@ Class reSmushitUI {
 	 */
 	public static function fullWidthPanel($title = null, $html = null, $border = null) {
 		self::fullWidthPanelWrapper($title, $html, $border);
-		echo $html;
+		echo wp_kses_post($html);
 		self::fullWidthPanelEndWrapper();
 	}
 
@@ -43,7 +43,7 @@ Class reSmushitUI {
 		if($border) {
 			$borderClass = 'brdr-'.$border;
 		}
-		echo "<div class='rsmt-panel w100 $borderClass'><h2>$title</h2>";
+		echo wp_kses_post("<div class='rsmt-panel w100 $borderClass'><h2>$title</h2>");
 	}
 
 
@@ -57,7 +57,7 @@ Class reSmushitUI {
 	 * @return none
 	 */
 	public static function fullWidthPanelEndWrapper() {
-		echo "</div>";
+		echo wp_kses_post("</div>");
 	}
 
 
@@ -87,14 +87,45 @@ Class reSmushitUI {
 	 * @return none
 	 */
 	public static function settingsPanel() {
+		$allowed_html = array(
+			'input' => array(
+				'type'      => array(),
+				'name'      => array(),
+				'value'     => array(),
+				'checked'   => array(),
+				'class'   => array(),
+				'id'   => array()
+			),
+			'form' => array(
+				'method'      => array(),
+				'action'      => array(),
+				'id'     => array()
+			),
+			'div' => array(
+			  'class'      => array(),
+			),
+			'span' => array(
+			  'class'      => array(),
+			),
+			'table' => array(
+			  'class'      => array(),
+			),
+			'label' => array(
+			  'class'      => array(),
+			),
+			'p' => array()
+		);
+
 		self::fullWidthPanelWrapper(__('Settings', 'resmushit-image-optimizer'), null, 'orange');
 		$new_label = "<span class='new'>" . __("New!", 'resmushit-image-optimizer') . "</span>";
-		echo '<div class="rsmt-settings">
-			<form method="post" action="options.php" id="rsmt-options-form">';
+		echo wp_kses('<div class="rsmt-settings">
+			<form method="post" action="options.php" id="rsmt-options-form">', $allowed_html);
 		settings_fields( 'resmushit-settings' );
 		do_settings_sections( 'resmushit-settings' );
 		
-		echo '<table class="form-table">' 
+
+		
+		echo wp_kses('<table class="form-table">' 
 				. self::addSetting("text", __("Image quality", 'resmushit-image-optimizer'), __("Default value is 92. The quality factor must be between 0 (very weak) and 100 (best quality)", 'resmushit-image-optimizer'), "resmushit_qlty")
 				. self::addSetting("checkbox", __("Optimize on upload", 'resmushit-image-optimizer'), __("All future images uploaded will be automatically optimized", 'resmushit-image-optimizer'), "resmushit_on_upload")
 				. self::addSetting("checkbox", __("Enable statistics", 'resmushit-image-optimizer'), __("Generates statistics about optimized pictures", 'resmushit-image-optimizer'), "resmushit_statistics")
@@ -102,9 +133,9 @@ Class reSmushitUI {
 				. self::addSetting("checkbox", $new_label . __("Process optimize on CRON", 'resmushit-image-optimizer'), __("Will perform image optimization process through CRON tasks", 'resmushit-image-optimizer'), "resmushit_cron")
 				. self::addSetting("checkbox", $new_label . __("Preserve EXIF", 'resmushit-image-optimizer'), __("Will preserve EXIF data during optimization", 'resmushit-image-optimizer'), "resmushit_preserve_exif")
 				. self::addSetting("checkbox", $new_label . __("Do not preserve backups", 'resmushit-image-optimizer'), sprintf(__("Will not preserve a backup of the original file (save space). <a href='%s' title='Should I remove backups?' target='_blank'>Read instructions</a> carefully before enabling.", 'resmushit-image-optimizer'), 'https://resmush.it/wordpress/why-keeping-backup-files'), "resmushit_remove_unsmushed")
-				. '</table>';
+				. '</table>', $allowed_html);
 		submit_button();
-		echo '</form></div>';
+		echo wp_kses('</form></div>', $allowed_html);
 		self::fullWidthPanelEndWrapper(); 		
 	}
 
@@ -131,35 +162,41 @@ Class reSmushitUI {
 			$countNonOptimizedPictures .= '+';
 		}
 
-		echo "<div class='rsmt-bulk'><div class='non-optimized-wrapper $additionnalClassNeedOptimization'><h3 class='icon_message warning'>";
+		echo wp_kses_post("<div class='rsmt-bulk'><div class='non-optimized-wrapper $additionnalClassNeedOptimization'><h3 class='icon_message warning'>");
 
 		if(get_option('resmushit_cron') && get_option('resmushit_cron') == 1) {
-			echo  "<em>$countNonOptimizedPictures "
+			echo  wp_kses_post("<em>$countNonOptimizedPictures "
 			. __('non optimized pictures will be automatically optimized', 'resmushit-image-optimizer')
 			. "</em>.</h3><p>"
 			. __('These pictures will be automatically optimized using schedule tasks (cronjobs).', 'resmushit-image-optimizer')
 			. " "
-			. __('Image optimization process can be launched <b>manually</b> by clicking on the button below :', 'resmushit-image-optimizer');
+			. __('Image optimization process can be launched <b>manually</b> by clicking on the button below :', 'resmushit-image-optimizer'));
 		} else {
-			echo  __('There is currently', 'resmushit-image-optimizer')
+			echo  wp_kses_post(__('There is currently', 'resmushit-image-optimizer')
 			. " <em>$countNonOptimizedPictures "
 			. __('non optimized pictures', 'resmushit-image-optimizer')
 			. "</em>.</h3><p>"
-			. __('This action will resmush all pictures which have not been optimized to the good Image Quality Rate.', 'resmushit-image-optimizer');
+			. __('This action will resmush all pictures which have not been optimized to the good Image Quality Rate.', 'resmushit-image-optimizer'));
 		}
 
-		echo "</p><p class='submit' id='bulk-resize-examine-button'><button class='button-primary' onclick='resmushit_bulk_resize(\"bulk_resize_image_list\");'>";
+		$allowed_html = array_merge(wp_kses_allowed_html( 'post' ), array(
+			'button' => array(
+				'class'      => array(),
+				'onclick'      => array()
+			)));
+
+		echo wp_kses("</p><p class='submit' id='bulk-resize-examine-button'><button class='button-primary' onclick='resmushit_bulk_resize(\"bulk_resize_image_list\");'>", $allowed_html);
 		
 		if(get_option('resmushit_cron') && get_option('resmushit_cron') == 1) {
-			echo __('Optimize all pictures manually', 'resmushit-image-optimizer');
+			echo wp_kses_post(__('Optimize all pictures manually', 'resmushit-image-optimizer'));
 		} else {
-			echo __('Optimize all pictures', 'resmushit-image-optimizer');
+			echo wp_kses_post(__('Optimize all pictures', 'resmushit-image-optimizer'));
 		}
 
-		echo "</button></p><div id='bulk_resize_image_list'></div></div>"
+		echo wp_kses_post("</button></p><div id='bulk_resize_image_list'></div></div>"
 		. "<div class='optimized-wrapper $additionnalClassNoNeedOptimization'><h3 class='icon_message ok'>"
 		. __('Congrats ! All your pictures are correctly optimized', 'resmushit-image-optimizer')
-		. "</h3></div></div>";
+		. "</h3></div></div>");
 		self::fullWidthPanelEndWrapper(); 		
 	}
 
@@ -185,30 +222,30 @@ Class reSmushitUI {
 			$additionnalClass = 'disabled';
 		}
 
-		echo "<div class='rsmt-bigfiles'><div class='optimized-wrapper $additionnalClass'>
-					<h3 class='icon_message info'>";
+		echo wp_kses_post("<div class='rsmt-bigfiles'><div class='optimized-wrapper $additionnalClass'>
+					<h3 class='icon_message info'>");
 
 		if($countfilesTooBigPictures > 1) {
-			echo htmlspecialchars($countfilesTooBigPictures, ENT_QUOTES, 'UTF-8') . ' ' . __('pictures are too big (> 5MB) for the optimizer', 'resmushit-image-optimizer');
+			echo esc_html($countfilesTooBigPictures . ' ' . __('pictures are too big (> 5MB) for the optimizer', 'resmushit-image-optimizer'));
 		} else {
-			echo htmlspecialchars($countfilesTooBigPictures, ENT_QUOTES, 'UTF-8') . ' ' . __('picture is too big (> 5MB) for the optimizer', 'resmushit-image-optimizer');
+			echo esc_html($countfilesTooBigPictures . ' ' . __('picture is too big (> 5MB) for the optimizer', 'resmushit-image-optimizer'));
 		}
-		echo "</h3><div class='list-accordion'><h4>"
+		echo wp_kses_post("</h3><div class='list-accordion'><h4>"
 				. __('List of files above 5MB', 'resmushit-image-optimizer')
-				. "</h4><ul>";
+				. "</h4><ul>");
 
 		foreach($getNonOptimizedPictures->filestoobig as $file){
 			$fileInfo = pathinfo(get_attached_file( $file->ID )); 
 			$filesize = reSmushitUI::sizeFormat(filesize(get_attached_file( $file->ID ))); 
 
-			echo "<li><a href='"
-					. htmlspecialchars(wp_get_attachment_url( $file->ID ), ENT_QUOTES, 'UTF-8')
+			echo wp_kses_post("<li><a href='"
+					. esc_url(wp_get_attachment_url( $file->ID ))
 					. "' target='_blank'>"
 					. wp_get_attachment_image($file->ID, 'thumbnail')
 					. "<span>"
-					. htmlspecialchars($fileInfo['basename'], ENT_QUOTES, 'UTF-8') . ' (' . $filesize . ').</span></a></li>';
+					. $fileInfo['basename'] . ' (' . $filesize . ').</span></a></li>');
 		}
-		echo '</ul></div></div></div>';
+		echo wp_kses_post('</ul></div></div></div>');
 		
 		self::fullWidthPanelEndWrapper(); 		
 	}
@@ -229,10 +266,10 @@ Class reSmushitUI {
 		self::fullWidthPanelWrapper(__('Statistics', 'resmushit-image-optimizer'), null, 'green');
 		$resmushit_stat = reSmushit::getStatistics();
 
-		echo "<div class='rsmt-statistics'>";
+		echo wp_kses_post("<div class='rsmt-statistics'>");
 
 		if($resmushit_stat['files_optimized'] != 0) {
-			echo "<p><strong>"
+			echo wp_kses_post("<p><strong>"
 					. __('Space saved :', 'resmushit-image-optimizer')
 					. "</strong> <span id='rsmt-statistics-space-saved'>"
 					. self::sizeFormat($resmushit_stat['total_saved_size'])
@@ -256,11 +293,11 @@ Class reSmushitUI {
 					. __('Total images optimized :', 'resmushit-image-optimizer')
 					. "</strong> <span id='rsmt-statistics-total-optimizations'>"
 					. $resmushit_stat['total_optimizations'] 
-					. "</span></p>";
+					. "</span></p>");
 			} else {
-				echo "<p>" . __('No picture has been optimized yet ! Add pictures to your Wordpress Media Library.', 'resmushit-image-optimizer') . "</p>";
+				echo wp_kses_post("<p>" . __('No picture has been optimized yet ! Add pictures to your Wordpress Media Library.', 'resmushit-image-optimizer') . "</p>");
 			}
-		echo "</div>";
+		echo wp_kses_post("</div>");
 		self::fullWidthPanelEndWrapper(); 		
 	}
 
@@ -277,15 +314,20 @@ Class reSmushitUI {
 			return FALSE;
 		}
 		self::fullWidthPanelWrapper(__('Restore Media Library', 'resmushit-image-optimizer'), null, 'black');
+		$allowed_html = array_merge(wp_kses_allowed_html( 'post' ), array(
+		'input' => array(
+			'type'      => array(),
+			'value'      => array(),
+			'class'      => array(),
+			'name'      => array()
+		)));
 
-		echo "<div class='rsmt-restore'>";
-
-		echo 
-			'<p><strong>'
+		echo wp_kses("<div class='rsmt-restore'>"
+			. '<p><strong>'
 			. __('Warning! By clicking the button below, you will restore all the original pictures, as before reSmush.it Image Optimizer installation. You will not have your pictures optimized! We strongly advice to be sure to have a complete backup of your website before performing this action', 'resmushit-image-optimizer')
 			. '</strong></p><p>'
-			. '<input type="button" value="'. __('Restore ALL my original pictures', 'resmushit-image-optimizer') .'" class="rsmt-trigger--restore-backup-files button media-button  select-mode-toggle-button" name="resmushit" class="button wp-smush-send" />';
-		echo "</div>";
+			. '<input type="button" value="'. __('Restore ALL my original pictures', 'resmushit-image-optimizer') .'" class="rsmt-trigger--restore-backup-files button media-button  select-mode-toggle-button" name="resmushit" class="button wp-smush-send" />'
+			. '</div>', $allowed_html);
 		self::fullWidthPanelEndWrapper(); 		
 	}
 
@@ -299,46 +341,49 @@ Class reSmushitUI {
 	public static function newsPanel() {
 		global $wp_version;
 		
-		echo "<div class='rsmt-news'>";
+		echo wp_kses_post("<div class='rsmt-news'>");
 		
 		self::fullWidthPanelWrapper(__('News', 'resmushit-image-optimizer'), null, 'red');
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, RESMUSHIT_NEWSFEED);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-		$data_raw = curl_exec($ch);
-		curl_close($ch);
-		$data = json_decode($data_raw);
-		
+		if(in_array('curl', get_loaded_extensions())){
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, RESMUSHIT_NEWSFEED);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+			$data_raw = curl_exec($ch);
+			curl_close($ch);
+			$data = json_decode($data_raw);
+		} else {
+			$data = [];
+		}
 		if($data) {
 			foreach($data as $i=>$news) {
 				if($i > 2){
 					break;
 				}
 
-				echo "<div class='news-item'><span class='news-date'>"
+				echo wp_kses_post("<div class='news-item'><span class='news-date'>"
 						. date('d/m/Y', $news->date)
-						. "</span>";
+						. "</span>");
 				if($news->picture) {
-					echo "<div class='news-img'><a href='" 
-							. htmlspecialchars($news->link, ENT_QUOTES, 'UTF-8')
+					echo wp_kses_post("<div class='news-img'><a href='" 
+							. esc_url($news->link)
 							. "' target='_blank'><img src='"
-							. htmlspecialchars($news->picture, ENT_QUOTES, 'UTF-8')
-							. "' /></a></div>";
+							. esc_url($news->picture)
+							. "' /></a></div>");
 				}
-				echo "<h3><a href='"
-						. htmlspecialchars($news->link, ENT_QUOTES, 'UTF-8')
+				echo wp_kses_post("<h3><a href='"
+						. esc_url($news->link)
 						. "' target='_blank'>"
-						. htmlspecialchars($news->title, ENT_QUOTES, 'UTF-8')
+						. $news->title
 						. "</a></h3><div class='news-content'>"
-						. htmlspecialchars($news->content, ENT_QUOTES, 'UTF-8')
-						. "</div>";
+						. $news->content
+						. "</div>");
 			}
 		}
 
-		echo "<div class='social'>"
+		echo wp_kses_post("<div class='social'>"
 				. "<p class='datainformation'>"
 				. __('No user data nor any information is collected while requesting this news feed.', 'resmushit-image-optimizer')
 				. "<p>"
@@ -351,7 +396,7 @@ Class reSmushitUI {
 				. __('Follow reSmush.it on Twitter', 'resmushit-image-optimizer')
 				. "' href='https://www.twitter.com/resmushit' target='_blank'>"
 				. "<img src='"
-				. RESMUSHIT_BASE_URL . "images/twitter.png' /></a></div></div>";
+				. RESMUSHIT_BASE_URL . "images/twitter.png' /></a></div></div>");
 		
 		self::fullWidthPanelEndWrapper(); 		
 	}
@@ -376,49 +421,52 @@ Class reSmushitUI {
 
 		if(resmushit_get_cron_status() != 'DISABLED' && resmushit_get_cron_status() != 'OK') {
 			
-			echo "<div class='rsmt-alert'>";
-			echo "<h3 class='icon_message warning'>"
+			echo wp_kses_post("<div class='rsmt-alert'>"
+			. "<h3 class='icon_message warning'>"
 			. __('Cronjobs seems incorrectly configured', 'resmushit-image-optimizer')
-			. "</h3>";
+			. "</h3>");
 
 			if (resmushit_get_cron_status() == 'MISCONFIGURED') {
-				echo "<p>"
+				echo wp_kses_post("<p>"
 					. __('Cronjobs are not correctly configured. The variable <em>DISABLE_WP_CRON</em> must be set to <em>TRUE</em> in <em>wp-config.php</em>. Please install them by reading the following <a href="https://resmush.it/wordpress/howto-configure-cronjobs" target="_blank">instruction page</a>.', 'resmushit-image-optimizer')
 					. "</p><p>"
 					. __('We advice to disable Remush.it option "Process optimize on CRON" as long as Cron jobs are incorrectly set up.', 'resmushit-image-optimizer')
-					. "</p>";
+					. "</p>");
 			} else if (resmushit_get_cron_status() == 'NEVER_RUN') {
-				echo "<p>"
+				echo wp_kses_post("<p>"
 					. __('Cronjobs seems to have never been launched. Please install them by reading the following <a href="https://resmush.it/wordpress/howto-configure-cronjobs" target="_blank">instruction page</a>.', 'resmushit-image-optimizer')
-					. "</p>";
+					. "</p>");
 			} else if (resmushit_get_cron_status() == 'NO_LATELY_RUN') {
-				echo "<p>"
+				echo wp_kses_post("<p>"
 					. __('Cronjobs seems not to have run lately. Please read the following <a href="https://resmush.it/wordpress/howto-configure-cronjobs" target="_blank">instruction page</a> to install them correctly.', 'resmushit-image-optimizer')
 					. "<ul><li><em>" . __('Expected Frequency :', 'resmushit-image-optimizer') . "</em> " . __('Every', 'resmushit-image-optimizer') . " " . time_elapsed_string(RESMUSHIT_CRON_FREQUENCY) . "</li>"
 					. "<li><em>" . __('Last run :', 'resmushit-image-optimizer') . "</em> " . time_elapsed_string(time() - get_option('resmushit_cron_lastrun')) . " " . __('ago', 'resmushit-image-optimizer') . "</li></ul>"
-					. "</p>";
+					. "</p>");
 			}
-			echo "</div>";
+			echo wp_kses_post("</div>");
 		}
 		if(get_option('resmushit_remove_unsmushed') == 1 && get_option('resmushit_has_no_backup_files') == 0) {
 			$files_to_delete = count(detect_unsmushed_files());
 
 			if($files_to_delete) {
-				echo "<div class='rsmt-alert'>";
-				echo "<h3 class='icon_message warning'>"
+				$allowed_html = array_merge(wp_kses_allowed_html( 'post' ), array(
+				'input' => array(
+					'type'      => array(),
+					'value'      => array(),
+					'class'      => array(),
+					'name'      => array(),
+				)));
+				echo wp_kses("<div class='rsmt-alert'>"
+				. "<h3 class='icon_message warning'>"
 				. __('Backup files can be removed.', 'resmushit-image-optimizer')
-				. "</h3>";
-
-				echo 
-					'<p>'
-					. sprintf(__('Keep these files and turn off "Do not preserve backups" option if you want to restore your unoptimized files in the future. Please <a href="%s" title="Should I remove backups? target="_blank">read instructions</a> before clicking.', 'resmushit-image-optimizer'), 'https://resmush.it/wordpress/why-keeping-backup-files')
-					. '</p><p>'
-
-					. sprintf( __( 'We have found %s files ready to be removed', 'resmushit-image-optimizer' ), count(detect_unsmushed_files()) )
-					. '</p><p>'
-					. '<input type="button" value="'. __('Remove backup files', 'resmushit-image-optimizer') .'" class="rsmt-trigger--remove-backup-files button media-button  select-mode-toggle-button" name="resmushit" class="button wp-smush-send" />';
-
-				echo "</div>";
+				. "</h3>"
+				.	'<p>'
+				. sprintf(__('Keep these files and turn off "Do not preserve backups" option if you want to restore your unoptimized files in the future. Please <a href="%s" title="Should I remove backups? target="_blank">read instructions</a> before clicking.', 'resmushit-image-optimizer'), 'https://resmush.it/wordpress/why-keeping-backup-files')
+				. '</p><p>'
+				. sprintf( __( 'We have found %s files ready to be removed', 'resmushit-image-optimizer' ), count(detect_unsmushed_files()) )
+				. '</p><p>'
+				. '<input type="button" value="'. __('Remove backup files', 'resmushit-image-optimizer') .'" class="rsmt-trigger--remove-backup-files button media-button  select-mode-toggle-button" name="resmushit" class="button wp-smush-send" />'
+				. "</div>", $allowed_html);
 			}
 		}
 
@@ -482,11 +530,18 @@ Class reSmushitUI {
 		if($wpdb->get_results($query))
 			$attachment_resmushit_disabled = 'checked';
 
-		$output = '<input type="checkbox" data-attachment-id="'. htmlspecialchars($id, ENT_QUOTES, 'UTF-8') .'"" class="rsmt-trigger--disabled-checkbox" '. $attachment_resmushit_disabled .'  />';
+		$output = '<input type="checkbox" data-attachment-id="'. $id .'"" class="rsmt-trigger--disabled-checkbox" '. $attachment_resmushit_disabled .'  />';
 		
 		if($return)
 			return $output;
-		echo $output;
+
+		$allowed_html = array(
+			'input' => array(
+				'type'      => array(),
+				'data-attachment-id'      => array(),
+				'checked'   => array(),
+		));
+		echo wp_kses($output, $allowed_html);
 	}
 
 
@@ -505,16 +560,25 @@ Class reSmushitUI {
 			$output = '-';
 		}
 		else if(reSmushit::getAttachmentQuality($attachment_id) != reSmushit::getPictureQualitySetting())
-			$output = '<input type="button" value="'. __('Optimize', 'resmushit-image-optimizer') .'" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. htmlspecialchars($attachment_id, ENT_QUOTES, 'UTF-8') .'" class="button wp-smush-send" />';
+			$output = '<input type="button" value="'. __('Optimize', 'resmushit-image-optimizer') .'" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send" />';
 		else{
 			$statistics = reSmushit::getStatistics($attachment_id);
-			$output = __('Reduced by', 'resmushit-image-optimizer') . " ". htmlspecialchars($statistics['total_saved_size_nice'], ENT_QUOTES, 'UTF-8') ." (". htmlspecialchars($statistics['percent_reduction'], ENT_QUOTES, 'UTF-8') . ' ' . __('saved', 'resmushit-image-optimizer') . ")";
-			$output .= '<input type="button" value="'. __('Force re-optimize', 'resmushit-image-optimizer') .'" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. htmlspecialchars($attachment_id, ENT_QUOTES, 'UTF-8') .'" class="button wp-smush-send" />';
+			$output = __('Reduced by', 'resmushit-image-optimizer') . " ". $statistics['total_saved_size_nice'] ." (". $statistics['percent_reduction'] . ' ' . __('saved', 'resmushit-image-optimizer') . ")";
+			$output .= '<input type="button" value="'. __('Force re-optimize', 'resmushit-image-optimizer') .'" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send" />';
 		}
 
 		if($return)
 			return $output;
-		echo $output;
+		$allowed_html = array_merge(wp_kses_allowed_html( 'post' ), array(
+			'input' => array(
+				'type'      => array(),
+				'value'      => array(),
+				'class'      => array(),
+				'name'      => array(),
+				'data-attachment-id'      => array(),
+				'checked'   => array(),
+		)));
+		echo wp_kses($output, $allowed_html);
 	}
 
 
