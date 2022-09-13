@@ -10,8 +10,8 @@
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://wordpress.org/plugins/resmushit-image-optimizer/
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.4.4
- * Timestamp:         2022.08.10
+ * Version:           0.4.5
+ * Timestamp:         2022.09.13
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
  * Author:            Charles Bourgeaux
@@ -218,7 +218,7 @@ function resmushit_update_disabled_state() {
 		die();
 	}
 	if(isset($_POST['data']['id']) && $_POST['data']['id'] != null && isset($_POST['data']['disabled'])){
-		echo reSmushit::updateDisabledState(sanitize_text_field((int)$_POST['data']['id']), sanitize_text_field($_POST['data']['disabled']));
+		echo htmlspecialchars(reSmushit::updateDisabledState(sanitize_text_field((int)$_POST['data']['id']), sanitize_text_field($_POST['data']['disabled'])), ENT_NOQUOTES, 'UTF-8');
 	}	
 	die();
 }	
@@ -265,7 +265,7 @@ function resmushit_bulk_process_image() {
 		die();
 	}
 	rlog('Bulk optimization launched for file : ' . get_attached_file( sanitize_text_field((int)$_POST['data']['ID']) ));
-	echo reSmushit::revert(sanitize_text_field((int)$_POST['data']['ID']));
+	echo htmlspecialchars(reSmushit::revert(sanitize_text_field((int)$_POST['data']['ID'])), ENT_QUOTES, 'UTF-8');
 	die();
 }
 add_action( 'wp_ajax_resmushit_bulk_process_image', 'resmushit_bulk_process_image' );

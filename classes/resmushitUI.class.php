@@ -189,9 +189,9 @@ Class reSmushitUI {
 					<h3 class='icon_message info'>";
 
 		if($countfilesTooBigPictures > 1) {
-			echo $countfilesTooBigPictures . ' ' . __('pictures are too big (> 5MB) for the optimizer', 'resmushit-image-optimizer');
+			echo htmlspecialchars($countfilesTooBigPictures, ENT_QUOTES, 'UTF-8') . ' ' . __('pictures are too big (> 5MB) for the optimizer', 'resmushit-image-optimizer');
 		} else {
-			echo $countfilesTooBigPictures . ' ' . __('picture is too big (> 5MB) for the optimizer', 'resmushit-image-optimizer');
+			echo htmlspecialchars($countfilesTooBigPictures, ENT_QUOTES, 'UTF-8') . ' ' . __('picture is too big (> 5MB) for the optimizer', 'resmushit-image-optimizer');
 		}
 		echo "</h3><div class='list-accordion'><h4>"
 				. __('List of files above 5MB', 'resmushit-image-optimizer')
@@ -202,11 +202,11 @@ Class reSmushitUI {
 			$filesize = reSmushitUI::sizeFormat(filesize(get_attached_file( $file->ID ))); 
 
 			echo "<li><a href='"
-					. wp_get_attachment_url( $file->ID )
+					. htmlspecialchars(wp_get_attachment_url( $file->ID ), ENT_QUOTES, 'UTF-8')
 					. "' target='_blank'>"
 					. wp_get_attachment_image($file->ID, 'thumbnail')
 					. "<span>"
-					. $fileInfo['basename'] . ' (' . $filesize . ').</span></a></li>';
+					. htmlspecialchars($fileInfo['basename'], ENT_QUOTES, 'UTF-8') . ' (' . $filesize . ').</span></a></li>';
 		}
 		echo '</ul></div></div></div>';
 		
@@ -323,17 +323,17 @@ Class reSmushitUI {
 						. "</span>";
 				if($news->picture) {
 					echo "<div class='news-img'><a href='" 
-							. $news->link
+							. htmlspecialchars($news->link, ENT_QUOTES, 'UTF-8')
 							. "' target='_blank'><img src='"
-							. $news->picture
+							. htmlspecialchars($news->picture, ENT_QUOTES, 'UTF-8')
 							. "' /></a></div>";
 				}
 				echo "<h3><a href='"
-						. $news->link
+						. htmlspecialchars($news->link, ENT_QUOTES, 'UTF-8')
 						. "' target='_blank'>"
-						. $news->title
+						. htmlspecialchars($news->title, ENT_QUOTES, 'UTF-8')
 						. "</a></h3><div class='news-content'>"
-						. $news->content 
+						. htmlspecialchars($news->content, ENT_QUOTES, 'UTF-8')
 						. "</div>";
 			}
 		}
@@ -482,7 +482,7 @@ Class reSmushitUI {
 		if($wpdb->get_results($query))
 			$attachment_resmushit_disabled = 'checked';
 
-		$output = '<input type="checkbox" data-attachment-id="'. $id .'"" class="rsmt-trigger--disabled-checkbox" '. $attachment_resmushit_disabled .'  />';
+		$output = '<input type="checkbox" data-attachment-id="'. htmlspecialchars($id, ENT_QUOTES, 'UTF-8') .'"" class="rsmt-trigger--disabled-checkbox" '. $attachment_resmushit_disabled .'  />';
 		
 		if($return)
 			return $output;
@@ -505,11 +505,11 @@ Class reSmushitUI {
 			$output = '-';
 		}
 		else if(reSmushit::getAttachmentQuality($attachment_id) != reSmushit::getPictureQualitySetting())
-			$output = '<input type="button" value="'. __('Optimize', 'resmushit-image-optimizer') .'" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send" />';
+			$output = '<input type="button" value="'. __('Optimize', 'resmushit-image-optimizer') .'" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. htmlspecialchars($attachment_id, ENT_QUOTES, 'UTF-8') .'" class="button wp-smush-send" />';
 		else{
 			$statistics = reSmushit::getStatistics($attachment_id);
-			$output = __('Reduced by', 'resmushit-image-optimizer') . " ". $statistics['total_saved_size_nice'] ." (". $statistics['percent_reduction'] . ' ' . __('saved', 'resmushit-image-optimizer') . ")";
-			$output .= '<input type="button" value="'. __('Force re-optimize', 'resmushit-image-optimizer') .'" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send" />';
+			$output = __('Reduced by', 'resmushit-image-optimizer') . " ". htmlspecialchars($statistics['total_saved_size_nice'], ENT_QUOTES, 'UTF-8') ." (". htmlspecialchars($statistics['percent_reduction'], ENT_QUOTES, 'UTF-8') . ' ' . __('saved', 'resmushit-image-optimizer') . ")";
+			$output .= '<input type="button" value="'. __('Force re-optimize', 'resmushit-image-optimizer') .'" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. htmlspecialchars($attachment_id, ENT_QUOTES, 'UTF-8') .'" class="button wp-smush-send" />';
 		}
 
 		if($return)
