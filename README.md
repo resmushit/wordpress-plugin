@@ -54,6 +54,7 @@ Currently, reSmush.it Plugin doesn't use CRON to execute, you must remain on the
 - [X] Provide a CRON feature
 - [ ] Support for Arabic file names : https://wordpress.org/support/topic/arabic-named-images-dont-get-optimized/#post-13607644
 - [ ] Auto-replace when JPG files is lower than an optimized PNG file
+- [ ] Select image styles that needs optimizations
 - [ ] fix Optimize button KO : https://wordpress.org/support/topic/new-page-media-optimized-button-doesnt-work/#post-13607661
 - [ ] SQL bug? : https://wordpress.org/support/topic/bug-311/
 - [ ] Remove SQL entries and revert pictures if uninstalling the plugin
