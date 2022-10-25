@@ -10,8 +10,8 @@
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://wordpress.org/plugins/resmushit-image-optimizer/
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.4.6
- * Timestamp:         2022.09.13
+ * Version:           0.4.7
+ * Timestamp:         2022.10.25
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
  * Author:            Charles Bourgeaux
@@ -22,8 +22,7 @@
  */
 
 require('resmushit.inc.php'); 
-
-
+require_once( ABSPATH . 'wp-includes/pluggable.php' );
 /**
 * 
 * Registering language plugin
@@ -193,6 +192,10 @@ if(get_option('resmushit_on_upload'))
 * @return json object
 */
 function resmushit_bulk_get_images() {
+	if ( !isset($_REQUEST['csrf']) || ! wp_verify_nonce( $_REQUEST['csrf'], 'bulk_resize' ) ) {
+		wp_send_json(json_encode(array('error' => 'Invalid CSRF token')));
+		die();
+	}
 	if(!is_super_admin() && !current_user_can('administrator')) {
 		wp_send_json(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
 		die();
@@ -213,6 +216,10 @@ add_action( 'wp_ajax_resmushit_bulk_get_images', 'resmushit_bulk_get_images' );
 * @return json object
 */
 function resmushit_update_disabled_state() {
+	if ( !isset($_REQUEST['data']['csrf']) || ! wp_verify_nonce( $_REQUEST['data']['csrf'], 'single_attachment' ) ) {
+		wp_send_json(json_encode(array('error' => 'Invalid CSRF token')));
+		die();
+	}
 	if(!is_super_admin() && !current_user_can('administrator')) {
 		wp_send_json(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
 		die();
@@ -236,6 +243,10 @@ add_action( 'wp_ajax_resmushit_update_disabled_state', 'resmushit_update_disable
 * @return json object
 */
 function resmushit_optimize_single_attachment() {
+	if ( !isset($_REQUEST['data']['csrf']) || ! wp_verify_nonce( $_REQUEST['data']['csrf'], 'single_attachment' ) ) {
+		wp_send_json(json_encode(array('error' => 'Invalid CSRF token')));
+		die();
+	}
 	if(!is_super_admin() && !current_user_can('administrator')) {
 		wp_send_json(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
 		die();
@@ -260,6 +271,10 @@ add_action( 'wp_ajax_resmushit_optimize_single_attachment', 'resmushit_optimize_
 * @return boolean
 */	
 function resmushit_bulk_process_image() {
+	if ( !isset($_REQUEST['csrf']) || ! wp_verify_nonce( $_REQUEST['csrf'], 'bulk_process_image' ) ) {
+		wp_send_json(json_encode(array('error' => 'Invalid CSRF token')));
+		die();
+	}
 	if(!is_super_admin() && !current_user_can('administrator')) {
 		wp_send_json(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
 		die();
@@ -282,6 +297,10 @@ add_action( 'wp_ajax_resmushit_bulk_process_image', 'resmushit_bulk_process_imag
 * @return json object
 */
 function resmushit_update_statistics() {
+	if ( !isset($_REQUEST['csrf']) || ! wp_verify_nonce( $_REQUEST['csrf'], 'bulk_process_image' ) ) {
+		wp_send_json(json_encode(array('error' => 'Invalid CSRF token')));
+		die();
+	}
 	if(!is_super_admin() && !current_user_can('administrator')) {
 		wp_send_json(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
 		die();
@@ -452,6 +471,10 @@ add_action('update_option_resmushit_remove_unsmushed', 'resmushit_on_remove_unsm
 */
 function resmushit_remove_backup_files() {
 	$return = array('success' => 0);
+	if ( !isset($_REQUEST['csrf']) || ! wp_verify_nonce( $_REQUEST['csrf'], 'remove_backup' ) ) {
+		wp_send_json(json_encode(array('error' => 'Invalid CSRF token')));
+		die();
+	}
 	if(!is_super_admin() && !current_user_can('administrator')) {
 		wp_send_json(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
 		die();
@@ -494,6 +517,10 @@ function resmushit_get_image_id($image_url) {
 * @return json object
 */
 function resmushit_restore_backup_files() {
+	if ( !isset($_REQUEST['csrf']) || ! wp_verify_nonce( $_REQUEST['csrf'], 'restore_library' ) ) {
+		wp_send_json(json_encode(array('error' => 'Invalid CSRF token')));
+		die();
+	}
 	if(!is_super_admin() && !current_user_can('administrator')) {
 		wp_send_json(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
 		die();

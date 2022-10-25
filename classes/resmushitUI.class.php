@@ -162,8 +162,8 @@ Class reSmushitUI {
 			$countNonOptimizedPictures .= '+';
 		}
 
-		echo wp_kses_post("<div class='rsmt-bulk'><div class='non-optimized-wrapper $additionnalClassNeedOptimization'><h3 class='icon_message warning'>");
-
+		echo wp_kses_post("<div class='rsmt-bulk' data-csrf='" . wp_create_nonce( 'bulk_process_image' ) . "'><div class='non-optimized-wrapper $additionnalClassNeedOptimization'><h3 class='icon_message warning'>");
+		
 		if(get_option('resmushit_cron') && get_option('resmushit_cron') == 1) {
 			echo  wp_kses_post("<em>$countNonOptimizedPictures "
 			. __('non optimized pictures will be automatically optimized', 'resmushit-image-optimizer')
@@ -185,7 +185,7 @@ Class reSmushitUI {
 				'onclick'      => array()
 			)));
 
-		echo wp_kses("</p><p class='submit' id='bulk-resize-examine-button'><button class='button-primary' onclick='resmushit_bulk_resize(\"bulk_resize_image_list\");'>", $allowed_html);
+		echo wp_kses("</p><p class='submit' id='bulk-resize-examine-button'><button class='button-primary' onclick='resmushit_bulk_resize(\"bulk_resize_image_list\", \"" . wp_create_nonce( 'bulk_resize' ) . "\");'>", $allowed_html);
 		
 		if(get_option('resmushit_cron') && get_option('resmushit_cron') == 1) {
 			echo wp_kses_post(__('Optimize all pictures manually', 'resmushit-image-optimizer'));
@@ -319,14 +319,15 @@ Class reSmushitUI {
 			'type'      => array(),
 			'value'      => array(),
 			'class'      => array(),
-			'name'      => array()
+			'name'      => array(),
+			'data-csrf'      => array(),
 		)));
 
 		echo wp_kses("<div class='rsmt-restore'>"
 			. '<p><strong>'
 			. __('Warning! By clicking the button below, you will restore all the original pictures, as before reSmush.it Image Optimizer installation. You will not have your pictures optimized! We strongly advice to be sure to have a complete backup of your website before performing this action', 'resmushit-image-optimizer')
 			. '</strong></p><p>'
-			. '<input type="button" value="'. __('Restore ALL my original pictures', 'resmushit-image-optimizer') .'" class="rsmt-trigger--restore-backup-files button media-button  select-mode-toggle-button" name="resmushit" class="button wp-smush-send" />'
+			. '<input type="button" data-csrf="'. wp_create_nonce( 'restore_library' ) .'" value="'. __('Restore ALL my original pictures', 'resmushit-image-optimizer') .'" class="rsmt-trigger--restore-backup-files button media-button  select-mode-toggle-button" name="resmushit" class="button wp-smush-send" />'
 			. '</div>', $allowed_html);
 		self::fullWidthPanelEndWrapper(); 		
 	}
@@ -455,6 +456,7 @@ Class reSmushitUI {
 					'value'      => array(),
 					'class'      => array(),
 					'name'      => array(),
+					'data-csrf'      => array()
 				)));
 				echo wp_kses("<div class='rsmt-alert'>"
 				. "<h3 class='icon_message warning'>"
@@ -465,7 +467,7 @@ Class reSmushitUI {
 				. '</p><p>'
 				. sprintf( __( 'We have found %s files ready to be removed', 'resmushit-image-optimizer' ), count(detect_unsmushed_files()) )
 				. '</p><p>'
-				. '<input type="button" value="'. __('Remove backup files', 'resmushit-image-optimizer') .'" class="rsmt-trigger--remove-backup-files button media-button  select-mode-toggle-button" name="resmushit" class="button wp-smush-send" />'
+				. '<input type="button" value="'. __('Remove backup files', 'resmushit-image-optimizer') .'" data-csrf="'. wp_create_nonce( 'remove_backup' ) .'" class="rsmt-trigger--remove-backup-files button media-button  select-mode-toggle-button" name="resmushit" class="button wp-smush-send" />'
 				. "</div>", $allowed_html);
 			}
 		}
@@ -530,7 +532,7 @@ Class reSmushitUI {
 		if($wpdb->get_results($query))
 			$attachment_resmushit_disabled = 'checked';
 
-		$output = '<input type="checkbox" data-attachment-id="'. $id .'"" class="rsmt-trigger--disabled-checkbox" '. $attachment_resmushit_disabled .'  />';
+		$output = '<input type="checkbox" data-attachment-id="'. $id .'"" data-csrf="'. wp_create_nonce( 'single_attachment' ) .'"" class="rsmt-trigger--disabled-checkbox" '. $attachment_resmushit_disabled .'  />';
 		
 		if($return)
 			return $output;
@@ -538,7 +540,7 @@ Class reSmushitUI {
 		$allowed_html = array(
 			'input' => array(
 				'type'      => array(),
-				'data-attachment-id'      => array(),
+				'data-*'      => array(),
 				'checked'   => array(),
 		));
 		echo wp_kses($output, $allowed_html);
@@ -560,11 +562,11 @@ Class reSmushitUI {
 			$output = '-';
 		}
 		else if(reSmushit::getAttachmentQuality($attachment_id) != reSmushit::getPictureQualitySetting())
-			$output = '<input type="button" value="'. __('Optimize', 'resmushit-image-optimizer') .'" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send" />';
+			$output = '<input type="button" data-csrf="' . wp_create_nonce( 'single_attachment' ) . '" value="'. __('Optimize', 'resmushit-image-optimizer') .'" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send" />';
 		else{
 			$statistics = reSmushit::getStatistics($attachment_id);
 			$output = __('Reduced by', 'resmushit-image-optimizer') . " ". $statistics['total_saved_size_nice'] ." (". $statistics['percent_reduction'] . ' ' . __('saved', 'resmushit-image-optimizer') . ")";
-			$output .= '<input type="button" value="'. __('Force re-optimize', 'resmushit-image-optimizer') .'" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send" />';
+			$output .= '<input type="button" data-csrf="' . wp_create_nonce( 'single_attachment' ) . '" value="'. __('Force re-optimize', 'resmushit-image-optimizer') .'" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send" />';
 		}
 
 		if($return)
@@ -575,7 +577,7 @@ Class reSmushitUI {
 				'value'      => array(),
 				'class'      => array(),
 				'name'      => array(),
-				'data-attachment-id'      => array(),
+				'data-*'      => array(),
 				'checked'   => array(),
 		)));
 		echo wp_kses($output, $allowed_html);

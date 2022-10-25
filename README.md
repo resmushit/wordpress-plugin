@@ -4,7 +4,7 @@ Wordpress plugin for the **reSmush.it Image Optimization API**
 
 ## What is it ?
 
-Use reSmush.it Image Optimizer for **FREE** to **optimize your pictures file sizes**. Improve your performances by using reSmush.it, the 10+ billion images API optimizer.
+Use reSmush.it Image Optimizer for **FREE** to **optimize your pictures file sizes**. Improve your performances by using reSmush.it, the 20+ billion images API optimizer.
 
 reSmush.it Image Optimizer allow to use **free Image optimization** based on [reSmush.it API](https://resmush.it/ "Image Optimization API, developped by Charles Bourgeaux"). reSmush.it provides image size reduction based on several advanced algorithms. The API accept JPG, PNG and GIF files up to **5MB**.
 
@@ -46,6 +46,7 @@ Currently, reSmush.it Plugin doesn't use CRON to execute, you must remain on the
 - [X] Fix individual Optimize Button
 - [X] Provide a "restore" option if plugin is deactivated
 - [ ] Provide option to optimize only some image size
+- [X] CSRF protection for Ajax calls
 - [ ] Provide a S3 support
 - [ ] Provide an Azure Storage support
 - [ ] Provide a warning message when using reSmush.it with incompatibles plugins

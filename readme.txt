@@ -2,12 +2,12 @@
 Contributors: resmushit
 Tags: image, optimizer, image optimization, resmush.it, smush, jpg, png, gif, optimization, compression, Compress, Images, Pictures, Reduce Image Size, Smush, Smush.it
 Requires at least: 4.0.0
-Tested up to: 6.0.2
-Stable tag: 0.4.6
+Tested up to: 6.0.3
+Stable tag: 0.4.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The FREE Image Optimizer which will compress your pictures and improve your SEO & performances by using reSmush.it, the 10+ billion images API optimizer.
+The FREE Image Optimizer which will compress your pictures and improve your SEO & performances by using reSmush.it, the 20+ billion images API optimizer.
 
 == Description ==
 
@@ -74,6 +74,9 @@ Yes ! Absolutely free, the only restriction is to send images below 5MB.
 
 == Changelog ==
 
+
+= 0.4.7 =
+* Security fixes : CSRF protection for Ajax Calls
 
 = 0.4.6 =
 * Security fixes : protection in a WP's way
