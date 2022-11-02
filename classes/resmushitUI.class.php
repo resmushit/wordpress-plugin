@@ -71,6 +71,15 @@ Class reSmushitUI {
 	 * @return none
 	 */
 	public static function headerPanel() {
+		if(time() < strtotime("21 November 2022")) {
+			$titlePartnership = "";
+			$descriptionPartnership = "
+				<div class=''><img src='". RESMUSHIT_BASE_URL . "images/shortpixel-resmushit.png' /></div>
+				<div class='extra-padding'>Subscribe to our <em>premium offer</em> with our partner Shortpixel and get: <ul><li><em>Next generation image format such as WebP</em> optimization,</li><li><em>Unlimited</em> picture conversion</li><li>No size limit</li><li><em>99.99%</em> service availability</li></ul> </div>
+				<div class='txt-center'><a class='button button-primary' target='_blank' href='https://shortpixel.com/otp/af/0LVVSE33120804' title='Subscribe to the premium offer'>Subscribe for <span class='txt-through'>$41.66</span> $9.99/mo  until Nov 20th</a></div>
+			";
+			self::fullWidthPanel($titlePartnership, $descriptionPartnership, 'dashed');
+		}
 		$html = "<img src='". RESMUSHIT_BASE_URL . "images/header.png' />";
 		self::fullWidthPanel($html);
 	}

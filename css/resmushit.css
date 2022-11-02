@@ -40,6 +40,10 @@
   .rsmt-panels .brdr-black{ 
     border-left: 4px solid #222222
   }  
+  .rsmt-panels .brdr-dashed{ 
+    border: 2px dashed #7cd7e5;
+    padding: 5px 10px;
+  }  
   .rsmt-panels h2{ 
     text-transform: uppercase;
     font-family: 'Roboto Slab', serif;
@@ -57,7 +61,15 @@
     list-style-type: disc;
     list-style-position: inside;
   }
-
+  .rsmt-panels .txt-through{
+    text-decoration:line-through;
+  }
+  .rsmt-panels .extra-padding{
+    padding: 2px 5px;
+  }
+  .rsmt-panels .txt-center{
+    text-align: center
+  }
 
 .rsmt-settings .setting-row{
   margin-bottom: 20px;
