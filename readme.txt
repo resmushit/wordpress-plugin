@@ -2,8 +2,8 @@
 Contributors: resmushit
 Tags: image, optimizer, image optimization, resmush.it, smush, jpg, png, gif, optimization, compression, Compress, Images, Pictures, Reduce Image Size, Smush, Smush.it
 Requires at least: 4.0.0
-Tested up to: 6.0.3
-Stable tag: 0.4.8
+Tested up to: 6.1.0
+Stable tag: 0.4.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ The FREE Image Optimizer which will compress your pictures and improve your SEO 
 reSmush.it Image Optimizer allow to use **free Image optimization** based on [reSmush.it API](http://www.resmush.it/ "Image Optimization API, developped by Charles Bourgeaux"). reSmush.it provides image size reduction based on several advanced algorithms. The API accept JPG, PNG and GIF files up to **5MB**.
 
 This plugin includes a bulk operation to optimize all your pictures in 2 clicks ! Change your image optimization level to fit your needs !
-This service is used by more than **400,000** websites on different CMS (Wordpress, Drupal, Joomla, Magento, Prestashop...).
+This service is used by more than **400,000*php* websites on different CMS (Wordpress, Drupal, Joomla, Magento, Prestashop...).
 
 The plugin includes an option to exclude some pictures of the optimizer.
 
@@ -74,6 +74,11 @@ Yes ! Absolutely free, the only restriction is to send images below 5MB.
 
 == Changelog ==
 
+
+= 0.4.9 =
+* Compatibility with WP 6.1.0
+* Compatible with PHP 8.1.X
+* Fixed issue on Undefined array key "file" in .../resmushit.php on line 114
 
 = 0.4.8 =
 * Incorrect library imported (fix `PHP Fatal error: Uncaught Error: Undefined constant “SECURE_AUTH_COOKIE” in /wp-includes/pluggable.php:923`)

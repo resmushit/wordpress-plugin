@@ -10,8 +10,8 @@
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://wordpress.org/plugins/resmushit-image-optimizer/
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.4.8
- * Timestamp:         2022.10.26
+ * Version:           0.4.9
+ * Timestamp:         2022.11.02
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
  * Author:            Charles Bourgeaux
@@ -107,8 +107,17 @@ function resmushit_process_images($attachments, $force_keep_original = TRUE) {
 	}
 
 	$fileInfo = pathinfo(get_attached_file( $attachment_id ));
+	if(!isset($fileInfo['dirname'])) {
+		rlog("Error! Incorrect file provided." . print_r($fileInfo), 'WARNING');
+		return $attachments;
+	}
 	$basepath = $fileInfo['dirname'] . '/';
 	$extension = isset($fileInfo['extension']) ? $fileInfo['extension'] : NULL;
+	
+	if(!isset($attachments[ 'file' ])) {
+		rlog("Error! Incorrect attachment." . print_r($attachments), 'WARNING');
+		return $attachments;
+	}
 	$basefile = basename($attachments[ 'file' ]);
 
 	// Optimize only pictures/files accepted by the API
@@ -118,8 +127,13 @@ function resmushit_process_images($attachments, $force_keep_original = TRUE) {
 
 	$statistics[] = reSmushit::optimize($basepath . $basefile, $force_keep_original );
 
-	foreach($attachments['sizes'] as $image_style)
+	if(!isset($attachments[ 'sizes' ])) {
+		rlog("Error! Unable to find attachments sizes." . print_r($attachments), 'WARNING');
+		return $attachments;
+	}
+	foreach($attachments['sizes'] as $image_style) {
 		$statistics[] = reSmushit::optimize($basepath . $image_style['file'], FALSE );
+	}
 	
 	$count = 0;
 	foreach($statistics as $stat){
@@ -127,8 +141,9 @@ function resmushit_process_images($attachments, $force_keep_original = TRUE) {
 			$cumulated_original_sizes += $stat->src_size;
 			$cumulated_optimized_sizes += $stat->dest_size;
 			$count++;
-		} else
+		} else {
 			$error = TRUE;
+		}
 	}
 	if(!$error) {
 		$optimizations_successful_count = get_option('resmushit_total_optimized');
