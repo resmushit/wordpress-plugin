@@ -44,6 +44,9 @@
     border: 2px dashed #7cd7e5;
     padding: 5px 10px;
   }  
+  .rsmt-panels .no-uppercase {
+    text-transform: none;
+  }
   .rsmt-panels h2{ 
     text-transform: uppercase;
     font-family: 'Roboto Slab', serif;
