@@ -75,7 +75,7 @@ Class reSmushitUI {
 			$titlePartnership = "";
 			$descriptionPartnership = "
 				<div class=''><img src='". RESMUSHIT_BASE_URL . "images/shortpixel-resmushit.png' /></div>
-				<div class='extra-padding'><h2 class='no-uppercase'>Subscribe to our <em>premium offer</em> with our partner Shortpixel and get:</h2> <ul><li><em>Next generation image format such as WebP and AVIF</em> (up to <em>50%</em> lighter than JPG),</li><li><em>Unlimited</em> picture conversion</li><li>No size limit</li><li><em>99.9%</em> service availability</li></ul> </div>
+				<div class='extra-padding'><h2 class='no-uppercase'>Limited time, unique offer in partnership with <a target='_blank' href='https://www.shortpixel.com' title='Shortpixel'>ShortPixel</a></h2> <ul><li><em>Unlimited</em> monthly credits</li><li>Optimize All your website's JPEG, PNG, (animated)GIF and PDFs with ShortPixel's SmartCompress algorithms.</li><li>Generate <em>next-gen image</em> <a href='https://shortpixel.com/blog/how-webp-images-can-speed-up-your-site/' title='How WebP can speed up your website' target='_blank'>format WebP</a> for ALL your images.</li><li>No size limit</li><li><em><a href='https://status.shortpixel.com/' target='_blank' title='Status page of Shortpixel'>99.9%</a></em> service availability</li></ul> </div>
 				<div class='txt-center'><a class='button button-primary' target='_blank' href='https://shortpixel.com/otp/af/0LVVSE33120804' title='Subscribe to the premium offer'>Subscribe for <span class='txt-through'>$41.66</span> $9.99/mo  until Nov 20th</a></div>
 			";
 			self::fullWidthPanel($titlePartnership, $descriptionPartnership, 'dashed');
