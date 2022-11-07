@@ -12,12 +12,19 @@ var file_too_big_count = 0;
  * Notice
  */
 jQuery(document).delegate(".rsmt-notice button.notice-dismiss","mouseup",function(e){
-	localStorage.setItem('resmushit-notice', 'closed');
+	var current = this;
+	var csrf_token = jQuery(current).parent().attr('data-csrf');
+	jQuery.post(
+		ajaxurl, { 
+			action: 'resmushit_notice_close',
+			csrf: csrf_token
+		}, 
+		function(response) {
+			var data = jQuery.parseJSON(response);
+		}
+	);
 });
 
-if(localStorage.getItem('resmushit-notice')) {
-	jQuery('.rsmt-notice').remove();
-}
 
 /**
  * Form Validators

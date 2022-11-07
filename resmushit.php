@@ -69,6 +69,8 @@ function resmushit_activate() {
 			update_option( 'resmushit_remove_unsmushed', 0 );
 		if(get_option('resmushit_has_no_backup_files') === false || get_option('resmushit_has_no_backup_files') == "")
 			update_option( 'resmushit_has_no_backup_files', 0 );
+		if(get_option('resmushit_notice_close') === false || get_option('resmushit_notice_close') == "")
+			update_option( 'resmushit_notice_close', 0 );
 	}
 }
 register_activation_hook( __FILE__, 'resmushit_activate' );
@@ -560,6 +562,31 @@ function resmushit_restore_backup_files() {
 add_action( 'wp_ajax_resmushit_restore_backup_files', 'resmushit_restore_backup_files' );	
 
 
+/**
+* 
+* add Ajax action to close permanently notice
+*
+* @param none
+* @return json object
+*/
+function resmushit_notice_close() {
+	$return = FALSE;
+	if ( !isset($_REQUEST['csrf']) || ! wp_verify_nonce( $_REQUEST['csrf'], 'notice_close' ) ) {
+		wp_send_json(json_encode(array('error' => 'Invalid CSRF token')));
+		die();
+	}
+	if(!is_super_admin() && !current_user_can('administrator')) {
+		wp_send_json(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
+		die();
+	}
+	if(update_option( 'resmushit_notice_close', 1 )) {
+		$return = TRUE;
+	}
+	wp_send_json(json_encode(array('status' => $return)));
+	die();
+}	
+add_action( 'wp_ajax_resmushit_notice_close', 'resmushit_notice_close' );
+
 
 /**
 * 
@@ -569,7 +596,12 @@ add_action( 'wp_ajax_resmushit_restore_backup_files', 'resmushit_restore_backup_
 * @return json object
 */
 function resmushit_general_admin_notice(){	
+	// Expired offer
 	if(time() > strtotime("21 November 2022")) {
+		return FALSE;
+	}
+	// Already seen notice
+	if(get_option('resmushit_notice_close') == 1) {
 		return FALSE;
 	}
 	$allowed_pages = array(
@@ -586,7 +618,7 @@ function resmushit_general_admin_notice(){
 
 	if ( isset( $current_page->id ) && in_array( $current_page->id, $allowed_pages ) ) {
 		echo "
-			<div class='notice notice-success is-dismissible rsmt-notice' data-notice='resmushit-notice-shortpixel'>
+			<div class='notice notice-success is-dismissible rsmt-notice' data-csrf='" . wp_create_nonce( 'notice_close' ) . "' data-dismissible='disable-done-notice-forever' data-notice='resmushit-notice-shortpixel'>
 			<div class='txt-center'><img src='". RESMUSHIT_BASE_URL . "images/shortpixel-resmushit.png' /></div>
 				<div class='extra-padding'><h4 class='no-uppercase'>Limited time, unique offer in partnership with <a target='_blank' href='https://www.shortpixel.com' title='Shortpixel'>ShortPixel</a></h4> <ul><li><em>Unlimited</em> monthly credits</li><li>Optimize All your website's JPEG, PNG, (animated)GIF and PDFs with ShortPixel's SmartCompress algorithms.</li><li>Generate <em>next-gen image</em> <a href='https://shortpixel.com/blog/how-webp-images-can-speed-up-your-site/' title='How WebP can speed up your website' target='_blank'>format WebP</a> for ALL your images.</li><li>No size limit</li><li><em><a href='https://status.shortpixel.com/' target='_blank' title='Status page of Shortpixel'>99.9%</a></em> service availability</li></ul> </div>
 				<div class='txt-center'><a class='button button-primary' target='_blank' href='https://unlimited.shortpixel.com' title='Subscribe to the premium offer'>Subscribe for <span class='txt-through'>$41.66</span> $9.99/mo  until Nov 20th</a></div>

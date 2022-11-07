@@ -29,6 +29,7 @@ function resmushit_settings_declare() {
 	register_setting( 'resmushit-settings', 'resmushit_cron' );
 	register_setting( 'resmushit-settings', 'resmushit_preserve_exif' );
 	register_setting( 'resmushit-settings', 'resmushit_remove_unsmushed' );
+	register_setting( 'resmushit-settings', 'resmushit_notice_close' );
 }
 add_action( 'admin_init', 'resmushit_settings_declare' );
 
