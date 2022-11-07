@@ -9,6 +9,17 @@ var file_too_big_count = 0;
 
 
 /**
+ * Notice
+ */
+jQuery(document).delegate(".rsmt-notice button.notice-dismiss","mouseup",function(e){
+	localStorage.setItem('resmushit-notice', 'closed');
+});
+
+if(localStorage.getItem('resmushit-notice')) {
+	jQuery('.rsmt-notice').remove();
+}
+
+/**
  * Form Validators
  */
 jQuery("#rsmt-options-form").submit(function(){

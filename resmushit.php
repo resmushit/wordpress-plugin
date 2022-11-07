@@ -559,7 +559,34 @@ function resmushit_restore_backup_files() {
 }	
 add_action( 'wp_ajax_resmushit_restore_backup_files', 'resmushit_restore_backup_files' );	
 
+function resmushit_general_admin_notice(){	
+	if(time() > strtotime("21 November 2022")) {
+		return FALSE;
+	}
+	$allowed_pages = array(
+		'media_page_resmushit_options',
+		'upload', 
+		'plugins',
+		'edit-post',
+		'media',
+		'attachment');
+//var_dump(get_current_screen());die;
+	if ( function_exists( 'get_current_screen' ) ) {
+		$current_page = get_current_screen();
+	}
 
+	if ( isset( $current_page->id ) && in_array( $current_page->id, $allowed_pages ) ) {
+		echo "
+			<div class='notice notice-success is-dismissible rsmt-notice' data-notice='resmushit-notice-shortpixel'>
+			<div class='txt-center'><img src='". RESMUSHIT_BASE_URL . "images/shortpixel-resmushit.png' /></div>
+				<div class='extra-padding'><h4 class='no-uppercase'>Limited time, unique offer in partnership with <a target='_blank' href='https://www.shortpixel.com' title='Shortpixel'>ShortPixel</a></h4> <ul><li><em>Unlimited</em> monthly credits</li><li>Optimize All your website's JPEG, PNG, (animated)GIF and PDFs with ShortPixel's SmartCompress algorithms.</li><li>Generate <em>next-gen image</em> <a href='https://shortpixel.com/blog/how-webp-images-can-speed-up-your-site/' title='How WebP can speed up your website' target='_blank'>format WebP</a> for ALL your images.</li><li>No size limit</li><li><em><a href='https://status.shortpixel.com/' target='_blank' title='Status page of Shortpixel'>99.9%</a></em> service availability</li></ul> </div>
+				<div class='txt-center'><a class='button button-primary' target='_blank' href='https://shortpixel.com/otp/af/0LVVSE33120804' title='Subscribe to the premium offer'>Subscribe for <span class='txt-through'>$41.66</span> $9.99/mo  until Nov 20th</a></div>
+			
+		</div>";
+	}
+    
+}
+add_action('admin_notices', 'resmushit_general_admin_notice');
 
 /**
 * 

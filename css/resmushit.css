@@ -44,32 +44,51 @@
     border: 2px dashed #7cd7e5;
     padding: 5px 10px;
   }  
+  .rsmt-notice .no-uppercase,
   .rsmt-panels .no-uppercase {
     text-transform: none;
   }
+  .rsmt-notice h4,
   .rsmt-panels h2{ 
     text-transform: uppercase;
     font-family: 'Roboto Slab', serif;
     font-size: 1.5em;
     color:#4B4B4B;
   }
+  .rsmt-notice h4{ 
+    text-transform: uppercase;
+    font-family: 'Roboto Slab', serif;
+    font-size: 1.5em;
+    color:#4B4B4B;
+  }
+
+  .rsmt-notice img {
+    max-width: 400px;
+  }
   .rsmt-panels img{
     max-width: 100%;
   }
+  .rsmt-notice {
+    padding: 10px;
+  }
+  .rsmt-notice em,
   .rsmt-panels em{
     font-weight: bold;
     font-style: normal;
   }
+  .rsmt-notice ul,
   .rsmt-panels ul {
     list-style-type: disc;
     list-style-position: inside;
   }
+  .rsmt-notice .txt-through,
   .rsmt-panels .txt-through{
     text-decoration:line-through;
   }
   .rsmt-panels .extra-padding{
     padding: 2px 5px;
   }
+  .rsmt-notice .txt-center,
   .rsmt-panels .txt-center{
     text-align: center
   }
