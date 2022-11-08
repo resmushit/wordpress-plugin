@@ -10,8 +10,8 @@
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://wordpress.org/plugins/resmushit-image-optimizer/
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.4.9
- * Timestamp:         2022.11.02
+ * Version:           0.4.10
+ * Timestamp:         2022.11.08
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
  * Author:            Charles Bourgeaux
@@ -110,27 +110,29 @@ function resmushit_process_images($attachments, $force_keep_original = TRUE) {
 
 	$fileInfo = pathinfo(get_attached_file( $attachment_id ));
 	if(!isset($fileInfo['dirname'])) {
-		rlog("Error! Incorrect file provided." . print_r($fileInfo), 'WARNING');
+		rlog("Error! Incorrect file provided." . print_r($fileInfo, TRUE), 'WARNING');
 		return $attachments;
 	}
 	$basepath = $fileInfo['dirname'] . '/';
 	$extension = isset($fileInfo['extension']) ? $fileInfo['extension'] : NULL;
 	
-	if(!isset($attachments[ 'file' ])) {
-		rlog("Error! Incorrect attachment." . print_r($attachments), 'WARNING');
-		return $attachments;
-	}
-	$basefile = basename($attachments[ 'file' ]);
-
 	// Optimize only pictures/files accepted by the API
 	if( !in_array(strtolower($extension), resmushit::authorizedExtensions()) ) {
 		return $attachments;	
 	}
 
+	if(!isset($attachments[ 'file' ])) {
+		rlog("Error! Incorrect attachment " . print_r($attachments, TRUE), 'WARNING');
+		return $attachments;
+	}
+	$basefile = basename($attachments[ 'file' ]);
+
+	
+
 	$statistics[] = reSmushit::optimize($basepath . $basefile, $force_keep_original );
 
 	if(!isset($attachments[ 'sizes' ])) {
-		rlog("Error! Unable to find attachments sizes." . print_r($attachments), 'WARNING');
+		rlog("Error! Unable to find attachments sizes." . print_r($attachments, TRUE), 'WARNING');
 		return $attachments;
 	}
 	foreach($attachments['sizes'] as $image_style) {
