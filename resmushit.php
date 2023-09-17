@@ -599,7 +599,7 @@ add_action( 'wp_ajax_resmushit_notice_close', 'resmushit_notice_close' );
 */
 function resmushit_general_admin_notice(){	
 	// Expired offer
-	if(time() > strtotime("16 October 2023")) {
+	if(time() > strtotime("31 October 2023")) {
 		return FALSE;
 	}
 	// Already seen notice
