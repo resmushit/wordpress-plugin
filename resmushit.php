@@ -10,8 +10,8 @@
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://wordpress.org/plugins/resmushit-image-optimizer/
  * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.4.12
- * Timestamp:         2023.09.17
+ * Version:           0.4.13
+ * Timestamp:         2023.10.14
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
  * Author:            Charles Bourgeaux
@@ -69,8 +69,8 @@ function resmushit_activate() {
 			update_option( 'resmushit_remove_unsmushed', 0 );
 		if(get_option('resmushit_has_no_backup_files') === false || get_option('resmushit_has_no_backup_files') == "")
 			update_option( 'resmushit_has_no_backup_files', 0 );
-		if(get_option('resmushit_notice_close_eol') === false || get_option('resmushit_notice_close_eol') == "")
-			update_option( 'resmushit_notice_close_eol', 0 );
+		if(get_option('resmushit_notice_close_eoldec23') === false || get_option('resmushit_notice_close_eoldec23') == "")
+			update_option( 'resmushit_notice_close_eoldec23', 0 );
 	}
 }
 register_activation_hook( __FILE__, 'resmushit_activate' );
@@ -581,7 +581,7 @@ function resmushit_notice_close() {
 		wp_send_json(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
 		die();
 	}
-	if(update_option( 'resmushit_notice_close_eol', 1 )) {
+	if(update_option( 'resmushit_notice_close_eoldec23', 1 )) {
 		$return = TRUE;
 	}
 	wp_send_json(json_encode(array('status' => $return)));
@@ -599,11 +599,11 @@ add_action( 'wp_ajax_resmushit_notice_close', 'resmushit_notice_close' );
 */
 function resmushit_general_admin_notice(){	
 	// Expired offer
-	if(time() > strtotime("31 October 2023")) {
+	if(time() > strtotime("31 December 2023")) {
 		return FALSE;
 	}
 	// Already seen notice
-	if(get_option('resmushit_notice_close_eol') == 1) {
+	if(get_option('resmushit_notice_close_eoldec23') == 1) {
 		return FALSE;
 	}
 	$allowed_pages = array(
@@ -623,10 +623,10 @@ function resmushit_general_admin_notice(){
 		echo "
 			<div class='notice notice-success is-dismissible rsmt-notice' data-csrf='" . wp_create_nonce( 'notice_close' ) . "' data-dismissible='disable-done-notice-forever' data-notice='resmushit-notice-shortpixel'>
 			<div class='txt-center'><img src='". RESMUSHIT_BASE_URL . "images/patreon.png' /></div>
-				<div class='extra-padding'><h4 class='no-uppercase'>End of reSmush.it on October 31st, 2023, unless if...</h4>
-				<p>For more than 7 years, reSmush.it has been provided freely for the whole community (more than <b>400,000</b> websites). But now, the cost of servers has increased and we cannot maintain this service without the community's help.</p>
-				<p>With $150/month we can maintain the service, and with $500/month we can actively maintain the plugin, and also develop .webp/AVIF support to provide better optimization for websites.</p>
-				<p>We definitely need your help, or we will definitely have to shut the service by the <b>31th october 2023</b>. In this case, you'll have our competitors that will propose for a couple of euros the same service (and freely but with many more limitations).</p>
+				<div class='extra-padding'><h4 class='no-uppercase'>🫶Thanks a lot! reSmush.it will continue for now!</h4>
+				<p>First, we'd really like to thank members of the community who have supported us by participating to the patreon. As you may know, over the last months, the cost of servers has increased and we were not able to maintain this service without the community's help. reSmush.it has been provided for FREE during 7 years</p>
+				<p>As we're getting very close to the target, we're able to preserve reSmush.it for now. <em>However, we still need your financial support to enhance new features on reSmush.it, such as faster servers, webp and next generations format support and new exciting features!</em></p>				
+				<p>So, we're kindly asking our community to participate for those who haven't, in order to preserve blazing fast images optimizations for everyone !</p>
 				<p>Your help will be deeply appreciated to continue this fabulous adventure! 🚀</p>
 				<p></p>
 				<p>Kind regards ❤️,</p>
