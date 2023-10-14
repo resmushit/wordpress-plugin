@@ -14,13 +14,14 @@ The FREE Image Optimizer which will compress your pictures and improve your SEO 
 reSmush.it Image Optimizer allow to use **free Image optimization** based on [reSmush.it API](http://www.resmush.it/ "Image Optimization API, developped by Charles Bourgeaux"). reSmush.it provides image size reduction based on several advanced algorithms. The API accept JPG, PNG and GIF files up to **5MB**.
 
 This plugin includes a bulk operation to optimize all your pictures in 2 clicks ! Change your image optimization level to fit your needs !
-This service is used by more than **400,000*php* websites on different CMS (Wordpress, Drupal, Joomla, Magento, Prestashop...).
+This service is used by more than **400,000** websites on different CMS (Wordpress, Drupal, Joomla, Magento, Prestashop...).
+
+reSmush.it can remains FREE due to community supports on our [Patreon Page](https://patreon.com/resmushit "Support reSmush.it on Patreon"). These financial supports allow to pay servers and to develop new exciting features!
 
 The plugin includes an option to exclude some pictures of the optimizer.
 
 Since Aug. 2016, reSmush.it allows to optimize pictures up to 5MB, for free !
 
-[](http://coderisk.com/wp/plugin/resmushit-image-optimizer/RIPS-Af6lJWjjj5)
 
 == Installation ==
 
