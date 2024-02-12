@@ -1,26 +1,34 @@
-=== reSmush.it : the only free Image Optimizer & compress plugin  ===
-Contributors: resmushit
-Tags: image, optimizer, image optimization, resmush.it, smush, jpg, png, gif, optimization, compression, Compress, Images, Pictures, Reduce Image Size, Smush, Smush.it
+=== reSmush.it : the original free image compressor and optimizer plugin  ===
+Contributors: ShortPixel, resmushit
+Tags: image, optimizer, image optimization, resmush.it, smush, jpg, png, gif, optimization, compression, Compress, Images, Pictures, Reduce Image Size, Smush, Smush.it, free image optimization
 Requires at least: 4.0.0
 Tested up to: 6.4.3
 Stable tag: 0.4.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The FREE Image Optimizer which will compress your pictures and improve your SEO & performances by using reSmush.it, the 25+ billion images API optimizer.
+reSmush.it is the FREE image compressor and optimizer plugin - use it to optimize your images and improve the SEO and performance of your website.
 
 == Description ==
+The reSmush.it Image Optimizer is a **free WordPress image compressor and optimizer** plugin which allows you to smush your website's images so that they load faster.
+The plugin is super easy to use (just 2 clicks!), supports JPG, PNG and GIF image formats and can be used to bulk optimize current(past) images and automatically optimize all new images.
+You can also adjust the optimization levels and exclude certain images.
+Since its launch more than 9 years ago, reSmush.it has become the preferred choice for WordPress image optimization as it allows you to smush the images for free.
+reSmush.it image optimization service works on various CMS platforms (WordPress, Drupal, Joomla, Magento, Prestashop, etc.) and is used by **more than 400,000 websites** worldwide.
 
-reSmush.it Image Optimizer allow to use **free Image optimization** based on [reSmush.it API](http://www.resmush.it/ "Image Optimization API, developped by Charles Bourgeaux"). reSmush.it provides image size reduction based on several advanced algorithms. The API accept JPG, PNG and GIF files up to **5MB**.
+reSmush.it has earned the reputation of being the best free, fast and easy image optimization plugin out there :-)
 
-This plugin includes a bulk operation to optimize all your pictures in 2 clicks ! Change your image optimization level to fit your needs !
-This service is used by more than **400,000** websites on different CMS (Wordpress, Drupal, Joomla, Magento, Prestashop...).
-
-reSmush.it can remains FREE due to community supports on our [Patreon Page](https://patreon.com/resmushit "Support reSmush.it on Patreon"). These financial supports allow to pay servers and to develop new exciting features!
-
-The plugin includes an option to exclude some pictures of the optimizer.
-
-Since Aug. 2016, reSmush.it allows to optimize pictures up to 5MB, for free !
+**Features:**
+- Free bulk image compressor
+- Automatic image optimization on upload
+- Keep or remove EXIF data
+- Image quality selector
+- Powerful and free image optimizer API
+- Customizable settings for image quality
+- Automatic image optimization with CRON
+- Backup and restore original images
+- Image statistics
+- File logging for developers
 
 
 == Installation ==
@@ -32,42 +40,46 @@ Since Aug. 2016, reSmush.it allows to optimize pictures up to 5MB, for free !
 
 == Frequently Asked Questions ==
 
+= How does reSmush.it Image Optimizer compare to other image optimization plugins (e.g. Smush, Imagify, TinyPNG, Kraken, EWWW, Optimole)?
 
-= How great is reSmush.it ? =
+reSmush.it Image Optimizer offers advanced image optimization and provides many of the premium features you'll find in competing services for free.
+Plus, we've earned a reputation for being the best free, fast and easy image optimization plugin out there:-)
 
-Since we've optimized more than 15,000,000,000 pictures, we've risen new skills. Our service is still in development to bring you new crazy functionalities.
+= How great is reSmush.it? =
 
-= What about WebP and next generation image formats ? =
+Since we have optimized more than 25,000,000,000 images, we have acquired new skills. Our service is still in development to bring you new useful features.
 
-We're working on a new offer to bring you the best of these new features. Please be patient, it will come soon :)
+= What about WebP and next-generation image formats? =
 
-= Is there an "Optimize on upload" feature ? =
+We are working on a new offer to give you the best of these new features. Please be patient, it will be coming soon :)
 
-Absolutely, this feature is enabled for all new pictures to be added, and can be disabled on will.
+= Is there a function "Optimize on upload"? =
 
-= Is there a CRON feature ? =
+Absolutely, this function is activated for all newly added images and can be deactivated if desired.
 
-Yes, for big (and even for small) media Libraries, you can optimize your pictures using Cronjobs.
+= Is there a CRON function? =
 
-= Can I choose an optimisation level ? =
+Yes, you can optimize your images with cronjobs for large (and also for small) media libraries.
 
-Yes, by default the optimization level is set at 92. But you can optimize more your pictures by reducing this optimization level.
+= Can I choose an optimization level? =
 
-= Can I go back to my original pictures ? =
+Yes, by default the optimization level is set to 92. However, you can further optimize your images by reducing the optimization level.
 
-Yes, by excluding/reverting this asset you'll have your original image available.
+= Can I return to my original images? =
 
-= Is it possible to exclude some pictures from the optimizer ? =
+Yes, by excluding/reverting this asset, you will have your original image available again.
+
+= Is it possible to exclude some images from the optimizer? =
 
 Yes, since version 0.1.2, you can easily exclude an asset from the optimizer.
 
-= Have I a risk to lose my existing pictures ? =
+= Am I at risk of losing my existing images? =
 
-Nope ! reSmush.it Image Optimizer creates a copy of the original pictures, and will perform optimizations only on copies.
+No! reSmush.it Image Optimizer creates a copy of the original images and performs optimizations only on the copies.
 
-= Is it free ? =
+= Is it free? =
 
-Yes ! Absolutely free, the only restriction is to send images below 5MB.
+Yes ! Absolutely free, the only restriction is that the images must not be larger than 5 MB.
 
 == Screenshots ==
 

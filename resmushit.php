@@ -1,7 +1,7 @@
 <?php
 /**
  * @package   resmushit
- * @author    Charles Bourgeaux <hello@resmush.it>
+ * @author    ShortPixel, Charles Bourgeaux <hello@resmush.it>
  * @license   GPL-2.0+
  * @link      http://www.resmush.it
  * @copyright 2024 Resmush.it
