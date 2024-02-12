@@ -4,7 +4,7 @@ Wordpress plugin for the **reSmush.it Image Optimization API**
 
 ## What is it ?
 
-Use reSmush.it Image Optimizer for **FREE** to **optimize your pictures file sizes**. Improve your performances by using reSmush.it, the 20+ billion images API optimizer.
+Use reSmush.it Image Optimizer for **FREE** to **optimize your pictures file sizes**. Improve your performances by using reSmush.it, the 25+ billion images API optimizer.
 
 reSmush.it Image Optimizer allow to use **free Image optimization** based on [reSmush.it API](https://resmush.it/ "Image Optimization API, developped by Charles Bourgeaux"). reSmush.it provides image size reduction based on several advanced algorithms. The API accept JPG, PNG and GIF files up to **5MB**.
 
@@ -69,6 +69,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 ## Authors
 
 * **Charles Bourgeaux** - *Initial work* - [reSmush.it](https://resmush.it)
+* **ShortPixel** - [Shortpixel](https://shortpixel.com)
 
 ## License
 
@@ -77,7 +78,3 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 More informations on the plugin on the [Wordpress Plugin Page](https://fr.wordpress.org/plugins/resmushit-image-optimizer/ "Wordpress Plugin Page")
 
-## Support us on our new platform
-Support us through Ko-Fi !
-
-[![Kofi](https://feed.resmush.it/images/kofi-button.png)](https://ko-fi.com/resmushit)

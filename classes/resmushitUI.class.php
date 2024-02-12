@@ -577,7 +577,8 @@ Class reSmushitUI {
 				'value'      => array(),
 				'class'      => array(),
 				'name'      => array(),
-				'data-*'      => array(),
+				'data-csrf'      => array(),
+				'data-attachment-id'      => array(),
 				'checked'   => array(),
 		)));
 		echo wp_kses($output, $allowed_html);
