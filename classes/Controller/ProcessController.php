@@ -46,6 +46,13 @@ class ProcessController
     }
   }
 
+  public function unHookProcessor()
+  {
+    Log::addTemp('Unhooking Process Filter');
+    remove_filter('wp_generate_attachment_metadata', array($this,'process_images') );
+
+  }
+
   /**
   *
   * Delete also -unsmushed file (ie. Original file) when deleting an attachment

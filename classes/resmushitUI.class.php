@@ -573,11 +573,11 @@ Class reSmushitUI {
 			$output = '-';
 		}
 		else if(reSmushit::getAttachmentQuality($attachment_id) != reSmushit::getPictureQualitySetting())
-			$output = '<input type="button" data-csrf="' . wp_create_nonce( 'single_attachment' ) . '" value="'. __('Optimize', 'resmushit-image-optimizer') .'" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send" />';
+			$output = '<button type="button" data-csrf="' . wp_create_nonce( 'single_attachment' ) . '"  class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send">'. __('Optimize', 'resmushit-image-optimizer') .'</button>';
 		else{
 			$statistics = reSmushit::getStatistics($attachment_id);
-			$output = __('Reduced by', 'resmushit-image-optimizer') . " ". $statistics['total_saved_size_nice'] ." (". $statistics['percent_reduction'] . ' ' . __('saved', 'resmushit-image-optimizer') . ")";
-			$output .= '<br><br><input type="button" data-csrf="' . wp_create_nonce( 'single_attachment' ) . '" value="'. __('Force re-optimize', 'resmushit-image-optimizer') .'" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send" />';
+			$output = __('Reduced by', 'resmushit-image-optimizer') . " ". $statistics['total_saved_size_nice'] ." <br>(". $statistics['percent_reduction'] . ' ' . __('saved', 'resmushit-image-optimizer') . ")";
+			$output .= '<br><br><button type="button" data-csrf="' . wp_create_nonce( 'single_attachment' ) . '" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send">'. __('Force re-optimize', 'resmushit-image-optimizer') .'</button>';
 		}
 
 		if($return)

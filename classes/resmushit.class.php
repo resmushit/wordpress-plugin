@@ -474,6 +474,7 @@ Log::addTemp('Pathinfo', $fileInfo);
 Log::addTemp('Attachment', $attachment);
 		if (! isset($attachment[0]))
 		{
+
 			 return false;
 		}
 	  return $attachment[0];

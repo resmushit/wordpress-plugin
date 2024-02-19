@@ -203,6 +203,9 @@ class AjaxController
   	$return = array('success' => 0);
   	$wp_upload_dir=wp_upload_dir();
 
+    $processController = ProcessController::getInstance();
+    $processController->unHookProcessor();
+
 Log::addTemp('Detect Files', $files);
   	foreach($files as $f) {
   		$dest = str_replace('-unsmushed', '', $f);
@@ -211,8 +214,17 @@ Log::addTemp('Detect Files', $files);
 
       if (false === $attachment_id)
       {
-         Log::addWarn('Restoring - no attachmentID for this URL '. $pictureURL);
-         continue;
+         Log::addTemp('First Try failed - '. $pictureURL);
+         if (strpos($pictureURL, '-scaled') !== false)
+         {
+            $pictureURL = str_replace('-scaled', '', $pictureURL);
+            $attachment_id = reSmushit::resmushit_get_image_id($pictureURL);
+            if (false === $attachment_id)
+            {
+              Log::addWarn('Restoring - no attachmentID for this URL '. $pictureURL);
+              continue;
+            }
+         }
       }
 
   		if(reSmushit::revert($attachment_id, true)) {

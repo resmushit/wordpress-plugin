@@ -188,7 +188,7 @@ class AdminController
   * @return none
   */
   public function register_plugin_assets(){
-   	$allowed_pages = array(
+   	/*$allowed_pages = array(
   						//	'media_page_resmushit_options',
   							'settings_page_resmushit_options',
    							'upload',
@@ -198,14 +198,24 @@ class AdminController
   							'edit-post',
   							'media',
    							'attachment');
+    */
+    $admin_pages = array(
+              'settings_page_resmushit_options',
+    );
 
-   	if ( function_exists( 'get_current_screen' ) ) {
+    $media_pages = array(
+      'upload',
+      'post',
+      'attachment',
+      'media'
+    );
+
   		$current_page = get_current_screen();
-  	}
-  	if ( isset( $current_page->id ) && in_array( $current_page->id, $allowed_pages ) ) {
+
   		wp_register_style( 'resmushit-css', plugins_url( 'css/resmushit.css', RESMUSH_PLUGIN_FILE ) );
-  		wp_enqueue_style( 'resmushit-css' );
-  	    wp_enqueue_style( 'prefix-style', esc_url_raw( 'https://fonts.googleapis.com/css?family=Roboto+Slab:700' ), array(), null  );
+
+      wp_register_style('resmushit-admin-css', plugins_url('css/resmush_admin.css', RESMUSH_PLUGIN_FILE));
+      wp_register_style('resmushit-media-css', plugins_url('css/resmush_media.css', RESMUSH_PLUGIN_FILE));
 
   	    wp_register_script( 'resmushit-js', plugins_url( 'js/script.js?' . hash_file('crc32',  RESMUSH_PLUGIN_PATH . '/js/script.js'), RESMUSH_PLUGIN_FILE ) );
 
@@ -224,13 +234,23 @@ class AdminController
             'error_webservice' => __('An error occured when contacting webservice. Please try again later.', "resmushit-image-optimizer"),
 
         );
-
-  	    wp_enqueue_script( 'resmushit-js' );
-
         wp_localize_script('resmushit-js', 'reSmush', array(
           'strings' => $translations,
         ));
-  	}
+
+        //Admin
+        if (in_array( $current_page->id, $admin_pages ) ) {
+
+          wp_enqueue_script( 'resmushit-js' );
+          wp_enqueue_style( 'resmushit-css' );
+          wp_enqueue_style('resmushit-admin-css');
+          wp_enqueue_style( 'prefix-style', esc_url_raw( 'https://fonts.googleapis.com/css?family=Roboto+Slab:700' ), array(), null  );
+  	     }
+         elseif (in_array( $current_page->id, $media_pages ) )
+         {
+            wp_enqueue_script('resmushit-js');
+            wp_enqueue_style('resmushit-media-css');
+         }
   }
 
   /**
