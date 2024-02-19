@@ -1,0 +1,1 @@
+{"name":"Resmush\/shortpixelmodules","description":"ShortPixel submodules","type":"function","autoload":{"psr-4":{"Resmush\\Notices":"notices\/src","Resmush\\ShortPixelLogger":"log\/src","Resmush\\FileSystem":"filesystem\/src"}}}

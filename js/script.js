@@ -15,12 +15,12 @@ jQuery(document).delegate(".rsmt-notice button.notice-dismiss","mouseup",functio
 	var current = this;
 	var csrf_token = jQuery(current).parent().attr('data-csrf');
 	jQuery.post(
-		ajaxurl, { 
+		ajaxurl, {
 			action: 'resmushit_notice_close',
 			csrf: csrf_token
-		}, 
+		},
 		function(response) {
-			var data = jQuery.parseJSON(response);
+			var data = JSON.parse(response);
 		}
 	);
 });
@@ -56,18 +56,18 @@ removeBackupFiles();
 restoreBackupFiles();
 
 
-/** 
+/**
  * recursive function for resizing images
  */
 function resmushit_bulk_process(bulk, item){
-	var error_occured = false;	
+	var error_occured = false;
 	var csrf_token = jQuery('.rsmt-bulk').attr('data-csrf');
 	jQuery.post(
-		ajaxurl, { 
-			action: 'resmushit_bulk_process_image', 
+		ajaxurl, {
+			action: 'resmushit_bulk_process_image',
 			data: bulk[item],
 			csrf: csrf_token
-		}, 
+		},
 		function(response) {
 			if(response == 'failed')
 				error_occured = true;
@@ -77,7 +77,7 @@ function resmushit_bulk_process(bulk, item){
 			if(!flag_removed){
 				jQuery('#bulk_resize_target').remove();
 				container.append('<div id="smush_results" style="padding: 20px 5px; overflow: auto;" />');
-				var results_target = jQuery('#smush_results'); 
+				var results_target = jQuery('#smush_results');
 				results_target.html('<div class="bulk--back-progressionbar"><div <div class="resmushit--progress--bar"</div></div>');
 				flag_removed = true;
 			}
@@ -94,7 +94,7 @@ function resmushit_bulk_process(bulk, item){
 					jQuery('.non-optimized-wrapper > p').remove();
 					jQuery('.non-optimized-wrapper > div').remove();
 				} else if(file_too_big_count){
-					
+
 					var message = file_too_big_count + ' picture cannot be optimized (> 5MB). All others have been optimized';
 					if(file_too_big_count > 1)
 						var message = file_too_big_count + ' pictures cannot be optimized (> 5MB). All others have been optimized';
@@ -113,7 +113,7 @@ function resmushit_bulk_process(bulk, item){
 }
 
 
-/** 
+/**
  * ajax post to return all images that are candidates for resizing
  * @param string the id of the html element into which results will be appended
  */
@@ -127,16 +127,16 @@ function resmushit_bulk_resize(container_id, csrf_token) {
 
 	target.animate(
 		{ height: [100,'swing'] },
-		500, 
-		function() {		
+		500,
+		function() {
 			jQuery.post(
-				ajaxurl, 
-				{ action: 'resmushit_bulk_get_images', csrf: csrf_token }, 
+				ajaxurl,
+				{ action: 'resmushit_bulk_get_images', csrf: csrf_token },
 				function(response) {
 					var images = JSON.parse(response);
 					if (images.hasOwnProperty('error')) {
 						target.html('<div>' + images.error + '.</div>');
-					} else if (images.hasOwnProperty('nonoptimized') && images.nonoptimized.length > 0) {	
+					} else if (images.hasOwnProperty('nonoptimized') && images.nonoptimized.length > 0) {
 						bulkTotalimages = images.nonoptimized.length;
 						target.html('<div class="loading--bulk"><span class="loader"></span><br />' + bulkTotalimages + ' attachment(s) found, starting optimization...</div>');
 						flag_removed = false;
@@ -151,18 +151,18 @@ function resmushit_bulk_resize(container_id, csrf_token) {
 }
 
 
-/** 
+/**
  * ajax post to update statistics
  */
 function updateStatistics() {
 	var csrf_token = jQuery('.rsmt-bulk').attr('data-csrf');
 	jQuery.post(
-		ajaxurl, { 
+		ajaxurl, {
 			action: 'resmushit_update_statistics',
 			csrf: csrf_token
-		}, 
+		},
 		function(response) {
-			statistics = JSON.parse(response);	
+			statistics = JSON.parse(response);
 			jQuery('#rsmt-statistics-space-saved').text(statistics.total_saved_size_formatted);
 			jQuery('#rsmt-statistics-files-optimized').text(statistics.files_optimized);
 			jQuery('#rsmt-statistics-percent-reduction').text(statistics.percent_reduction);
@@ -172,7 +172,7 @@ function updateStatistics() {
 }
 
 
-/** 
+/**
  * ajax post to disabled status (or remove)
  */
 function updateDisabledState() {
@@ -186,10 +186,10 @@ function updateDisabledState() {
 		var csrfToken = jQuery(current).attr('data-csrf');
 
 		jQuery.post(
-			ajaxurl, { 
+			ajaxurl, {
 				action: 'resmushit_update_disabled_state',
 				data: {id: postID, disabled: disabledState, csrf: csrfToken}
-			}, 
+			},
 			function(response) {
 				jQuery(current).removeClass('rsmt-disable-loader');
 				jQuery(current).prop('disabled', false);
@@ -204,8 +204,8 @@ function updateDisabledState() {
 					selector.empty().append('-');
 				} else {
 					selector.empty().append('<input type="button" value="Optimize" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="' + postID + '" class="button wp-smush-send" />');
-				}	
-				optimizeSingleAttachment();			
+				}
+				optimizeSingleAttachment();
 			}
 		);
 	});
@@ -213,7 +213,7 @@ function updateDisabledState() {
 
 
 
-/** 
+/**
  * ajax to Optimize a single picture
  */
 function optimizeSingleAttachment() {
@@ -225,14 +225,14 @@ function optimizeSingleAttachment() {
 		var disabledState = jQuery(current).is(':checked');
 		var postID = jQuery(current).attr('data-attachment-id');
 		var csrf_token = jQuery(current).attr('data-csrf');
-		
+
 		jQuery.post(
-			ajaxurl, { 
+			ajaxurl, {
 				action: 'resmushit_optimize_single_attachment',
 				data: {id: postID, csrf: csrf_token}
-			}, 
+			},
 			function(response) {
-				var statistics = jQuery.parseJSON(response);
+				var statistics = JSON.parse(response);
 				jQuery(current).parent().empty().append('Reduced by ' + statistics.total_saved_size_nice + ' (' + statistics.percent_reduction + ' saved)');
 			}
 		);
@@ -240,25 +240,25 @@ function optimizeSingleAttachment() {
 }
 
 
-/** 
+/**
  * ajax to Optimize a single picture
  */
 function removeBackupFiles() {
 	jQuery(document).delegate(".rsmt-trigger--remove-backup-files","mouseup",function(e){
 		if ( confirm( "You're about to delete your image backup files. Are you sure to perform this operation ?" ) ) {
-   
+
 		    e.preventDefault();
 			var current = this;
 			jQuery(current).val('Removing backups...');
 			jQuery(current).prop('disabled', true);
 			var csrf_token = jQuery(current).attr('data-csrf');
 			jQuery.post(
-				ajaxurl, { 
+				ajaxurl, {
 					action: 'resmushit_remove_backup_files',
 					csrf: csrf_token
-				}, 
+				},
 				function(response) {
-					var data = jQuery.parseJSON(response);
+					var data = JSON.parse(response);
 					jQuery(current).val(data.success + ' backup files successfully removed');
 					setTimeout(function(){ jQuery(current).parent().parent().slideUp() }, 3000);
 				}
@@ -268,25 +268,25 @@ function removeBackupFiles() {
 }
 
 
-/** 
+/**
  * ajax to Optimize a single picture
  */
 function restoreBackupFiles() {
 	jQuery(document).delegate(".rsmt-trigger--restore-backup-files","mouseup",function(e){
 		if ( confirm( "You're about to restore ALL your original image files. Are you sure to perform this operation ?" ) ) {
-   
+
 		    e.preventDefault();
 			var current = this;
 			jQuery(current).val('Restoring backups...');
 			jQuery(current).prop('disabled', true);
 			var csrf_token = jQuery(current).attr('data-csrf');
 			jQuery.post(
-				ajaxurl, { 
+				ajaxurl, {
 					action: 'resmushit_restore_backup_files',
 					csrf: csrf_token
-				}, 
+				},
 				function(response) {
-					var data = jQuery.parseJSON(response);
+					var data = JSON.parse(response);
 					jQuery(current).val(data.success + ' images successfully restored');
 				}
 			);

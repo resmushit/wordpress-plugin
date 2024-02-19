@@ -1,0 +1,30 @@
+{
+    "name": "short-pixel-optimizer/resmush",
+    "description": "Resmush.it WordPress Plugin",
+    "repositories": [
+        {
+            "packagist.org": false,
+            "type": "path",
+            "url": "../modules/*",
+	    "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "require": {
+        "shortpixel/notices":"@dev",
+        "shortpixel/build" : "@dev",
+				"shortpixel/filesystem" : "@dev"
+    },
+    "autoload": {
+        "psr-4": { "Resmush\\" : "classes"}
+    },
+    "scripts": {
+        "post-update-cmd" : "\\ShortPixel\\Build\\Build::BuildIt",
+        "buildLoader": "\\Resmush\\Helper\\BuildAutoLoader::buildJSON",
+    },
+    "extra": {
+         "targetNamespace" : "Resmush",
+         "targetFilter" : "resmush"
+    }
+}

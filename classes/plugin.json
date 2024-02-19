@@ -1,0 +1,1 @@
+{"name":"Resmush\/plugin","description":"Resmush.IT","type":"function","autoload":{"psr-4":{"Resmush":"classes/"}}}
