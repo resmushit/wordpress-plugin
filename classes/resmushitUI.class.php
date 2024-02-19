@@ -299,6 +299,16 @@ Class reSmushitUI {
 		self::fullWidthPanelEndWrapper();
 	}
 
+  public static function feedbackPanel()
+  {
+    self::fullWidthPanelWrapper(__('Feedback', 'resmushit-image-optimizer'), null, 'green');
+
+    $html = '<p><a href='. RESMUSHIT_FEEDBACK_URL . ' target="_blank">Feedback form</a></p>';
+    echo wp_kses_post($html);
+    self::fullWidthPanelEndWrapper();
+
+  }
+
 
 /**
 	 *

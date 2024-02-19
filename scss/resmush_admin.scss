@@ -1,0 +1,38 @@
+// Main settings UI
+.resmush-settings-ui
+{
+  // Tabular navigation
+  .nav-block
+  {
+    background: #fff;
+
+    .rsmt-tabs-nav
+    {
+      // width: 50%;
+//       display: block;
+       list-style: none;
+       margin-top: 50px;
+
+       li {
+          font-weight: 700;
+          background: #fff;
+          cursor: pointer;
+          text-align: left;
+          font-size:16px;
+          margin: 10px 0;
+          padding-left: 30px;
+          &.active {
+            background-color: rgb(26, 189, 202);
+            color: #fff;
+
+          }
+          a {
+              text-decoration: none;
+              color: #3c434a;
+          }
+       }
+    }
+
+  }
+
+}

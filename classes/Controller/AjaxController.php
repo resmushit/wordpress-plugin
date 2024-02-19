@@ -224,6 +224,13 @@ Log::addTemp('Detect Files', $files);
               Log::addWarn('Restoring - no attachmentID for this URL '. $pictureURL);
               continue;
             }
+            else {
+              Log::addTemp('Second Try: ' . $attachment_id);
+            }
+         }
+         else {
+           Log::addWarn('Restoring - no attachmentID for this URL '. $pictureURL);
+           continue;
          }
       }
 

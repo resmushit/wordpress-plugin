@@ -50,6 +50,50 @@ jQuery( ".list-accordion h4" ).on('click', function(){
 	}
 });
 
+// NAVIGATION
+
+
+function ChangePanelEvent(event)
+{
+		event.preventDefault();
+		var target = event.target;
+		var tabTarget = target.dataset.tab;
+
+		// This can be done better if something was decided. 
+		var tabNavs = document.querySelectorAll('.rsmt-tabs-nav li');
+		for (var i = 0; i < tabNavs.length; i++)
+		{
+			 tabNavs[i].classList.remove('active');
+			 if (tabNavs[i].dataset.tab == tabTarget)
+			 {
+				 tabNavs[i].classList.add('active');
+			 }
+		}
+
+		var searchClass = 'rsmt-tab-' + tabTarget;
+
+		// Hide everything else.
+		var tabs = document.querySelectorAll('.rsmt-tab');
+		for (var i = 0; i < tabs.length; i++)
+		{
+			 tabs[i].style.display = 'none';
+			 tabs[i].classList.remove('active');
+			 if (tabs[i].classList.contains(searchClass))
+			 {
+				  tabs[i].style.display = 'block';
+					tabs[i].classList.add('active');
+			 }
+		}
+
+}
+
+var tabNavs = document.querySelectorAll('.rsmt-tabs-nav li');
+for (var i = 0; i < tabNavs.length; i++)
+{
+		if (tabNavs[i].dataset.tab !== undefined)
+	 		tabNavs[i].addEventListener('click', ChangePanelEvent);
+}
+
 updateDisabledState();
 optimizeSingleAttachment();
 removeBackupFiles();

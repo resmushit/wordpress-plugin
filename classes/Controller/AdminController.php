@@ -161,19 +161,41 @@ class AdminController
   */
   public function settings_page() {
   	?>
-  	<div class='rsmt-panels'>
-  		<div class="rsmt-cols w66 iln-block">
+    <div class='rsmt-panels'>
+      <div class='rmst-panel w100'>
   			<?php reSmushitUI::headerPanel();?>
+      </div>
+    </div>
+  	<div class='rsmt-panels resmush-settings-ui'>
+
+     <div class="rsmt-cols w10 iln-block nav-block">
+        <ul class='rsmt-tabs-nav'>
+          <li data-tab='actions' class='active'>Actions</li>
+          <li data-tab='settings'>Settings</li>
+          <li><a href="<?php echo RESMUSHIT_FEEDBACK_URL ?>" target="_blank">Feedback</a></li>
+        </ul>
+
+     </div>
+
+  		<div class="rsmt-cols w60 iln-block rsmt-tab rsmt-tab-actions active">
   			<?php reSmushitUI::alertPanel();?>
   			<?php reSmushitUI::bulkPanel();?>
   			<?php reSmushitUI::bigFilesPanel();?>
   			<?php reSmushitUI::statisticsPanel();?>
   			<?php reSmushitUI::restorePanel();?>
   		</div>
-  		<div class="rsmt-cols w33 iln-block">
-  			<?php reSmushitUI::settingsPanel();?>
-  			<?php reSmushitUI::newsPanel();?>
-  		</div>
+
+      <div class='rsmt-cols w60 iln-block rsmt-tab rsmt-tab-settings' style='display:none'>
+        <?php reSmushitUI::settingsPanel();?>
+      </div>
+
+      <div class='rsmt-cols w60 iln-block rsmt-tab rsmt-tab-feedback' style='display:none'>
+        <?php reSmushitUI::feedbackPanel();?>
+      </div>
+
+      <div class="rsmt-cols w30 iln-block">
+          <h1>ADS</h1>
+      </div>
   	</div>
   	<?php
   }
@@ -250,6 +272,8 @@ class AdminController
          {
             wp_enqueue_script('resmushit-js');
             wp_enqueue_style('resmushit-media-css');
+            wp_enqueue_style( 'resmushit-css' );
+
          }
   }
 
