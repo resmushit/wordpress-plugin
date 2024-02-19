@@ -208,7 +208,28 @@ class AdminController
   	    wp_enqueue_style( 'prefix-style', esc_url_raw( 'https://fonts.googleapis.com/css?family=Roboto+Slab:700' ), array(), null  );
 
   	    wp_register_script( 'resmushit-js', plugins_url( 'js/script.js?' . hash_file('crc32',  RESMUSH_PLUGIN_PATH . '/js/script.js'), RESMUSH_PLUGIN_FILE ) );
+
+        $translations = array(
+            'restore_all_confirm' => __("You're about to restore ALL your original image files. Are you sure to perform this operation ?", "resmushit-image-optimizer"),
+            'images_restored' => __('images successfully restored', "resmushit-image-optimizer"),
+            'backupfiles_removed' => __('backup files successfully removed', "resmushit-image-optimizer"),
+            'remove_backup_confirm' => __("You're about to delete your image backup files. Are you sure to perform this operation ?", "resmushit-image-optimizer"),
+            'removing_backups' => __('Removing backups...', "resmushit-image-optimizer"),
+            'reduced_by' => __('Reduced by', "resmushit-image-optimizer"),
+            'optimizing' => __('Optimizing...', "resmushit-image-optimizer"),
+            'attachments_found' => __('attachment(s) found, starting optimization...', "resmushit-image-optimizer"),
+            'no_attachments_found' => __('There are no existing attachments that requires optimization.', "resmushit-image-optimizer"),
+            'examing_attachments' => __('Examining existing attachments. This may take a few moments...', "resmushit-image-optimizer"),
+            'picture_too_big' => __('picture(s) cannot be optimized (> 5MB). All others have been optimized', "resmushit-image-optimizer"),
+            'error_webservice' => __('An error occured when contacting webservice. Please try again later.', "resmushit-image-optimizer"),
+
+        );
+
   	    wp_enqueue_script( 'resmushit-js' );
+
+        wp_localize_script('resmushit-js', 'reSmush', array(
+          'strings' => $translations,
+        ));
   	}
   }
 

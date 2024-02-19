@@ -90,14 +90,12 @@ function resmushit_bulk_process(bulk, item){
 				resmushit_bulk_process(bulk, item + 1);
 			else{
 				if(error_occured){
-					jQuery('.non-optimized-wrapper h3').text('An error occured when contacting webservice. Please try again later.');
+					jQuery('.non-optimized-wrapper h3').text(reSmush.strings.error_webservice);
 					jQuery('.non-optimized-wrapper > p').remove();
 					jQuery('.non-optimized-wrapper > div').remove();
 				} else if(file_too_big_count){
 
-					var message = file_too_big_count + ' picture cannot be optimized (> 5MB). All others have been optimized';
-					if(file_too_big_count > 1)
-						var message = file_too_big_count + ' pictures cannot be optimized (> 5MB). All others have been optimized';
+					var message = file_too_big_count + ' ' . reSmush.strings.picture_too_big;
 
 					jQuery('.non-optimized-wrapper h3').text(message);
 					jQuery('.non-optimized-wrapper > p').remove();
@@ -123,7 +121,7 @@ function resmushit_bulk_resize(container_id, csrf_token) {
 	jQuery('#bulk-resize-examine-button').fadeOut(200);
 	var target = jQuery('#bulk_resize_target');
 
-	target.html('<div class="loading--bulk"><span class="loader"></span><br />Examining existing attachments. This may take a few moments...</div>');
+	target.html('<div class="loading--bulk"><span class="loader"></span><br />' + reSmush.strings.examing_attachments + '</div>');
 
 	target.animate(
 		{ height: [100,'swing'] },
@@ -138,12 +136,12 @@ function resmushit_bulk_resize(container_id, csrf_token) {
 						target.html('<div>' + images.error + '.</div>');
 					} else if (images.hasOwnProperty('nonoptimized') && images.nonoptimized.length > 0) {
 						bulkTotalimages = images.nonoptimized.length;
-						target.html('<div class="loading--bulk"><span class="loader"></span><br />' + bulkTotalimages + ' attachment(s) found, starting optimization...</div>');
+						target.html('<div class="loading--bulk"><span class="loader"></span><br />' + bulkTotalimages + ' ' + reSmush.strings.attachments_found + '</div>');
 						flag_removed = false;
 						//start treating all pictures
 						resmushit_bulk_process(images.nonoptimized, 0);
 					} else {
-						target.html('<div>There are no existing attachments that requires optimization.</div>');
+						target.html('<div>' + reSmush.strings.no_attachments_found + '</div>');
 					}
 				}
 			);
@@ -220,7 +218,7 @@ function optimizeSingleAttachment() {
 	jQuery(document).delegate(".rsmt-trigger--optimize-attachment","mouseup",function(e){
 	    e.preventDefault();
 		var current = this;
-		jQuery(current).val('Optimizing...');
+		jQuery(current).val(reSmush.strings.optimizing);
 		jQuery(current).prop('disabled', true);
 		var disabledState = jQuery(current).is(':checked');
 		var postID = jQuery(current).attr('data-attachment-id');
@@ -233,7 +231,7 @@ function optimizeSingleAttachment() {
 			},
 			function(response) {
 				var statistics = JSON.parse(response);
-				jQuery(current).parent().empty().append('Reduced by ' + statistics.total_saved_size_nice + ' (' + statistics.percent_reduction + ' saved)');
+				jQuery(current).parent().empty().append(reSmush.strings.reduced_by + ' ' + statistics.total_saved_size_nice + ' (' + statistics.percent_reduction + ' saved)');
 			}
 		);
 	});
@@ -245,11 +243,11 @@ function optimizeSingleAttachment() {
  */
 function removeBackupFiles() {
 	jQuery(document).delegate(".rsmt-trigger--remove-backup-files","mouseup",function(e){
-		if ( confirm( "You're about to delete your image backup files. Are you sure to perform this operation ?" ) ) {
+		if ( confirm( reSmush.strings.remove_backup_confirm ) ) {
 
 		    e.preventDefault();
 			var current = this;
-			jQuery(current).val('Removing backups...');
+			jQuery(current).val( reSmush.strings.removing_backups);
 			jQuery(current).prop('disabled', true);
 			var csrf_token = jQuery(current).attr('data-csrf');
 			jQuery.post(
@@ -259,7 +257,7 @@ function removeBackupFiles() {
 				},
 				function(response) {
 					var data = JSON.parse(response);
-					jQuery(current).val(data.success + ' backup files successfully removed');
+					jQuery(current).val(data.success + ' ' + reSmush.strings.backupfiles_removed);
 					setTimeout(function(){ jQuery(current).parent().parent().slideUp() }, 3000);
 				}
 			);
@@ -273,7 +271,7 @@ function removeBackupFiles() {
  */
 function restoreBackupFiles() {
 	jQuery(document).delegate(".rsmt-trigger--restore-backup-files","mouseup",function(e){
-		if ( confirm( "You're about to restore ALL your original image files. Are you sure to perform this operation ?" ) ) {
+		if ( confirm( reSmush.strings.restore_all_confirm) ) {
 
 		    e.preventDefault();
 			var current = this;
@@ -287,7 +285,7 @@ function restoreBackupFiles() {
 				},
 				function(response) {
 					var data = JSON.parse(response);
-					jQuery(current).val(data.success + ' images successfully restored');
+					jQuery(current).val(data.success + ' ' +  reSmush.strings.images_restored );
 				}
 			);
 		}
