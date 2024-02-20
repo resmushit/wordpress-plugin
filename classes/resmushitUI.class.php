@@ -126,13 +126,13 @@ Class reSmushitUI {
 
 		
 		echo wp_kses('<table class="form-table">' 
-				. self::addSetting("text", __("Image quality", 'resmushit-image-optimizer'), __("Default value is 92. The quality factor must be between 0 (very weak) and 100 (best quality)", 'resmushit-image-optimizer'), "resmushit_qlty")
-				. self::addSetting("checkbox", __("Optimize on upload", 'resmushit-image-optimizer'), __("All future images uploaded will be automatically optimized", 'resmushit-image-optimizer'), "resmushit_on_upload")
-				. self::addSetting("checkbox", __("Enable statistics", 'resmushit-image-optimizer'), __("Generates statistics about optimized pictures", 'resmushit-image-optimizer'), "resmushit_statistics")
-				. self::addSetting("checkbox", __("Enable logs", 'resmushit-image-optimizer'), __("Enable file logging (for developers)", 'resmushit-image-optimizer'), "resmushit_logs")
-				. self::addSetting("checkbox", $new_label . __("Process optimize on CRON", 'resmushit-image-optimizer'), __("Will perform image optimization process through CRON tasks", 'resmushit-image-optimizer'), "resmushit_cron")
-				. self::addSetting("checkbox", $new_label . __("Preserve EXIF", 'resmushit-image-optimizer'), __("Will preserve EXIF data during optimization", 'resmushit-image-optimizer'), "resmushit_preserve_exif")
-				. self::addSetting("checkbox", $new_label . __("Do not preserve backups", 'resmushit-image-optimizer'), sprintf(__("Will not preserve a backup of the original file (save space). <a href='%s' title='Should I remove backups?' target='_blank'>Read instructions</a> carefully before enabling.", 'resmushit-image-optimizer'), 'https://resmush.it/wordpress/why-keeping-backup-files'), "resmushit_remove_unsmushed")
+				. self::addSetting("text", __("Image quality", 'resmushit-image-optimizer'), __("A lower value means a smaller image size, a higher value means better image quality. A value between 50 and 85 is normally recommended.", 'resmushit-image-optimizer'), "resmushit_qlty")
+				. self::addSetting("checkbox", __("Optimize on upload", 'resmushit-image-optimizer'), __("Once activated, newly uploaded images are automatically optimized.", 'resmushit-image-optimizer'), "resmushit_on_upload")
+				. self::addSetting("checkbox", $new_label . __("Preserve EXIF", 'resmushit-image-optimizer'), __("Activate this option to retain the original EXIF data in the images.", 'resmushit-image-optimizer'), "resmushit_preserve_exif")
+				. self::addSetting("checkbox", $new_label . __("Deactivate backup", 'resmushit-image-optimizer'), sprintf(__("If you select this option, you choose not to keep the original version of the images. This is helpful to save disk space, but we strongly recommend having a backup of the entire website on hand. <a href='%s' title='Should I remove backups?' target='_blank'>More information</a>.", "resmushit-image-optimizer"), "https://resmush.it/why-preserving-backup-files/"), "resmushit_remove_unsmushed")
+				. self::addSetting("checkbox", $new_label . __("Optimize images using CRON", 'resmushit-image-optimizer'), sprintf(__("Image optimization is performed automatically via CRON tasks. <a href='%s' title='How to configure Cronjobs?' target='_blank'>More information</a>", 'resmushit-image-optimizer'), 'https://resmush.it/how-to-configure-cronjobs/'), "resmushit_cron")
+				. self::addSetting("checkbox", __("Activate logs", 'resmushit-image-optimizer'), sprintf(__("Activate logging in a file. Useful for debugging/developers. <a href='%s' title='Details about logs' target='_blank'>More information</a>", 'resmushit-image-optimizer'), 'https://resmush.it/features/'), "resmushit_logs")
+				. self::addSetting("checkbox", __("Activate statistics", 'resmushit-image-optimizer'), __("Generates statistics about optimized images.", 'resmushit-image-optimizer'), "resmushit_statistics")
 				. '</table>', $allowed_html);
 		submit_button();
 		echo wp_kses('</form></div>', $allowed_html);
@@ -151,7 +151,7 @@ Class reSmushitUI {
 	public static function bulkPanel() {
 		$dataCountNonOptimizedPictures = reSmushit::getCountNonOptimizedPictures();
 		$countNonOptimizedPictures = $dataCountNonOptimizedPictures['nonoptimized'];
-		self::fullWidthPanelWrapper(__('Optimize unsmushed pictures', 'resmushit-image-optimizer'), null, 'blue');
+		self::fullWidthPanelWrapper(__('Optimize Media Library', 'resmushit-image-optimizer'), null, 'blue');
 		
 		$additionnalClassNeedOptimization = NULL;
 		$additionnalClassNoNeedOptimization = 'disabled';
@@ -166,17 +166,17 @@ Class reSmushitUI {
 		
 		if(get_option('resmushit_cron') && get_option('resmushit_cron') == 1) {
 			echo  wp_kses_post("<em>$countNonOptimizedPictures "
-			. __('non optimized pictures will be automatically optimized', 'resmushit-image-optimizer')
+			. __('unoptimized images are automatically optimized', 'resmushit-image-optimizer')
 			. "</em>.</h3><p>"
-			. __('These pictures will be automatically optimized using schedule tasks (cronjobs).', 'resmushit-image-optimizer')
+			. __('These images are automatically optimized using scheduled tasks (cronjobs).', 'resmushit-image-optimizer')
 			. " "
-			. __('Image optimization process can be launched <b>manually</b> by clicking on the button below :', 'resmushit-image-optimizer'));
+			. __('You can also start the image optimization <b>manually</b> by clicking on the button below:', 'resmushit-image-optimizer'));
 		} else {
-			echo  wp_kses_post(__('There is currently', 'resmushit-image-optimizer')
+			echo  wp_kses_post(__('There are currently', 'resmushit-image-optimizer')
 			. " <em>$countNonOptimizedPictures "
-			. __('non optimized pictures', 'resmushit-image-optimizer')
+			. __('images that need optimization', 'resmushit-image-optimizer')
 			. "</em>.</h3><p>"
-			. __('This action will resmush all pictures which have not been optimized to the good Image Quality Rate.', 'resmushit-image-optimizer'));
+			. __('This action resmushes all images that have not yet been optimized with the image quality specified in the settings. If the image quality has been changed and backups are activated, images that have already been optimized are resmushed with the new image quality rate.', 'resmushit-image-optimizer'));
 		}
 
 		$allowed_html = array_merge(wp_kses_allowed_html( 'post' ), array(
@@ -188,14 +188,14 @@ Class reSmushitUI {
 		echo wp_kses("</p><p class='submit' id='bulk-resize-examine-button'><button class='button-primary' onclick='resmushit_bulk_resize(\"bulk_resize_image_list\", \"" . wp_create_nonce( 'bulk_resize' ) . "\");'>", $allowed_html);
 		
 		if(get_option('resmushit_cron') && get_option('resmushit_cron') == 1) {
-			echo wp_kses_post(__('Optimize all pictures manually', 'resmushit-image-optimizer'));
+			echo wp_kses_post(__('Optimize all images manually', 'resmushit-image-optimizer'));
 		} else {
-			echo wp_kses_post(__('Optimize all pictures', 'resmushit-image-optimizer'));
+			echo wp_kses_post(__('Optimize all images', 'resmushit-image-optimizer'));
 		}
 
 		echo wp_kses_post("</button></p><div id='bulk_resize_image_list'></div></div>"
 		. "<div class='optimized-wrapper $additionnalClassNoNeedOptimization'><h3 class='icon_message ok'>"
-		. __('Congrats ! All your pictures are correctly optimized', 'resmushit-image-optimizer')
+		. __('Congratulations! All your images are optimized correctly!', 'resmushit-image-optimizer')
 		. "</h3></div></div>");
 		self::fullWidthPanelEndWrapper(); 		
 	}
@@ -215,7 +215,7 @@ Class reSmushitUI {
 		if(!$countfilesTooBigPictures)
 			return false;
 
-		self::fullWidthPanelWrapper(__('Files non optimized', 'resmushit-image-optimizer'), null, 'grey');
+		self::fullWidthPanelWrapper(__('Unoptimized images', 'resmushit-image-optimizer'), null, 'grey');
 
 		$additionnalClass = NULL;
 		if(!$countfilesTooBigPictures) {
@@ -226,12 +226,12 @@ Class reSmushitUI {
 					<h3 class='icon_message info'>");
 
 		if($countfilesTooBigPictures > 1) {
-			echo esc_html($countfilesTooBigPictures . ' ' . __('pictures are too big (> 5MB) for the optimizer', 'resmushit-image-optimizer'));
+			echo esc_html($countfilesTooBigPictures . ' ' . __('images are too large (>5MB) to be optimized', 'resmushit-image-optimizer'));
 		} else {
-			echo esc_html($countfilesTooBigPictures . ' ' . __('picture is too big (> 5MB) for the optimizer', 'resmushit-image-optimizer'));
+			echo esc_html($countfilesTooBigPictures . ' ' . __('image is too large (>5MB) to be optimized', 'resmushit-image-optimizer'));
 		}
 		echo wp_kses_post("</h3><div class='list-accordion'><h4>"
-				. __('List of files above 5MB', 'resmushit-image-optimizer')
+				. __('List of images above 5MB', 'resmushit-image-optimizer')
 				. "</h4><ul>");
 
 		foreach($getNonOptimizedPictures->filestoobig as $file){
@@ -270,32 +270,32 @@ Class reSmushitUI {
 
 		if($resmushit_stat['files_optimized'] != 0) {
 			echo wp_kses_post("<p><strong>"
-					. __('Space saved :', 'resmushit-image-optimizer')
+					. __('Storage saved:', 'resmushit-image-optimizer')
 					. "</strong> <span id='rsmt-statistics-space-saved'>"
 					. self::sizeFormat($resmushit_stat['total_saved_size'])
 					. "</span></p><p><strong>"
-					. __('Total reduction :', 'resmushit-image-optimizer')
+					. __('Total reduction:', 'resmushit-image-optimizer')
 					. "</strong> <span id='rsmt-statistics-percent-reduction'>"
 					. $resmushit_stat['percent_reduction']
 					. "</span></p><p><strong>"
-					. __('Attachments optimized :', 'resmushit-image-optimizer')
+					. __('Attachments optimized:', 'resmushit-image-optimizer')
 					. "</strong> <span id='rsmt-statistics-files-optimized'>"
 					. $resmushit_stat['files_optimized']
 					. "</span>/<span id='rsmt-statistics-total-picture'>"
 					. $resmushit_stat['total_pictures']
 					. "</span></p><p><strong>"
-					. __('Image optimized (including thumbnails) :', 'resmushit-image-optimizer') 
+					. __('Optimized images (including thumbnails):', 'resmushit-image-optimizer') 
 					. "</strong> <span id='rsmt-statistics-files-optimized'>"
 					. $resmushit_stat['files_optimized_with_thumbnails']
 					. "</span>/<span id='rsmt-statistics-total-pictures'>"
 					. $resmushit_stat['total_pictures_with_thumbnails']
 					. "</span></p><p><strong>"
-					. __('Total images optimized :', 'resmushit-image-optimizer')
+					. __('Total optimized images:', 'resmushit-image-optimizer')
 					. "</strong> <span id='rsmt-statistics-total-optimizations'>"
 					. $resmushit_stat['total_optimizations'] 
 					. "</span></p>");
 			} else {
-				echo wp_kses_post("<p>" . __('No picture has been optimized yet ! Add pictures to your Wordpress Media Library.', 'resmushit-image-optimizer') . "</p>");
+				echo wp_kses_post("<p>" . __('No image has been optimized yet! Add images to your WordPress\' Media Library.', 'resmushit-image-optimizer') . "</p>");
 			}
 		echo wp_kses_post("</div>");
 		self::fullWidthPanelEndWrapper(); 		
@@ -325,9 +325,9 @@ Class reSmushitUI {
 
 		echo wp_kses("<div class='rsmt-restore'>"
 			. '<p><strong>'
-			. __('Warning! By clicking the button below, you will restore all the original pictures, as before reSmush.it Image Optimizer installation. You will not have your pictures optimized! We strongly advice to be sure to have a complete backup of your website before performing this action', 'resmushit-image-optimizer')
+			. __('Warning! By clicking the button below, all original images will revert to the state they were in before they were optimized with reSmush.it Image Optimizer!', 'resmushit-image-optimizer')
 			. '</strong></p><p>'
-			. '<input type="button" data-csrf="'. wp_create_nonce( 'restore_library' ) .'" value="'. __('Restore ALL my original pictures', 'resmushit-image-optimizer') .'" class="rsmt-trigger--restore-backup-files button media-button  select-mode-toggle-button" name="resmushit" class="button wp-smush-send" />'
+			. '<input type="button" data-csrf="'. wp_create_nonce( 'restore_library' ) .'" value="'. __('Restore ALL my original images', 'resmushit-image-optimizer') .'" class="rsmt-trigger--restore-backup-files button media-button  select-mode-toggle-button" name="resmushit" class="button wp-smush-send" />'
 			. '</div>', $allowed_html);
 		self::fullWidthPanelEndWrapper(); 		
 	}
@@ -389,7 +389,7 @@ Class reSmushitUI {
 				. __('No user data nor any information is collected while requesting this news feed.', 'resmushit-image-optimizer')
 				. "<p>"
 				. "<a class='social-resmushit' title='"
-				. __('Visit resmush.it for more informations', 'resmushit-image-optimizer')
+				. __('Visit resmush.it for more information', 'resmushit-image-optimizer')
 				. "' href='https://resmush.it' target='_blank'>"
 				. "<img src='"
 				. RESMUSHIT_BASE_URL . "images/logo.png' /></a>"
@@ -418,28 +418,28 @@ Class reSmushitUI {
 			return TRUE;
 		}
 
-		self::fullWidthPanelWrapper(__('Important informations', 'resmushit-image-optimizer'), null, 'red');
+		self::fullWidthPanelWrapper(__('Important information', 'resmushit-image-optimizer'), null, 'red');
 
 		if(resmushit_get_cron_status() != 'DISABLED' && resmushit_get_cron_status() != 'OK') {
 			
 			echo wp_kses_post("<div class='rsmt-alert'>"
 			. "<h3 class='icon_message warning'>"
-			. __('Cronjobs seems incorrectly configured', 'resmushit-image-optimizer')
+			. __('Cronjobs are not configured correctly', 'resmushit-image-optimizer')
 			. "</h3>");
 
 			if (resmushit_get_cron_status() == 'MISCONFIGURED') {
 				echo wp_kses_post("<p>"
-					. __('Cronjobs are not correctly configured. The variable <em>DISABLE_WP_CRON</em> must be set to <em>TRUE</em> in <em>wp-config.php</em>. Please install them by reading the following <a href="https://resmush.it/wordpress/howto-configure-cronjobs" target="_blank">instruction page</a>.', 'resmushit-image-optimizer')
+					. __('Cronjobs are not configured correctly. The variable <em>DISABLE_WP_CRON</em> should be set to <em>TRUE</em> in <em>wp-config.php</em>. Please configure them using the following <a href="https://resmush.it/how-to-configure-cronjobs/" target="_blank">documentation</a>.', 'resmushit-image-optimizer')
 					. "</p><p>"
-					. __('We advice to disable Remush.it option "Process optimize on CRON" as long as Cron jobs are incorrectly set up.', 'resmushit-image-optimizer')
+					. __('We recommend deactivating the option "Optimize images using CRON" until the cronjobs are configured correctly.', 'resmushit-image-optimizer')
 					. "</p>");
 			} else if (resmushit_get_cron_status() == 'NEVER_RUN') {
 				echo wp_kses_post("<p>"
-					. __('Cronjobs seems to have never been launched. Please install them by reading the following <a href="https://resmush.it/wordpress/howto-configure-cronjobs" target="_blank">instruction page</a>.', 'resmushit-image-optimizer')
+					. __('The Cronjobs were never started. Please configure them using the following <a href="https://resmush.it/how-to-configure-cronjobs/" target="_blank">documentation</a>.', 'resmushit-image-optimizer')
 					. "</p>");
 			} else if (resmushit_get_cron_status() == 'NO_LATELY_RUN') {
 				echo wp_kses_post("<p>"
-					. __('Cronjobs seems not to have run lately. Please read the following <a href="https://resmush.it/wordpress/howto-configure-cronjobs" target="_blank">instruction page</a> to install them correctly.', 'resmushit-image-optimizer')
+					. __('Cronjobs have not been executed recently. Please configure them using the following <a href="https://resmush.it/how-to-configure-cronjobs/" target="_blank">documentation</a>.', 'resmushit-image-optimizer')
 					. "<ul><li><em>" . __('Expected Frequency :', 'resmushit-image-optimizer') . "</em> " . __('Every', 'resmushit-image-optimizer') . " " . time_elapsed_string(RESMUSHIT_CRON_FREQUENCY) . "</li>"
 					. "<li><em>" . __('Last run :', 'resmushit-image-optimizer') . "</em> " . time_elapsed_string(time() - get_option('resmushit_cron_lastrun')) . " " . __('ago', 'resmushit-image-optimizer') . "</li></ul>"
 					. "</p>");
@@ -463,7 +463,7 @@ Class reSmushitUI {
 				. __('Backup files can be removed.', 'resmushit-image-optimizer')
 				. "</h3>"
 				.	'<p>'
-				. sprintf(__('Keep these files and turn off "Do not preserve backups" option if you want to restore your unoptimized files in the future. Please <a href="%s" title="Should I remove backups? target="_blank">read instructions</a> before clicking.', 'resmushit-image-optimizer'), 'https://resmush.it/wordpress/why-keeping-backup-files')
+				. sprintf(__('Keep these files and turn off the option "Disable backup" if you want to restore your unoptimized files in the future. Please <a href="%s" title="Should I remove backups? target="_blank">read instructions</a> before clicking.', 'resmushit-image-optimizer'), 'https://resmush.it/why-preserving-backup-files/')
 				. '</p><p>'
 				. sprintf( __( 'We have found %s files ready to be removed', 'resmushit-image-optimizer' ), count(detect_unsmushed_files()) )
 				. '</p><p>'

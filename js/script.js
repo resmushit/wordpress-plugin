@@ -90,14 +90,15 @@ function resmushit_bulk_process(bulk, item){
 				resmushit_bulk_process(bulk, item + 1);
 			else{
 				if(error_occured){
-					jQuery('.non-optimized-wrapper h3').text('An error occured when contacting webservice. Please try again later.');
+					jQuery('.non-optimized-wrapper h3').text('An error occured when contacting the API. Please try again later.');
 					jQuery('.non-optimized-wrapper > p').remove();
 					jQuery('.non-optimized-wrapper > div').remove();
 				} else if(file_too_big_count){
 					
-					var message = file_too_big_count + ' picture cannot be optimized (> 5MB). All others have been optimized';
+					var message = file_too_big_count + ' image cannot be optimized (>5MB). All others have been optimized.';
+
 					if(file_too_big_count > 1)
-						var message = file_too_big_count + ' pictures cannot be optimized (> 5MB). All others have been optimized';
+						var message = file_too_big_count + ' images cannot be optimized (>5MB). All others have been optimized';
 
 					jQuery('.non-optimized-wrapper h3').text(message);
 					jQuery('.non-optimized-wrapper > p').remove();
@@ -123,7 +124,7 @@ function resmushit_bulk_resize(container_id, csrf_token) {
 	jQuery('#bulk-resize-examine-button').fadeOut(200);
 	var target = jQuery('#bulk_resize_target');
 
-	target.html('<div class="loading--bulk"><span class="loader"></span><br />Examining existing attachments. This may take a few moments...</div>');
+	target.html('<div class="loading--bulk"><span class="loader"></span><br />Checking existing images. This may take a few moments...</div>');
 
 	target.animate(
 		{ height: [100,'swing'] },
@@ -138,12 +139,12 @@ function resmushit_bulk_resize(container_id, csrf_token) {
 						target.html('<div>' + images.error + '.</div>');
 					} else if (images.hasOwnProperty('nonoptimized') && images.nonoptimized.length > 0) {	
 						bulkTotalimages = images.nonoptimized.length;
-						target.html('<div class="loading--bulk"><span class="loader"></span><br />' + bulkTotalimages + ' attachment(s) found, starting optimization...</div>');
+						target.html('<div class="loading--bulk"><span class="loader"></span><br />' + bulkTotalimages + ' image(s) found. Starting optimization...</div>');
 						flag_removed = false;
-						//start treating all pictures
+						//start treating all images
 						resmushit_bulk_process(images.nonoptimized, 0);
 					} else {
-						target.html('<div>There are no existing attachments that requires optimization.</div>');
+						target.html('<div>There are no images that need to be optimized.</div>');
 					}
 				}
 			);
@@ -214,7 +215,7 @@ function updateDisabledState() {
 
 
 /** 
- * ajax to Optimize a single picture
+ * ajax to Optimize a single image
  */
 function optimizeSingleAttachment() {
 	jQuery(document).delegate(".rsmt-trigger--optimize-attachment","mouseup",function(e){
@@ -241,11 +242,11 @@ function optimizeSingleAttachment() {
 
 
 /** 
- * ajax to Optimize a single picture
+ * ajax to Optimize a single image
  */
 function removeBackupFiles() {
 	jQuery(document).delegate(".rsmt-trigger--remove-backup-files","mouseup",function(e){
-		if ( confirm( "You're about to delete your image backup files. Are you sure to perform this operation ?" ) ) {
+		if ( confirm( "You are about to delete your image backup files. Are you sure you want to perform this operation?" ) ) {
    
 		    e.preventDefault();
 			var current = this;
@@ -259,7 +260,7 @@ function removeBackupFiles() {
 				}, 
 				function(response) {
 					var data = jQuery.parseJSON(response);
-					jQuery(current).val(data.success + ' backup files successfully removed');
+					jQuery(current).val(data.success + ' backup files successfully removed!');
 					setTimeout(function(){ jQuery(current).parent().parent().slideUp() }, 3000);
 				}
 			);
@@ -269,11 +270,11 @@ function removeBackupFiles() {
 
 
 /** 
- * ajax to Optimize a single picture
+ * ajax to Optimize a single image
  */
 function restoreBackupFiles() {
 	jQuery(document).delegate(".rsmt-trigger--restore-backup-files","mouseup",function(e){
-		if ( confirm( "You're about to restore ALL your original image files. Are you sure to perform this operation ?" ) ) {
+		if ( confirm( "You are about to restore ALL your original image files. Are you sure you want to perform this operation?" ) ) {
    
 		    e.preventDefault();
 			var current = this;
@@ -287,7 +288,7 @@ function restoreBackupFiles() {
 				}, 
 				function(response) {
 					var data = jQuery.parseJSON(response);
-					jQuery(current).val(data.success + ' images successfully restored');
+					jQuery(current).val(data.success + ' images successfully restored!');
 				}
 			);
 		}

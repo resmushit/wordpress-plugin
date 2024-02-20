@@ -43,7 +43,7 @@ add_action( 'admin_init', 'resmushit_settings_declare' );
 * @return $columns
 */
 function resmushit_media_list_add_column( $columns ) {
-	$columns["resmushit_disable"] 	= __('Disable of reSmush.it', 'resmushit-image-optimizer');
+	$columns["resmushit_disable"] 	= __('Disable reSmush.it', 'resmushit-image-optimizer');
 	$columns["resmushit_status"] 	= __('reSmush.it status', 'resmushit-image-optimizer');
 	return $columns;
 }
@@ -98,7 +98,7 @@ function resmushit_image_attachment_add_status_button($form_fields, $post) {
 		return $form_fields;
 
 	$form_fields["rsmt-disabled-checkbox"] = array(
-		"label" => __("Disable of reSmush.it", "resmushit-image-optimizer"),
+		"label" => __("Disable reSmush.it", "resmushit-image-optimizer"),
 		"input" => "html",
 		"value" => '',
 		"html"  => reSmushitUI::mediaListCustomValuesDisable($post->ID, true)

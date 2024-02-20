@@ -9,16 +9,17 @@
  * @wordpress-plugin
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://wordpress.org/plugins/resmushit-image-optimizer/
- * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.4.14
- * Timestamp:         2024.02.12
+ * Description:       100% Free Image Optimizer and Compressor plugin. Fast JPEG/PNG and GIF compression.
+ * Version:           1.0.0
+ * Timestamp:         2024.02.21
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
- * Author:            Charles Bourgeaux
+ * Author:            Charles Bourgeaux, ShortPixel
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Domain Path: 	  /languages
- * Text Domain:		  resmushit-image-optimizer
+ * GitHub Plugin URI: https://github.com/resmushit/wordpress-plugin
+ * Domain Path:       /languages
+ * Text Domain:	      resmushit-image-optimizer
  */
 
 require('resmushit.inc.php'); 
@@ -116,7 +117,7 @@ function resmushit_process_images($attachments, $force_keep_original = TRUE) {
 	$basepath = $fileInfo['dirname'] . '/';
 	$extension = isset($fileInfo['extension']) ? $fileInfo['extension'] : NULL;
 	
-	// Optimize only pictures/files accepted by the API
+	// Optimize only images/files accepted by the API
 	if( !in_array(strtolower($extension), resmushit::authorizedExtensions()) ) {
 		return $attachments;	
 	}
@@ -204,7 +205,7 @@ if(get_option('resmushit_on_upload'))
 
 /**
 * 
-* add Ajax action to fetch all unsmushed pictures
+* add Ajax action to fetch all unsmushed images
 *
 * @param none
 * @return json object
@@ -283,7 +284,7 @@ add_action( 'wp_ajax_resmushit_optimize_single_attachment', 'resmushit_optimize_
 
 /**
 * 
-* add Ajax action to optimize a picture according to attachment ID
+* add Ajax action to optimize an image according to attachment ID
 *
 * @param none
 * @return boolean
@@ -411,7 +412,7 @@ function resmushit_cron_process() {
 	include_once( ABSPATH . 'wp-admin/includes/image.php' );
 
 	add_filter('wp_generate_attachment_metadata', 'resmushit_process_images');
-	rlog('Gathering unoptimized pictures from CRON');
+	rlog('Gathering unoptimized images from CRON');
 	$unoptimized_pictures = json_decode(reSmushit::getNonOptimizedPictures(TRUE));
 	rlog('Found ' . count($unoptimized_pictures->nonoptimized) . ' attachments');
 

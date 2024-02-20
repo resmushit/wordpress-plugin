@@ -81,41 +81,41 @@ Class reSmushitWPCLI {
     		if(isset($assoc_args['attachment'])) {
     			if((int)$assoc_args['attachment'] != 0) {
     				if(!get_attached_file($assoc_args['attachment'])) {
-    					WP_CLI::error('Attachment not found in database.');
+					WP_CLI::error('File not found in the database.');
     					return;
     				}
     				WP_CLI::log('Optimizing attachment #' . (int)$assoc_args['attachment'] . '...');
     				update_option( 'resmushit_cron_lastaction', time() );
 					switch(reSmushit::revert($assoc_args['attachment'])) {
 						case 'success': 
-							WP_CLI::success('1 picture have been optimized.');
+							WP_CLI::success('1 image has been optimized.');
 							break;
 						case 'disabled':
-							WP_CLI::warning('This attachmend has optimization disabled.');
+							WP_CLI::warning('Optimization is deactivated for this image.');
 							break;
 						case 'file_too_big':
-							WP_CLI::error('Attachment file is too big (below 5MB)');
+							WP_CLI::error('The file is too large (over 5MB)');
 							break;
 						case 'file_not_found':
-							WP_CLI::error('File not found on disk.');
+							WP_CLI::error('File not found on the disk.');
 							break;
 						case 'failed':
 						default:
-							WP_CLI::error('Unexpected error while running optimization.');
+							WP_CLI::error('Unexpected error while executing the optimization.');
 							break;
 					}
 					return;						
     			} else {
-    				WP_CLI::error('Incorrect value for parameter `attachment`. Type `wp resmushit help` for more informations.');
+				WP_CLI::error('Incorrect value for the `attachment` parameter. Enter `wp resmushit help` for more information.');
     				return;
     			}
     		} else {
-    			WP_CLI::error('Incorrect parameter. Type `wp resmushit help` for more informations.');
+			WP_CLI::error('Incorrect parameter. Enter `wp resmushit help` for more information.');
     			return;
     		}
     	}
 
-    	WP_CLI::log('Gathering unoptimized pictures...');
+	WP_CLI::log('Gathering unoptimized images...');
 		$unoptimized_pictures = json_decode(reSmushit::getNonOptimizedPictures(TRUE));
 		$count_unoptimized_pictures = count($unoptimized_pictures->nonoptimized);
 
@@ -129,9 +129,9 @@ Class reSmushitWPCLI {
 				$progress->tick();
 			}
 			$progress->finish();
-			WP_CLI::success($count_unoptimized_pictures . ' pictures have been optimized.');
+			WP_CLI::success($count_unoptimized_pictures . ' images have been optimized.');
 		} else {
-			WP_CLI::success('All pictures have already been optimized.');
+			WP_CLI::success('All images have already been optimized.');
 		}
     }
 }
