@@ -96,13 +96,13 @@ class ProcessController
   		return $attachments;
 
   	if(empty($attachments)) {
-  		Log::addError("Error! Attachment #$attachment_id has no corresponding file on disk.", 'WARNING');
+		Log::addError("Error! The image #$attachment_id has no corresponding file on disk.", 'WARNING');
   		return $attachments;
   	}
 
   	$fileInfo = pathinfo(get_attached_file( $attachment_id ));
   	if(!isset($fileInfo['dirname'])) {
-  		Log::addError("Error! Incorrect file provided." . print_r($fileInfo, TRUE), 'WARNING');
+		Log::addError("Error! Incorrect file provided." . print_r($fileInfo, TRUE), 'WARNING');
   		return $attachments;
   	}
   	$basepath = $fileInfo['dirname'] . '/';
@@ -114,7 +114,7 @@ class ProcessController
   	}
 
   	if(!isset($attachments[ 'file' ])) {
-  		Log::addError("Error! Incorrect attachment " . print_r($attachments, TRUE), 'WARNING');
+		Log::addError("Error! Incorrect image " . print_r($attachments, TRUE), 'WARNING');
   		return $attachments;
   	}
   	$basefile = basename($attachments[ 'file' ]);
@@ -122,7 +122,7 @@ class ProcessController
   	$statistics[] = reSmushit::optimize($basepath . $basefile, $force_keep_original );
 
   	if(!isset($attachments[ 'sizes' ])) {
-  		Log::addError("Error! Unable to find attachments sizes." . print_r($attachments, TRUE), 'WARNING');
+		Log::addError("Error! Unable to find image sizes." . print_r($attachments, TRUE), 'WARNING');
   		return $attachments;
   	}
   	foreach($attachments['sizes'] as $image_style) {

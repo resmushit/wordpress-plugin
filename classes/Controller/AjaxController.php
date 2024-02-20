@@ -53,7 +53,7 @@ class AjaxController
   		die();
   	}
   	if(!is_super_admin() && !current_user_can('administrator')) {
-  		wp_send_json(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
+		wp_send_json(json_encode(array('error' => 'The user must be an administrator to retrieve this data')));
   		die();
   	}
     Log::addInfo('Bulk optimization launched for file : ' . get_attached_file( sanitize_text_field((int)$_POST['data']['ID']) ));
@@ -74,7 +74,7 @@ class AjaxController
   		die();
   	}
   	if(!is_super_admin() && !current_user_can('administrator')) {
-  		wp_send_json(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
+		wp_send_json(json_encode(array('error' => 'The user must be an administrator to retrieve this data')));
   		die();
   	}
   	wp_send_json(reSmushit::getNonOptimizedPictures());
@@ -95,7 +95,7 @@ class AjaxController
   		die();
   	}
   	if(!is_super_admin() && !current_user_can('administrator')) {
-  		wp_send_json(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
+		wp_send_json(json_encode(array('error' => 'The user must be an administrator to retrieve this data')));
   		die();
   	}
   	if(isset($_POST['data']['id']) && $_POST['data']['id'] != null && isset($_POST['data']['disabled'])){
@@ -118,7 +118,7 @@ class AjaxController
   		die();
   	}
   	if(!is_super_admin() && !current_user_can('administrator')) {
-  		wp_send_json(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
+		wp_send_json(json_encode(array('error' => 'The user must be an administrator to retrieve this data')));
   		die();
   	}
   	if(isset($_POST['data']['id']) && $_POST['data']['id'] != null){
@@ -141,7 +141,7 @@ class AjaxController
   		die();
   	}
   	if(!is_super_admin() && !current_user_can('administrator')) {
-  		wp_send_json(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
+		wp_send_json(json_encode(array('error' => 'The user must be an administrator to retrieve this data')));
   		die();
   	}
     $processController = ProcessController::getInstance();
@@ -151,7 +151,7 @@ class AjaxController
   	if(isset($_POST['data']['id']) && $_POST['data']['id'] != null){
   		reSmushit::revert(sanitize_text_field((int)$_POST['data']['id']));
 
-      $response = array('status' => true, 'message' => __('Item restored', 'resmushit-image-optimizer'));
+      $response = array('status' => true, 'message' => __('Image restored!', 'resmushit-image-optimizer'));
   		wp_send_json($response);
   	}
   	die();
@@ -171,7 +171,7 @@ class AjaxController
   		die();
   	}
   	if(!is_super_admin() && !current_user_can('administrator')) {
-  		wp_send_json(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
+		wp_send_json(json_encode(array('error' => 'The user must be an administrator to retrieve this data')));
   		die();
   	}
   	$output = reSmushit::getStatistics();
@@ -195,7 +195,7 @@ class AjaxController
   		die();
   	}
   	if(!is_super_admin() && !current_user_can('administrator')) {
-  		wp_send_json(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
+		wp_send_json(json_encode(array('error' => 'The user must be an administrator to retrieve this data')));
   		die();
   	}
 
@@ -225,7 +225,7 @@ class AjaxController
   		die();
   	}
   	if(!is_super_admin() && !current_user_can('administrator')) {
-  		wp_send_json(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
+		wp_send_json(json_encode(array('error' => 'The user must be an administrator to retrieve this data')));
   		die();
   	}
   	$files= reSmushit::detect_unsmushed_files();

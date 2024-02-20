@@ -6,7 +6,7 @@
    * ## OPTIONS
    *
    * <cmd>
-   * : can be 'optimize' to run optimization
+   * : can be 'optimize' to run the optimization (for a single image or bulk)
    * : can be 'set-quality <quality>' to define a new quality factor
    * : can be 'help' to display global help
    * : can be 'version' to retrieve plugin version
@@ -30,11 +30,11 @@ Class reSmushitWPCLI {
     *
     **/
     function help() {
-    	WP_CLI::log('reSmush.it Image Optimizer Help ');
-    	WP_CLI::log('Usage:');
-    	WP_CLI::log('- `wp resmushit set-quality <quality_level>` : defines the quality level (1-100)');
-    	WP_CLI::log('- `wp resmushit optimize` : optimize the whole library by batch of ' . reSmushit::MAX_ATTACHMENTS_REQ);
-    	WP_CLI::log('- `wp resmushit optimize --attachment=<attachment_id>` : optimize a single attachment.');
+	WP_CLI::log('reSmush.it Image Optimizer Help ');
+	WP_CLI::log('Usage:');
+	WP_CLI::log('- `wp resmushit set-quality <quality_level>` : defines the image quality level (1-100)');
+	WP_CLI::log('- `wp resmushit optimize` : optimize the whole media library by batches of ' . reSmushit::MAX_ATTACHMENTS_REQ);
+	WP_CLI::log('- `wp resmushit optimize --attachment=<attachment_id>` : optimizes a single attachment.');
     }
 
     /**
@@ -43,7 +43,7 @@ Class reSmushitWPCLI {
     *
     **/
     function version() {
-    	WP_CLI::success('reSmush.it Image Optimizer ' . RESMUSHIT_VERSION);
+	WP_CLI::success('reSmush.it Image Optimizer ' . RESMUSHIT_VERSION);
     }
 
  	/**
@@ -54,14 +54,14 @@ Class reSmushitWPCLI {
     **/
     function set_quality( $args ) {
     	if(!isset($args[0])) {
-    		WP_CLI::error( 'A Quality value is required for this command. (eg. `wp set-quality 92`).  Type `wp resmushit help` for more informations.' );
+		WP_CLI::error( 'An image quality value is required for this command. (eg. `wp set-quality 82`).  Type `wp resmushit help` for more information.' );
     		return;
     	}
         if($args[0] > 0 && $args[0] <= 100) {
         	update_option( 'resmushit_qlty', (int)$args[0] );
-        	WP_CLI::success( "Quality value set to " . $args[0]);
+		WP_CLI::success( "The image quality value is set to " . $args[0]);
         } else {
-    		WP_CLI::error( 'An incorrect quality value is provided (eg. `wp set-quality 92`)' );
+		WP_CLI::error( 'An incorrect image quality value was provided (e.g. `wp set-quality 82`)' );
         }
     }
 
@@ -72,7 +72,7 @@ Class reSmushitWPCLI {
     **/
     function optimize( $args, $assoc_args ) {
     	if(isset($args[0])) {
-    		WP_CLI::error('Incorrect parameter. Type `wp resmushit help` for more informations.');
+		WP_CLI::error('Incorrect parameter. Type `wp resmushit help` for more information.');
     		return;
     	}
 
@@ -81,7 +81,7 @@ Class reSmushitWPCLI {
     		if(isset($assoc_args['attachment'])) {
     			if((int)$assoc_args['attachment'] != 0) {
     				if(!get_attached_file($assoc_args['attachment'])) {
-					WP_CLI::error('File not found in the database.');
+					WP_CLI::error('The file was not found in the database.');
     					return;
     				}
     				WP_CLI::log('Optimizing attachment #' . (int)$assoc_args['attachment'] . '...');
@@ -91,7 +91,7 @@ Class reSmushitWPCLI {
 							WP_CLI::success('1 image has been optimized.');
 							break;
 						case 'disabled':
-							WP_CLI::warning('Optimization is deactivated for this image.');
+							WP_CLI::warning('Optimization is disabled for this image.');
 							break;
 						case 'file_too_big':
 							WP_CLI::error('The file is too large (over 5MB)');
@@ -120,8 +120,8 @@ Class reSmushitWPCLI {
 		$count_unoptimized_pictures = count($unoptimized_pictures->nonoptimized);
 
 		if($count_unoptimized_pictures > 0) {
-			WP_CLI::log('Found ' . $count_unoptimized_pictures . ' attachments');
-			$progress = \WP_CLI\Utils\make_progress_bar( 'Optimized attachments', count($unoptimized_pictures->nonoptimized) );
+			WP_CLI::log('Found ' . $count_unoptimized_pictures . ' images');
+			$progress = \WP_CLI\Utils\make_progress_bar( 'Optimized images', count($unoptimized_pictures->nonoptimized) );
 
 			foreach($unoptimized_pictures->nonoptimized as $el) {
 				update_option( 'resmushit_cron_lastaction', time() );
