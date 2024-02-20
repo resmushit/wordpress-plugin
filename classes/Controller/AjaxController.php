@@ -33,6 +33,7 @@ class AjaxController
       add_action( 'wp_ajax_resmushit_bulk_get_images', array($this,'bulk_get_images') );
       add_action( 'wp_ajax_resmushit_update_disabled_state', array($this,'update_disabled_state') );
       add_action( 'wp_ajax_resmushit_optimize_single_attachment', array($this,'optimize_single_attachment') );
+      add_action( 'wp_ajax_resmushit_restore_single_attachment', array($this,'restore_single_attachment') );
       add_action( 'wp_ajax_resmushit_update_statistics', array($this,'update_statistics') );
       add_action( 'wp_ajax_resmushit_remove_backup_files', array($this, 'remove_backup_files') );
       add_action( 'wp_ajax_resmushit_restore_backup_files', array($this, 'restore_backup_files') );
@@ -127,6 +128,34 @@ class AjaxController
   	die();
   }
 
+  /**
+  *
+  * add Ajax action to optimize a single attachment in the library
+  *
+  * @param none
+  * @return json object
+  */
+  public function restore_single_attachment() {
+  	if ( !isset($_REQUEST['data']['csrf']) || ! wp_verify_nonce( $_REQUEST['data']['csrf'], 'single_attachment' ) ) {
+  		wp_send_json(json_encode(array('error' => 'Invalid CSRF token')));
+  		die();
+  	}
+  	if(!is_super_admin() && !current_user_can('administrator')) {
+  		wp_send_json(json_encode(array('error' => 'User must be at least administrator to retrieve these data')));
+  		die();
+  	}
+    $processController = ProcessController::getInstance();
+    $processController->unHookProcessor();
+
+
+  	if(isset($_POST['data']['id']) && $_POST['data']['id'] != null){
+  		reSmushit::revert(sanitize_text_field((int)$_POST['data']['id']));
+
+      $response = array('status' => true, 'message' => __('Item restored', 'resmushit-image-optimizer'));
+  		wp_send_json($response);
+  	}
+  	die();
+  }
 
 
   /**
@@ -206,7 +235,6 @@ class AjaxController
     $processController = ProcessController::getInstance();
     $processController->unHookProcessor();
 
-Log::addTemp('Detect Files', $files);
   	foreach($files as $f) {
   		$dest = str_replace('-unsmushed', '', $f);
   		$pictureURL = str_replace($wp_upload_dir['basedir'], $wp_upload_dir['baseurl'], $dest);

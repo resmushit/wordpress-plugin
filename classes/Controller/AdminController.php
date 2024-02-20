@@ -254,6 +254,8 @@ class AdminController
             'examing_attachments' => __('Examining existing attachments. This may take a few moments...', "resmushit-image-optimizer"),
             'picture_too_big' => __('picture(s) cannot be optimized (> 5MB). All others have been optimized', "resmushit-image-optimizer"),
             'error_webservice' => __('An error occured when contacting webservice. Please try again later.', "resmushit-image-optimizer"),
+            'restoring' => __('Restoring...', 'resmushit-image-optimizer'),
+            ''
 
         );
         wp_localize_script('resmushit-js', 'reSmush', array(

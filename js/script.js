@@ -59,7 +59,7 @@ function ChangePanelEvent(event)
 		var target = event.target;
 		var tabTarget = target.dataset.tab;
 
-		// This can be done better if something was decided. 
+		// This can be done better if something was decided.
 		var tabNavs = document.querySelectorAll('.rsmt-tabs-nav li');
 		for (var i = 0; i < tabNavs.length; i++)
 		{
@@ -96,6 +96,7 @@ for (var i = 0; i < tabNavs.length; i++)
 
 updateDisabledState();
 optimizeSingleAttachment();
+restoreSingleAttachment();
 removeBackupFiles();
 restoreBackupFiles();
 
@@ -281,6 +282,36 @@ function optimizeSingleAttachment() {
 	});
 }
 
+function restoreSingleAttachment()
+{
+	jQuery(document).on('click', ".rsmt-trigger--restore-attachment",function(e){
+			e.preventDefault();
+		var current = this;
+		jQuery(current).val(reSmush.strings.restoring);
+		jQuery(current).prop('disabled', true);
+		var disabledState = jQuery(current).is(':checked');
+		var postID = jQuery(current).attr('data-attachment-id');
+		var csrf_token = jQuery(current).attr('data-csrf');
+
+		jQuery.post(
+			ajaxurl, {
+				action: 'resmushit_restore_single_attachment',
+				data: {id: postID, csrf: csrf_token}
+			},
+			function(response) {
+			//	var statistics = JSON.parse(response);
+			//	jQuery(current).parent().empty().append(reSmush.strings.reduced_by + ' ' + statistics.total_saved_size_nice + ' (' + statistics.percent_reduction + ' saved)');
+				var message = 'Restored';
+				if (response.message)
+				{
+						message = response.message;
+				}
+
+				jQuery(current).parent().empty().append(message);
+			}
+		);
+	});
+}
 
 /**
  * ajax to Optimize a single picture
