@@ -9,16 +9,17 @@
  * @wordpress-plugin
  * Plugin Name:       reSmush.it Image Optimizer
  * Plugin URI:        https://wordpress.org/plugins/resmushit-image-optimizer/
- * Description:       Image Optimization API. Provides image size optimization
- * Version:           0.4.14
- * Timestamp:         2024.02.12
+ * Description:       100% Free Image Optimizer and Compressor plugin. Fast JPEG/PNG and GIF compression.
+ * Version:           1.0.0
+ * Timestamp:         2024.02.21
  * Author:            reSmush.it
  * Author URI:        https://resmush.it
- * Author:            Charles Bourgeaux
+ * Author:            Charles Bourgeaux, ShortPixel
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Domain Path: 	  /languages
- * Text Domain:		  resmushit-image-optimizer
+ * GitHub Plugin URI: https://github.com/resmushit/wordpress-plugin
+ * Domain Path:       /languages
+ * Text Domain:	      resmushit-image-optimizer
  */
 
 require('resmushit.inc.php');

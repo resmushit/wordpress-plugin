@@ -1,4 +1,4 @@
-=== reSmush.it : the original free image compressor and optimizer plugin  ===
+=== reSmush.it : The original free image compressor and optimizer plugin  ===
 Contributors: ShortPixel, resmushit
 Tags: image, optimizer, image optimization, resmush.it, smush, jpg, png, gif, optimization, compression, Compress, Images, Pictures, Reduce Image Size, Smush, Smush.it, free image optimization
 Requires at least: 4.0.0
@@ -11,11 +11,10 @@ reSmush.it is the FREE image compressor and optimizer plugin - use it to optimiz
 
 == Description ==
 The reSmush.it Image Optimizer is a **free WordPress image compressor and optimizer** plugin which allows you to smush your website's images so that they load faster.
-The plugin is super easy to use (just 2 clicks!), supports JPG, PNG and GIF image formats and can be used to bulk optimize current(past) images and automatically optimize all new images.
+The plugin is **super easy to use** (just 2 clicks!), supports JPG, PNG and GIF image formats and can be used to bulk optimize current (past) images and automatically optimize all new images.
 You can also adjust the optimization levels and exclude certain images.
-Since its launch more than 9 years ago, reSmush.it has become the preferred choice for WordPress image optimization as it allows you to smush the images for free.
-reSmush.it image optimization service works on various CMS platforms (WordPress, Drupal, Joomla, Magento, Prestashop, etc.) and is used by **more than 400,000 websites** worldwide.
-
+Since its launch more than 9 years ago, <a href="https://resmush.it" target="_blank">reSmush.it</a> has become the preferred choice for WordPress image optimization as it allows you to smush the images for free.
+reSmush.it image optimization service works on <a href="https://resmush.it/tools/" target="_blank">various CMS platforms</a> (WordPress, Drupal, Joomla, Magento, Prestashop, etc.) and is used by **more than 400,000 websites** worldwide.
 reSmush.it has earned the reputation of being the best free, fast and easy image optimization plugin out there :-)
 
 **Features:**
@@ -89,7 +88,6 @@ Yes ! Absolutely free, the only restriction is that the images must not be large
 = 0.4.14 =
 * Fix Optimize button in listing
 
-== Changelog ==
 = 0.4.13 =
 * Patreon new message
 
@@ -165,7 +163,7 @@ Yes ! Absolutely free, the only restriction is that the images must not be large
 * Fix : Links verification format for admin menu
 
 = 0.3.6 =
-* Fix : cron multiple run issue. 
+* Fix : cron multiple run issue.
 
 = 0.3.5 =
 * New header image, new WP description for plugin page.
@@ -302,7 +300,7 @@ Yes ! Absolutely free, the only restriction is that the images must not be large
 
 = 0.1.1 =
 * Optimize on upload
-* Statistics 
+* Statistics
 * Log services
 * Interface rebuild
 * News feed from feed.resmush.it

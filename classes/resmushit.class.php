@@ -33,7 +33,7 @@ Class reSmushit {
 
 	/**
 	 *
-	 * Optimize a picture according to a filepath.
+	 * Optimize an image according to a filepath.
 	 *
 	 * @param  string $file_path the path to the file on the server
 	 * @return bool 	TRUE if the resmush operation worked
@@ -51,7 +51,7 @@ Class reSmushit {
 
 	/**
 	 *
-	 * Optimize a picture according to a filepath.
+	 * Optimize an image according to a filepath.
 	 *
 	 * @param  string $file_path the path to the file on the server
 	 * @return bool 	TRUE if the resmush operation worked
@@ -258,7 +258,7 @@ Log::addTemp('Pathinfo', $fileInfo);
 			$output['percent_reduction'] 		= 0;
 		else
 			$output['percent_reduction'] 		= 100*round(($total_original_size - $total_optimized_size)/$total_original_size,4) . ' %';
-		//number of thumbnails + original picture
+		//number of thumbnails + original image
 		$output['files_optimized'] 				= sizeof($optimized_sizes);
 		$output['files_optimized_with_thumbnails'] = sizeof($optimized_sizes) * (sizeof(get_intermediate_image_sizes()) + 1);
 
@@ -273,11 +273,11 @@ Log::addTemp('Pathinfo', $fileInfo);
 
 
 	/**
-      *
-      * Get the count of all pictures
+      * 
+      * Get the count of all images
       *
       * @param none
-      * @return json of unsmushed pictures attachments ID
+      * @return json of unsmushed image attachment IDs
       */
 	public static function getCountAllPictures(){
 		global $wpdb;
@@ -304,11 +304,11 @@ Log::addTemp('Pathinfo', $fileInfo);
 
 
 	/**
-      *
-      * Get a list of non optimized pictures
+      * 
+      * Get a list of unoptimized images
       *
       * @param none
-      * @return json of unsmushed pictures attachments ID
+      * @return json of unsmushed image attachment IDs
       */
 	public static function getNonOptimizedPictures($id_only = FALSE){
 		global $wpdb;
@@ -360,7 +360,7 @@ Log::addTemp('Pathinfo', $fileInfo);
 				$files_not_found[] = $tmp;
 				continue;
 			}
-			//If filesize > 5MB, we do not optimize this picture
+			//If filesize > 5MB, we do not optimize this image
 			if( filesize(get_attached_file( $image->ID )) > self::MAX_FILESIZE ){
 				$files_too_big[] = $tmp;
 				continue;
@@ -373,11 +373,11 @@ Log::addTemp('Pathinfo', $fileInfo);
 
 
 	/**
-      *
-      * Return the number of non optimized pictures
+      * 
+      * Return the number of unoptimized images
       *
       * @param none
-      * @return number of non optimized pictures to the current quality factor
+      * @return number of unoptimized images to the current quality factor
       */
 	public static function getCountNonOptimizedPictures(){
 		$data = json_decode(self::getNonOptimizedPictures());
@@ -483,7 +483,7 @@ Log::addTemp('Attachment', $attachment);
 
 	/**
       *
-      * Get Last Quality Factor attached to a picture
+      * Get Last Quality Factor attached to an image
       *
       * @param int 		$attachment_id 	Post ID
       * @return int 	quality setting for this attachment
