@@ -290,7 +290,7 @@ class AdminController
   		$links = array();
   		$links[] = $oneLink;
   	}
-  	$links[] = '<a href="' . admin_url( 'upload.php?page=resmushit_options' ) . '">' . __('Settings', "resmushit-image-optimizer") . '</a>';
+	$links[] = '<a href="' . admin_url( 'options-general.php?page=resmushit_options' ) . '">' . __('Settings', "resmushit-image-optimizer") . '</a>';
   	return $links;
   }
 

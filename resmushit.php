@@ -24,7 +24,7 @@
 
 require('resmushit.inc.php');
 
-define( 'RESMUSH_PLUGIN_VERSION', '0.5');
+define( 'RESMUSH_PLUGIN_VERSION', '1.0.0');
 define( 'RESMUSH_PLUGIN_FILE', __FILE__ );
 define( 'RESMUSH_PLUGIN_PATH', plugin_dir_path(__FILE__) );
 

@@ -1,8 +1,8 @@
 <?php
 
 define('RESMUSHIT_ENDPOINT', 'http://api.resmush.it/');
-define('RESMUSHIT_VERSION', '0.4.14');
-define('RESMUSHIT_DEFAULT_QLTY', '92');
+define('RESMUSHIT_VERSION', '1.0.0');
+define('RESMUSHIT_DEFAULT_QLTY', '82');
 define('RESMUSHIT_TIMEOUT', '10');
 define('RESMUSHIT_LOGS_PATH', 'resmushit.log');
 define('RESMUSHIT_LOGS_MAX_FILESIZE', '102400');
