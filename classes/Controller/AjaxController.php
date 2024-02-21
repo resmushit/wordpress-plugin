@@ -89,7 +89,7 @@ class AjaxController
   * @param none
   * @return json object
   */
-  function update_disabled_state() {
+  public function update_disabled_state() {
   	if ( !isset($_REQUEST['data']['csrf']) || ! wp_verify_nonce( $_REQUEST['data']['csrf'], 'single_attachment' ) ) {
   		wp_send_json(json_encode(array('error' => 'Invalid CSRF token')));
   		die();

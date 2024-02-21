@@ -11,7 +11,7 @@ var file_too_big_count = 0;
 /**
  * Notice
  */
-jQuery(document).delegate(".rsmt-notice button.notice-dismiss","mouseup",function(e){
+jQuery(document).delegate(".rsmt-notice button.notice-dismiss","click",function(e){
 	var current = this;
 	var csrf_token = jQuery(current).parent().attr('data-csrf');
 	jQuery.post(
@@ -123,9 +123,11 @@ function resmushit_bulk_process(bulk, item){
 				jQuery('#bulk_resize_target').remove();
 				container.append('<div id="smush_results" style="padding: 20px 5px; overflow: auto;" />');
 				var results_target = jQuery('#smush_results');
-				results_target.html('<div class="bulk--back-progressionbar"><div <div class="resmushit--progress--bar"</div></div>');
+				results_target.html('<div class="bulk--back-progressionbar"><div class="resmushit--progress--bar"></div></div><button id="stopbulk" class="button button-primary" >' + reSmush.strings.stop_optimization + '</button>');
 				flag_removed = true;
 			}
+
+			jQuery('#stopbulk').on('click', function () {  window.location.reload() });
 
 			bulkCounter++;
 			jQuery('.resmushit--progress--bar').html('<p>'+ Math.round((bulkCounter*100/bulkTotalimages)) +'%</p>');
@@ -260,7 +262,7 @@ function updateDisabledState() {
  * ajax to Optimize a single picture
  */
 function optimizeSingleAttachment() {
-	jQuery(document).delegate(".rsmt-trigger--optimize-attachment","mouseup",function(e){
+	jQuery(document).delegate(".rsmt-trigger--optimize-attachment","click",function(e){
 	    e.preventDefault();
 		var current = this;
 		jQuery(current).val(reSmush.strings.optimizing);
@@ -317,7 +319,7 @@ function restoreSingleAttachment()
  * ajax to Optimize a single picture
  */
 function removeBackupFiles() {
-	jQuery(document).delegate(".rsmt-trigger--remove-backup-files","mouseup",function(e){
+	jQuery(document).delegate(".rsmt-trigger--remove-backup-files","click",function(e){
 		if ( confirm( reSmush.strings.remove_backup_confirm ) ) {
 
 		    e.preventDefault();
@@ -345,7 +347,7 @@ function removeBackupFiles() {
  * ajax to Optimize a single picture
  */
 function restoreBackupFiles() {
-	jQuery(document).delegate(".rsmt-trigger--restore-backup-files","mouseup",function(e){
+	jQuery(document).delegate(".rsmt-trigger--restore-backup-files","click",function(e){
 		if ( confirm( reSmush.strings.restore_all_confirm) ) {
 
 		    e.preventDefault();

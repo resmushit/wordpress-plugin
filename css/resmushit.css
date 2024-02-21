@@ -180,6 +180,7 @@
   height: 25px;
   position: relative;
   text-align: center;
+  margin: 10px 0;
 }
   .rsmt-bulk .resmushit--progress--bar p{
     font-size: 15px;

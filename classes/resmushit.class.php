@@ -273,7 +273,7 @@ Log::addTemp('Pathinfo', $fileInfo);
 
 
 	/**
-      * 
+      *
       * Get the count of all images
       *
       * @param none
@@ -304,7 +304,7 @@ Log::addTemp('Pathinfo', $fileInfo);
 
 
 	/**
-      * 
+      *
       * Get a list of unoptimized images
       *
       * @param none
@@ -341,14 +341,19 @@ Log::addTemp('Pathinfo', $fileInfo);
 				where
 					POSTS.post_type = %s
 					and (POSTS.post_mime_type = 'image/jpeg' OR POSTS.post_mime_type = 'image/gif' OR POSTS.post_mime_type = 'image/png')
+        ORDER BY POSTS.post_date desc
+
 				) as ATTACHMENTS
 				WHERE
 					(ATTACHMENTS.qlty != '%s' OR ATTACHMENTS.qlty IS NULL)
 					AND ATTACHMENTS.disabled IS NULL
 				LIMIT %d",
-				array('_wp_attachment_metadata','resmushed_quality','resmushed_disabled','attachment', self::getPictureQualitySetting(), self::MAX_ATTACHMENTS_REQ)
+    		array('_wp_attachment_metadata','resmushed_quality','resmushed_disabled','attachment', self::getPictureQualitySetting(), self::MAX_ATTACHMENTS_REQ)
 		);
 		// Get the images in the attachement table
+		//
+		Log::addTemp('UnOptimizedPictures Query' . $queryUnoptimizedPicture, debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 5));
+
 		$all_images = $wpdb->get_results($queryUnoptimizedPicture);
 
 		foreach($all_images as $image){
@@ -368,12 +373,12 @@ Log::addTemp('Pathinfo', $fileInfo);
 
 			$unsmushed_images[] = $tmp;
 		}
-		return json_encode(array('nonoptimized' => $unsmushed_images, 'filestoobig' => $files_too_big, 'filesnotfound' => $files_not_found));
+		return json_encode(array('nonoptimized' => $unsmushed_images, 'filestoobig' => $files_too_big, 'filesnotfound' => $files_not_found, 'totalresult' => count($all_images) ));
 	}
 
 
 	/**
-      * 
+      *
       * Return the number of unoptimized images
       *
       * @param none
@@ -385,6 +390,7 @@ Log::addTemp('Pathinfo', $fileInfo);
 		$output['nonoptimized'] = is_array($data->nonoptimized) ? sizeof($data->nonoptimized) : 0;
 		$output['filesnotfound'] = is_array($data->filesnotfound) ? sizeof($data->filesnotfound) : 0;
 		$output['filestoobig'] = is_array($data->filestoobig) ? sizeof($data->filestoobig) : 0;
+    $output['totalresult'] = property_exists($data, 'totalresult') ?  : 0;
 		return $output;
 	}
 

@@ -24,6 +24,10 @@ class AdminController
 
   public function __construct()
   {
+      if(!is_super_admin() && !current_user_can('administrator')) {
+        return;
+      }
+
       $this->initHooks();
   }
 
@@ -33,9 +37,12 @@ class AdminController
       add_action( 'admin_menu', array($this, 'add_menu') );
       add_action( 'admin_init', array($this, 'settings_declare') );
       add_filter( 'manage_media_columns', array($this, 'media_list_add_column') );
-      add_filter( 'manage_upload_sortable_columns', array($this,'media_list_sort_column') );
+    //  add_filter( 'manage_upload_sortable_columns', array($this,'media_list_sort_column') );
       add_action( 'manage_media_custom_column', array($this,'media_list_add_column_value'), 10, 2 );
-      add_filter("attachment_fields_to_edit", array($this, 'image_attachment_add_status_button'), null, 2);
+    //  add_filter("attachment_fields_to_edit", array($this, 'image_attachment_add_status_button'), null, 2);
+
+      add_action( 'add_meta_boxes_attachment', array( $this, 'addMetaBox') );
+
       add_action( 'admin_head', array($this,'register_plugin_assets') );
 
       add_filter('plugin_action_links_' . plugin_basename(RESMUSH_PLUGIN_FILE), array($this, 'add_plugin_page_settings_link'));
@@ -74,7 +81,29 @@ class AdminController
   	register_setting( 'resmushit-settings', 'resmushit_notice_close' );
   }
 
+  // Add metabox for editmediaview sie.
+  public function addMetaBox()
+  {
+      add_meta_box(
+          'rsi_info_box',          // this is HTML id of the box on edit screen
+          __('Resmush.IT', ''),    // title of the box
+          array( $this, 'displayMetaBox'),   // function to be called to display the info
+          null,//,        // on which edit screen the box should appear
+          'side'//'normal',      // part of page where the box should appear
+          //'default'      // priority of the box
+      );
+  }
 
+  public function displayMetaBox($post)
+  {
+    $post_id = $post->ID;
+    echo "<div>";
+    reSmushitUI::mediaListCustomValuesStatus($post_id);
+    echo "</div><div><br>";
+    reSmushitUI::mediaListCustomValuesDisable($post_id);
+    echo "</div>";
+
+  }
 
   /**
   *
@@ -84,7 +113,7 @@ class AdminController
   * @return $columns
   */
   public function media_list_add_column( $columns ) {
-  	$columns["resmushit_disable"] 	= __('Disable of reSmush.it', 'resmushit-image-optimizer');
+//  	$columns["resmushit_disable"] 	= __('Disable of reSmush.it', 'resmushit-image-optimizer');
   	$columns["resmushit_status"] 	= __('reSmush.it status', 'resmushit-image-optimizer');
   	return $columns;
   }
@@ -99,7 +128,7 @@ class AdminController
   * @return $columns
   */
   public function media_list_sort_column( $columns ) {
-  	$columns["resmushit_disable"] 	= "resmushit_disable";
+  //	$columns["resmushit_disable"] 	= "resmushit_disable";
   	$columns["resmushit_status"] 	= "resmushit_status";
   	return $columns;
   }
@@ -115,10 +144,16 @@ class AdminController
   * @return none
   */
   public function media_list_add_column_value( $column_name, $id ) {
-  	if ( $column_name == "resmushit_disable" )
-  		reSmushitUI::mediaListCustomValuesDisable($id);
-  	else if ( $column_name == "resmushit_status" )
+
+      if ($column_name !== 'resmushit_status')
+      {
+         return;
+      }
+      echo "<div>";
   		reSmushitUI::mediaListCustomValuesStatus($id);
+echo "</div><div>";
+      reSmushitUI::mediaListCustomValuesDisable($id);
+echo "</div>";
   }
 
 
@@ -255,7 +290,7 @@ class AdminController
             'picture_too_big' => __('image(s) cannot be optimized (>5MB). All others have been optimized.', "resmushit-image-optimizer"),
             'error_webservice' => __('An error occured when contacting the API. Please try again later.', "resmushit-image-optimizer"),
             'restoring' => __('Restoring...', 'resmushit-image-optimizer'),
-            ''
+            'stop_optimization' => __('Stop bulk', 'resmushit-image-optimizer'),
 
         );
         wp_localize_script('resmushit-js', 'reSmush', array(
