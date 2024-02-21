@@ -196,18 +196,16 @@ echo "</div>";
   */
   public function settings_page() {
   	?>
-    <div class='rsmt-panels'>
-      <div class='rmst-panel w100'>
+    <div class='rsmt-panels header-panel'>
   			<?php reSmushitUI::headerPanel();?>
-      </div>
     </div>
   	<div class='rsmt-panels resmush-settings-ui'>
 
      <div class="rsmt-cols w10 iln-block nav-block">
         <ul class='rsmt-tabs-nav'>
-          <li data-tab='actions' class='active'>Actions</li>
-          <li data-tab='settings'>Settings</li>
-          <li><a href="<?php echo RESMUSHIT_FEEDBACK_URL ?>" target="_blank">Feedback</a></li>
+          <li data-tab='actions' class='active'><?php _e('Actions','resmushit-image-optimizer'); ?></li>
+          <li data-tab='settings'><?php _e('Settings', 'resmushit-image-optimizer'); ?></li>
+          <li data-tab='feedback'><?php _e('Support', 'resmushit-image-optimizer'); ?> </a></li>
         </ul>
 
      </div>
@@ -229,9 +227,21 @@ echo "</div>";
       </div>
 
       <div class="rsmt-cols w30 iln-block">
-          <h1>ADS</h1>
+        <div class='shortpixel-ad'>
+          <img src='<?php echo RESMUSHIT_BASE_URL  ?>images/shortpixel-text-logo.svg' />
+          <ul class='options'>
+          <li>Unlimited image optimization</li>
+          <li>Unlimited domains</li>
+          <li>WebP&AVIF conversion<li>
+          <li>$9.99 / month</li>
+        </ul>
+        <div class='button-wrapper'>
+          <a class='button' href=" https://shortpixel.com/ms/af/C34DUIL28044" target="_blank">Buy now</a>
+        </div>
+        </div>
       </div>
-  	</div>
+
+  	</div> <!-- // ui -->
   	<?php
   }
 

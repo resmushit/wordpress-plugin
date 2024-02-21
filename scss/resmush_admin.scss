@@ -1,4 +1,25 @@
+
+.header-panel
+{
+
+    h2 {
+      margin-top: 0;
+      color: #fff;
+      font-size: 26px;
+    }
+    span {
+      color: #fff;
+      a {
+        color: #fff;
+      }
+    }
+    .rsmt-panel {
+      background-color: #91cbd8;
+    }
+}
+
 // Main settings UI
+
 .resmush-settings-ui
 {
   // Tabular navigation
@@ -20,7 +41,7 @@
           text-align: left;
           font-size:16px;
           margin: 10px 0;
-          padding-left: 30px;
+          padding: 5px 5px 5px 30px;
           &.active {
             background-color: rgb(26, 189, 202);
             color: #fff;
@@ -33,6 +54,63 @@
        }
     }
 
+  }
+
+  // The last panel of a view should have no margin, so the left menu and items line up.
+  .rsmt-cols .rsmt-panel:last-child
+  {
+     margin-bottom: 0;
+  }
+
+  // Settings Section
+  .rsmt-settings
+  {
+      input[type="checkbox"]
+      {
+         margin-right: 6px;
+      }
+      .number-small {
+          width: 70px;
+      }
+  }
+
+
+  .shortpixel-ad
+  {
+     background-color: #e6faff;
+     color: #1ABDCA;
+     border: 1px solid #ccc;
+     margin-left: 12px;
+     padding: 16px;
+     img { width: 100%; }
+     ul
+     {
+        list-style: none;
+        li {
+          font-size: 16px;
+          font-weight: 700;
+          margin-bottom: 12px;
+          text-align: center;
+       }
+     }
+     .button-wrapper
+     {
+        text-align: center;
+        margin: 36px 0;
+        a {
+            font-size: 20px;
+            padding: 8px 8px;
+            width: 60%;
+            font-weight: 700;
+            color: #1ABDCA;
+            border-color: #1ABDCA;
+
+            &:hover {
+              background-color: #1ABDCA;
+              color: #e6faff;
+            }
+        }
+     }
   }
 
 

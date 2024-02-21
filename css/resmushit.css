@@ -68,7 +68,7 @@
   }
   .rsmt-notice h4,
   .rsmt-panels h2{
-    text-transform: uppercase;
+
     font-family: 'Roboto Slab', serif;
     font-size: 1.5em;
     color:#4B4B4B;
@@ -126,15 +126,13 @@
   .rsmt-settings .setting-row label{
     display: inline-block;
     font-weight: bold;
-    width: 100%
   }
     .rsmt-settings .setting-row label p{
-      margin:0;
-      font-size: 0.8em;
+      margin-top: 4px;
       font-weight: normal;
     }
+
   .rsmt-settings .setting-row input[type='text']{
-    width: 100%;
   }
   .rsmt-settings .setting-row input[type='checkbox']{
     margin-top: 2px;
@@ -246,6 +244,7 @@
   }
   .rsmt-bigfiles ul{
       display: none;
+      list-style: none;
   }
 .rsmt-bigfiles ul{
   margin-left:10px;
@@ -254,7 +253,12 @@
   .rsmt-bigfiles ul li *{
     display: inline-block;
     vertical-align: middle;
+
   }
+  .rsmt-bigfiles ul li  a {
+    vertical-align: top;
+  }
+
     .rsmt-bigfiles ul li img{
       height: auto;
       width: 50px;

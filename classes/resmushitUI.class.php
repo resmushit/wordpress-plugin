@@ -29,7 +29,7 @@ Class reSmushitUI {
 	// @todo This function only used by one other function ..
 	public static function fullWidthPanel($title = null, $html = null, $border = null) {
 		self::fullWidthPanelWrapper($title, $html, $border);
-		echo wp_kses_post($html);
+		echo $html;
 		self::fullWidthPanelEndWrapper();
 	}
 
@@ -47,7 +47,7 @@ Class reSmushitUI {
 		$borderClass = NULL;
 
 		if($border) {
-			$borderClass = 'brdr-'.$border;
+			$borderClass = ' brdr-'.$border;
 		}
 		echo wp_kses_post("<div class='rsmt-panel w100 $borderClass'><h2>$title</h2>");
 	}
@@ -71,8 +71,8 @@ Class reSmushitUI {
 	 * @return none
 	 */
 	public static function headerPanel() {
-		$html = "<img src='". RESMUSHIT_BASE_URL . "images/header.png' />";
-		$html = "<span class='byline'>By ShortPixel</span>";
+		//$html = "<img src='". RESMUSHIT_BASE_URL . "images/header.png' />";
+		$html = sprintf("<span class='byline'>By %s ShortPixel %s</span>", '<a href="https://shortpixel.com/" target="_blank">', '</a>');
 		self::fullWidthPanel('ReSmush.it', $html);
 	}
 
@@ -121,7 +121,7 @@ Class reSmushitUI {
 
 
 		echo '<table class="form-table">'
-				. self::addSetting("text", __("Image quality", 'resmushit-image-optimizer'), __("A lower value means a smaller image size, a higher value means better image quality. A value between 50 and 85 is normally recommended.", 'resmushit-image-optimizer'), "resmushit_qlty")
+				. self::addSetting("number", __("Image quality", 'resmushit-image-optimizer'), __("A lower value means a smaller image size, a higher value means better image quality. A value between 50 and 85 is normally recommended.", 'resmushit-image-optimizer'), "resmushit_qlty")
 				. self::addSetting("checkbox", __("Optimize on upload", 'resmushit-image-optimizer'), __("Once activated, newly uploaded images are automatically optimized.", 'resmushit-image-optimizer'), "resmushit_on_upload")
 				. self::addSetting("checkbox", __("Preserve EXIF", 'resmushit-image-optimizer'), __("Activate this option to retain the original EXIF data in the images.", 'resmushit-image-optimizer'), "resmushit_preserve_exif")
 				. self::addSetting("checkbox",  __("Deactivate backup", 'resmushit-image-optimizer'), sprintf(__("If you select this option, you choose not to keep the original version of the images. This is helpful to save disk space, but we strongly recommend having a backup of the entire website on hand. <a href='%s' title='Should I remove backups?' target='_blank'>More information</a>.", "resmushit-image-optimizer"), "https://resmush.it/why-preserving-backup-files/"), "resmushit_remove_unsmushed")
@@ -243,6 +243,8 @@ Class reSmushitUI {
 			$fileInfo = pathinfo(get_attached_file( $file->ID ));
 			$filesize = reSmushitUI::sizeFormat(filesize(get_attached_file( $file->ID )));
 
+      echo "<li><h3>" .
+        sprintf(__('You can optimize these images with %s ShortPixel Image Optimizer %s','resmushit-image-optimizer'), '<a href="https://shortpixel.com/wp/af/ZGBQINU28044" target="_blank">', '</a>') . "</h3></li>";
 			echo wp_kses_post("<li><a href='"
 					. esc_url(wp_get_attachment_url( $file->ID ))
 					. "' target='_blank'>"
@@ -308,9 +310,36 @@ Class reSmushitUI {
 
   public static function feedbackPanel()
   {
-    self::fullWidthPanelWrapper(__('Feedback', 'resmushit-image-optimizer'), null, 'green');
+    self::fullWidthPanelWrapper(__('Support', 'resmushit-image-optimizer'), null, 'green');
 
-    $html = '<p><a href='. RESMUSHIT_FEEDBACK_URL . ' target="_blank">Feedback form</a></p>';
+
+    ?>
+    <ul>
+    <li>
+      <a href="https://resmush.it/contact/" target="_blank">
+      <?php _e('Contact support or suggest a new feature', 'resmushit-image-optimizer'); ?></a>
+    </li>
+    <li>
+      <a href="https://resmush.it/features/" target="_blank"><?php _e('Plugin features','resmushit-image-optimizer'); ?></a>
+    </li>
+    <li>
+      <a href="https://resmush.it/why-preserving-backup-files/" target="_blank"><?php _e('Backup information','resmushit-image-optimizer'); ?></a>
+    </li>
+    <li>
+      <a href="https://resmush.it/how-to-configure-cronjobs/" target="_blank"><?php _e('How to configure CRON jobs','resmushit-image-optimizer'); ?></a>
+    </li>
+    <p>&nbsp;</p>
+
+    <?php
+    self::fullWidthPanelEndWrapper();
+    self::fullWidthPanelWrapper(__('Feedback', 'resmushit-image-optimizer'), null, 'orange');
+
+
+    $html = '
+    <p>We are happy to receive feedback. </p>
+    <ul><li><a href='. RESMUSHIT_FEEDBACK_URL . ' target="_blank">Feedback form</a></li></ul>';
+
+
     echo wp_kses_post($html);
     self::fullWidthPanelEndWrapper();
 
@@ -512,19 +541,26 @@ Class reSmushitUI {
 	 */
 	public static function addSetting($type, $name, $extra, $machine_name) {
 		$output = "	<div class='setting-row type-$type'>
-					<label for='$machine_name'>$name<p>$extra</p></label>";
-		switch($type){
+					";
+    $label = "<label for='$machine_name'>$name<p>$extra</p></label>";
+
+  	switch($type){
 			case 'text':
-				$output .= "<input type='text' name='$machine_name' id='$machine_name' value='". get_option( $machine_name ) ."'/>";
+				$output .= $label . "<input type='text' name='$machine_name' id='$machine_name' value='". get_option( $machine_name ) ."'/>";
 				break;
+      case 'number':
+        $output .= $label . "<input type='number' class='number-small' name='$machine_name' id='$machine_name' value='". get_option( $machine_name ) ."'/>";
+      break;
 			case 'checkbox':
 				$additionnal = null;
 				if ( 1 == get_option( $machine_name ) ) $additionnal = 'checked="checked"';
 				$output .= "<input type='checkbox' name='$machine_name' id='$machine_name' value='1' ".  $additionnal ."/>";
+        $output .= $label;
 				break;
 			default:
 				break;
 		}
+
 		$output .= '</div>';
 		return $output;
 	}
