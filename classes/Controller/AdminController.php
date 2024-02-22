@@ -226,7 +226,7 @@ echo "</div>";
         <?php reSmushitUI::feedbackPanel();?>
       </div>
 
-      <div class="rsmt-cols w30 iln-block">
+      <div class="rsmt-cols w30 iln-block ad-wrapper">
         <div class='shortpixel-ad'>
           <img src='<?php echo RESMUSHIT_BASE_URL  ?>images/shortpixel-text-logo.svg' />
           <ul class='options'>

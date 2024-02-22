@@ -43,6 +43,10 @@
   text-decoration: none;
   color: #3c434a;
 }
+.resmush-settings-ui .rsmt-cols {
+  background: #fff;
+  min-height: 500px;
+}
 .resmush-settings-ui .rsmt-cols .rsmt-panel {
   border-left: 0 !important;
   margin-bottom: 0;
@@ -51,6 +55,9 @@
 .resmush-settings-ui .rsmt-cols .rsmt-panel:last-child {
   margin-bottom: 0;
   border-radius: 0 5px 5px 0;
+}
+.resmush-settings-ui .rsmt-cols.ad-wrapper {
+  background: none;
 }
 .resmush-settings-ui .rsmt-settings input[type=checkbox] {
   margin-right: 6px;
@@ -84,7 +91,7 @@
 }
 .resmush-settings-ui .shortpixel-ad .button-wrapper {
   text-align: center;
-  margin: 36px 0;
+  margin: 36px 0 26px;
 }
 .resmush-settings-ui .shortpixel-ad .button-wrapper a {
   font-size: 20px;

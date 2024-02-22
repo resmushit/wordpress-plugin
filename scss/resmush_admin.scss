@@ -67,6 +67,8 @@
   // The last panel of a view should have no margin, so the left menu and items line up.
   .rsmt-cols
   {
+    background: #fff;
+    min-height: 500px;
     .rsmt-panel
     {
         border-left: 0 !important;
@@ -79,6 +81,10 @@
     {
        margin-bottom: 0;
       border-radius: 0 5px 5px 0;
+    }
+    &.ad-wrapper
+    {
+       background: none;
     }
   }
 
@@ -121,7 +127,7 @@
      .button-wrapper
      {
         text-align: center;
-        margin: 36px 0;
+        margin: 36px 0 26px;
         a {
             font-size: 20px;
             padding: 8px 8px;
