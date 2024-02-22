@@ -75,7 +75,7 @@ Class reSmushitUI {
 	public static function headerPanel() {
 		//$html = "<img src='". RESMUSHIT_BASE_URL . "images/header.png' />";
 		$html = sprintf("<span class='byline'>By %s ShortPixel %s</span>", '<a href="https://shortpixel.com/" target="_blank">', '</a>');
-		self::fullWidthPanel('ReSmush.it', $html);
+		self::fullWidthPanel('reSmush.it', $html);
 	}
 
 	/**
@@ -169,9 +169,9 @@ Class reSmushitUI {
 
 		if(get_option('resmushit_cron') && get_option('resmushit_cron') == 1) {
 			echo  wp_kses_post("<em>$countNonOptimizedPictures "
-			. __('unoptimized images are automatically optimized', 'resmushit-image-optimizer')
+			. __('unoptimized images will be optimized automatically', 'resmushit-image-optimizer')
 			. "</em>.</h3><p>"
-			. __('These images are automatically optimized using scheduled tasks (cronjobs).', 'resmushit-image-optimizer')
+			. __('These images will be optimized automatically using scheduled tasks (cronjobs).', 'resmushit-image-optimizer')
 			. " "
 			. __('You can also start the image optimization <b>manually</b> by clicking on the button below:', 'resmushit-image-optimizer'));
 		} else {
@@ -182,7 +182,8 @@ Class reSmushitUI {
 			. __('This action resmushes all images that have not yet been optimized with the image quality specified in the settings. If the image quality has been changed and backups are activated, images that have already been optimized are resmushed with the new image quality rate.', 'resmushit-image-optimizer'));
       if ($limitReached)
       {
-          echo wp_kses_post('<p>' . __('Maximum item count has been reached. You can optimize the first batch of images, refresh the page and continue', 'resmushit-image-optimizer') . '</p>');
+          echo wp_kses_post('<p>' . __('The plugin optimizes batches of up to 1000 images at a time. After each batch is completed, refresh this page and you can cont
+inue the process.', 'resmushit-image-optimizer') . '</p>');
       }
 		}
 
@@ -321,7 +322,7 @@ Class reSmushitUI {
     <ul>
     <li>
       <a href="https://resmush.it/contact/" target="_blank">
-      <?php _e('Contact support or suggest a new feature', 'resmushit-image-optimizer'); ?></a>
+      <?php _e('Contact support', 'resmushit-image-optimizer'); ?></a>
     </li>
     <li>
       <a href="https://resmush.it/features/" target="_blank"><?php _e('Plugin features','resmushit-image-optimizer'); ?></a>
@@ -340,7 +341,7 @@ Class reSmushitUI {
 
 
     $html = '
-    <p>We are happy to receive feedback. </p>
+    <p>Leave us feedback or suggest a new feature!</p>
     <ul><li><a href='. RESMUSHIT_FEEDBACK_URL . ' target="_blank">Feedback form</a></li></ul>';
 
 
