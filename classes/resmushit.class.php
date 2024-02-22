@@ -152,7 +152,6 @@ Class reSmushit {
 
 		$basepath = dirname(get_attached_file( $attachment_id )) . '/';
 		$fileInfo = pathinfo(get_attached_file( $attachment_id ));
-Log::addTemp('Pathinfo', $fileInfo);
 		$originalFile = $basepath . $fileInfo['filename'] . '-unsmushed.' . $fileInfo['extension'];
 		Log::addDebug('Revert original image for : ' . str_replace(ABSPATH, '/', get_attached_file( $attachment_id )));
 
@@ -162,7 +161,6 @@ Log::addTemp('Pathinfo', $fileInfo);
 
 		//Regenerate thumbnails
 		if($generateThumbnails) {
-			Log::addTemp('Revert - Generate Metadata');
 			wp_generate_attachment_metadata($attachment_id, get_attached_file( $attachment_id ));
 		}
 

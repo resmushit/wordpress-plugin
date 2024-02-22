@@ -5,6 +5,8 @@ if (! defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
+
+
 use \Resmush\Controller\CronController as CronController;
 
  /**
@@ -241,7 +243,7 @@ Class reSmushitUI {
 
         echo "<li><h3>" .
           sprintf(__('You can optimize these images with %s ShortPixel Image Optimizer %s','resmushit-image-optimizer'), '<a href="https://shortpixel.com/wp/af/ZGBQINU28044" target="_blank">', '</a>') . "</h3></li>";
-          
+
 		foreach($getNonOptimizedPictures->filestoobig as $file){
 			$fileInfo = pathinfo(get_attached_file( $file->ID ));
 			$filesize = reSmushitUI::sizeFormat(filesize(get_attached_file( $file->ID )));
@@ -599,6 +601,8 @@ Class reSmushitUI {
 			return $output;
 
 		echo $output;
+
+
 	}
 
 
@@ -612,8 +616,11 @@ Class reSmushitUI {
 	public static function mediaListCustomValuesStatus($attachment_id, $return = false) {
 		$post = get_post($attachment_id);
 		if ( !preg_match("/image.*/", $post->post_mime_type) )
-			return;
-	//
+			return;	//
+
+
+
+
 
 		if(reSmushit::getDisabledState($attachment_id)){
 			$output = __('Image excluded from optimization','resmushit-image-optimizer');
@@ -643,6 +650,7 @@ Class reSmushitUI {
 				'checked'   => array(),
 		)));
 		echo wp_kses($output, $allowed_html);
+
 	}
 
 

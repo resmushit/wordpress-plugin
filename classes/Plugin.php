@@ -9,6 +9,10 @@ use \Resmush\Controller\CronController as CronController;
 use \Resmush\Controller\ProcessController as ProcessController;
 
 
+use Resmush\FileSystem\Controller\FileSystemController as FileSystem;
+
+
+
 if (! defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
@@ -49,6 +53,11 @@ class Plugin
     public function initHooks()
     {
 
+    }
+
+    public function fs()
+    {
+      return new FileSystem();
     }
 
     public function process()

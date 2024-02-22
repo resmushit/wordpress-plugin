@@ -2,7 +2,10 @@
 namespace Resmush\Controller;
 
 use \reSmushitUI as reSmushitUI;
+use \reSmushit as reSmushit;
+
 use \Resmush\ShortPixelLogger\ShortPixelLogger as Log;
+
 
 if (! defined('ABSPATH')) {
     exit; // Exit if accessed directly.
@@ -97,6 +100,11 @@ class AdminController
   public function displayMetaBox($post)
   {
     $post_id = $post->ID;
+    if (false === $this->isAllowedExtension($post_id))
+    {
+       return;
+    }
+
     echo "<div>";
     reSmushitUI::mediaListCustomValuesStatus($post_id);
     echo "</div><div><br>";
@@ -149,11 +157,35 @@ class AdminController
       {
          return;
       }
+
+      if (false === $this->isAllowedExtension($id))
+      {
+         return;
+      }
+
+
       echo "<div>";
   		reSmushitUI::mediaListCustomValuesStatus($id);
 echo "</div><div>";
       reSmushitUI::mediaListCustomValuesDisable($id);
 echo "</div>";
+  }
+
+
+  public function isAllowedExtension($id)
+  {
+
+    $file = get_attached_file($id);
+    $fs = Resmush()->fs();
+
+    $fileObj = $fs->getFile($file);
+    if (false ===  in_array($fileObj->getExtension(), reSmushit::authorizedExtensions()))
+    {
+       return false;
+    }
+
+    return true;
+
   }
 
 
@@ -168,6 +200,11 @@ echo "</div>";
   public function image_attachment_add_status_button($form_fields, $post) {
   	if ( !preg_match("/image.*/", $post->post_mime_type) )
   		return $form_fields;
+
+      if (false === $this->isAllowedExtension($post->ID))
+      {
+         return;
+      }
 
   	$form_fields["rsmt-disabled-checkbox"] = array(
   		"label" => __("Disable of reSmush.it", "resmushit-image-optimizer"),
