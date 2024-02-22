@@ -1,3 +1,6 @@
+.header-panel {
+  margin-top: 25px;
+}
 .header-panel h2 {
   margin-top: 0;
   color: #fff;
@@ -11,10 +14,14 @@
 }
 .header-panel .rsmt-panel {
   background-color: #91cbd8;
+  background: linear-gradient(90deg, #91cbd8 72%, #96c9a0 99%);
+  border-radius: 0.5rem;
 }
 
 .resmush-settings-ui .nav-block {
   background: #fff;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 .resmush-settings-ui .nav-block .rsmt-tabs-nav {
   list-style: none;
@@ -37,19 +44,30 @@
   text-decoration: none;
   color: #3c434a;
 }
+.resmush-settings-ui .rsmt-cols .rsmt-panel {
+  border-left: 0 !important;
+  margin-bottom: 0;
+  padding-left: 36px;
+}
 .resmush-settings-ui .rsmt-cols .rsmt-panel:last-child {
   margin-bottom: 0;
+  border-radius: 0 5px 5px 0;
 }
 .resmush-settings-ui .rsmt-settings input[type=checkbox] {
   margin-right: 6px;
 }
+.resmush-settings-ui .rsmt-settings span {
+  display: block;
+}
 .resmush-settings-ui .rsmt-settings .number-small {
   width: 70px;
+  margin-top: 0;
 }
 .resmush-settings-ui .shortpixel-ad {
   background-color: #e6faff;
   color: #1ABDCA;
   border: 1px solid #ccc;
+  border-radius: 0.5rem;
   margin-left: 12px;
   padding: 16px;
 }

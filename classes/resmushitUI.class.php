@@ -549,7 +549,7 @@ Class reSmushitUI {
 				$output .= $label . "<input type='text' name='$machine_name' id='$machine_name' value='". get_option( $machine_name ) ."'/>";
 				break;
       case 'number':
-        $output .= $label . "<input type='number' class='number-small' name='$machine_name' id='$machine_name' value='". get_option( $machine_name ) ."'/>";
+        $output .= $label . "<span><input type='number' class='number-small' name='$machine_name' id='$machine_name' value='". get_option( $machine_name ) ."'/></span>";
       break;
 			case 'checkbox':
 				$additionnal = null;

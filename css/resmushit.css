@@ -41,22 +41,22 @@
     flex-basis: 10%;
   }
   .rsmt-panels .brdr-green{
-    border-left: 4px solid #277F72
+    border-left: 4px solid #ffff
   }
   .rsmt-panels .brdr-blue{
-    border-left: 4px solid #5A8BA8
+    border-left: 4px solid #ffff
   }
   .rsmt-panels .brdr-orange{
-    border-left: 4px solid #DFC02A
+    border-left: 4px solid #ffff
   }
   .rsmt-panels .brdr-red{
-    border-left: 4px solid #9E2F29
+    border-left: 4px solid #ffff
   }
   .rsmt-panels .brdr-grey{
     border-left: 4px solid #a2a2a2
   }
   .rsmt-panels .brdr-black{
-    border-left: 4px solid #222222
+    border-left: 4px solid #ffff
   }
   .rsmt-panels .brdr-dashed{
     border: 2px dashed #7cd7e5;
