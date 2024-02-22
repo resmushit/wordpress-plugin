@@ -279,10 +279,10 @@ echo "</div>";
 
   		$current_page = get_current_screen();
 
-  		wp_register_style( 'resmushit-css', plugins_url( 'css/resmushit.css', RESMUSH_PLUGIN_FILE ) );
+  		wp_register_style( 'resmushit-css', plugins_url( 'css/resmushit.css', RESMUSH_PLUGIN_FILE ), array(), RESMUSH_PLUGIN_VERSION);
 
-      wp_register_style('resmushit-admin-css', plugins_url('css/resmush_admin.css', RESMUSH_PLUGIN_FILE));
-      wp_register_style('resmushit-media-css', plugins_url('css/resmush_media.css', RESMUSH_PLUGIN_FILE));
+      wp_register_style('resmushit-admin-css', plugins_url('css/resmush_admin.css', RESMUSH_PLUGIN_FILE), array(), RESMUSH_PLUGIN_VERSION);
+      wp_register_style('resmushit-media-css', plugins_url('css/resmush_media.css', RESMUSH_PLUGIN_FILE), array(), RESMUSH_PLUGIN_VERSION);
 
   	    wp_register_script( 'resmushit-js', plugins_url( 'js/script.js?' . hash_file('crc32',  RESMUSH_PLUGIN_PATH . '/js/script.js'), RESMUSH_PLUGIN_FILE ) );
 
