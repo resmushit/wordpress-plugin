@@ -1,0 +1,155 @@
+
+.header-panel
+{
+
+  margin-top: 25px;
+    h2 {
+      margin-top: 0;
+      color: #fff;
+      font-size: 26px;
+      margin-bottom: 12px;
+    }
+    span {
+      color: #fff;
+      a {
+        color: #fff;
+      }
+    }
+    .rsmt-panel {
+      background-color: #91cbd8;
+      background: linear-gradient(90deg,  #91cbd8 72%,  #96c9a0 99%);
+      border-radius: 0.5rem;
+
+
+    }
+}
+
+// Main settings UI
+
+.resmush-settings-ui
+{
+  // Tabular navigation
+  .nav-block
+  {
+    background: #fff;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+
+    .rsmt-tabs-nav
+    {
+      // width: 50%;
+//       display: block;
+       list-style: none;
+       margin-top: 50px;
+
+       li {
+          font-weight: 700;
+          background: #fff;
+          cursor: pointer;
+          text-align: left;
+          font-size:16px;
+          margin: 10px 0;
+          padding: 5px 5px 5px 30px;
+          &.active {
+            color: rgb(26, 189, 202);
+            //color: #fff;
+
+          }
+          a {
+              text-decoration: none;
+              color: #3c434a;
+          }
+       }
+    }
+
+  }
+
+
+  // The last panel of a view should have no margin, so the left menu and items line up.
+  .rsmt-cols
+  {
+    background: #fff;
+    min-height: 500px;
+    &.rsmt-tab
+    {
+      border-top-right-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+    }
+    .rsmt-panel
+    {
+        margin-bottom: 0;
+    //    border-bottom: 1px solid #ccc;
+        padding-left: 36px;
+        border-radius: 0 0.5rem 0.5rem 0;
+
+    }
+
+    .rsmt-panel:last-child
+    {
+       margin-bottom: 0;
+    }
+    &.message-wrapper
+    {
+       background: none;
+    }
+  }
+
+  // Settings Section
+  .rsmt-settings
+  {
+      input[type="checkbox"]
+      {
+         margin-right: 6px;
+      }
+      span { display: block; }
+      .number-small {
+          width: 70px;
+          margin-top: 0;
+        //  margin-left: 35px;
+      }
+  }
+
+
+  .shortpixel-message
+  {
+     background-color: #e6faff;
+     color: #1ABDCA;
+     border: 1px solid #ccc;
+     border-radius: 0.5rem;
+     margin-left: 12px;
+  //   margin-top: 8px;
+     padding: 16px;
+     img { width: 100%; }
+     ul
+     {
+        list-style: none;
+        li {
+          font-size: 16px;
+          font-weight: 700;
+          margin-bottom: 12px;
+          text-align: center;
+       }
+     }
+     .button-wrapper
+     {
+        text-align: center;
+        margin: 36px 0 26px;
+        a {
+            font-size: 20px;
+            padding: 8px 8px;
+            width: 60%;
+            font-weight: 700;
+            color: #1ABDCA;
+            border-color: #1ABDCA;
+
+            &:hover {
+              background-color: #1ABDCA;
+              color: #e6faff;
+            }
+        }
+     }
+  }
+
+
+
+}

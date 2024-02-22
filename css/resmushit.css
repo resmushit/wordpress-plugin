@@ -6,7 +6,7 @@
 }
   .rsmt-panels .rsmt-panel{
     background-color: #FFF;
-    box-shadow: 0 2px 0 #EAEAEA;
+
     padding: 15px;
     margin: 0 0 15px;
     -webkit-box-sizing: border-box;
@@ -16,46 +16,64 @@
   .rsmt-panels .w100{
     width: 100%;
   }
+  .rsmt-panels .w75{
+    flex-basis: 75%;
+  }
   .rsmt-panels .w66{
     flex-basis: 66%;
+  }
+  .rsmt-panels .w60{
+    flex-basis: 60%;
+  }
+  .rsmt-panels .w50{
+    flex-basis: 50%;
   }
   .rsmt-panels .w33{
     flex-basis: 33%;
   }
-  .rsmt-panels .brdr-green{ 
-    border-left: 4px solid #277F72
-  }    
-  .rsmt-panels .brdr-blue{ 
-    border-left: 4px solid #5A8BA8
-  }   
-  .rsmt-panels .brdr-orange{ 
-    border-left: 4px solid #DFC02A
-  }   
-  .rsmt-panels .brdr-red{ 
-    border-left: 4px solid #9E2F29
-  }  
-  .rsmt-panels .brdr-grey{ 
+  .rsmt-panels .w30{
+    flex-basis: 30%;
+  }
+  .rsmt-panels .w25{
+    flex-basis: 25%;
+  }
+  .rsmt-panels .w10{
+    flex-basis: 10%;
+  }
+  .rsmt-panels .brdr-green{
+    border-left: 4px solid #ffff
+  }
+  .rsmt-panels .brdr-blue{
+    border-left: 4px solid #ffff
+  }
+  .rsmt-panels .brdr-orange{
+    border-left: 4px solid #ffff
+  }
+  .rsmt-panels .brdr-red{
+    border-left: 4px solid #ffff
+  }
+  .rsmt-panels .brdr-grey{
     border-left: 4px solid #a2a2a2
-  }  
-  .rsmt-panels .brdr-black{ 
-    border-left: 4px solid #222222
-  }  
-  .rsmt-panels .brdr-dashed{ 
+  }
+  .rsmt-panels .brdr-black{
+    border-left: 4px solid #ffff
+  }
+  .rsmt-panels .brdr-dashed{
     border: 2px dashed #7cd7e5;
     padding: 5px 10px;
-  }  
+  }
   .rsmt-notice .no-uppercase,
   .rsmt-panels .no-uppercase {
     text-transform: none;
   }
   .rsmt-notice h4,
-  .rsmt-panels h2{ 
-    text-transform: uppercase;
+  .rsmt-panels h2{
+
     font-family: 'Roboto Slab', serif;
     font-size: 1.5em;
     color:#4B4B4B;
   }
-  .rsmt-notice h4{ 
+  .rsmt-notice h4{
     text-transform: uppercase;
     font-family: 'Roboto Slab', serif;
     font-size: 1.5em;
@@ -108,15 +126,13 @@
   .rsmt-settings .setting-row label{
     display: inline-block;
     font-weight: bold;
-    width: 100%
   }
     .rsmt-settings .setting-row label p{
-      margin:0;
-      font-size: 0.8em;
+      margin-top: 4px;
       font-weight: normal;
     }
+
   .rsmt-settings .setting-row input[type='text']{
-    width: 100%;
   }
   .rsmt-settings .setting-row input[type='checkbox']{
     margin-top: 2px;
@@ -162,6 +178,7 @@
   height: 25px;
   position: relative;
   text-align: center;
+  margin: 10px 0;
 }
   .rsmt-bulk .resmushit--progress--bar p{
     font-size: 15px;
@@ -227,15 +244,21 @@
   }
   .rsmt-bigfiles ul{
       display: none;
+      list-style: none;
   }
 .rsmt-bigfiles ul{
   margin-left:10px;
 }
-  
+
   .rsmt-bigfiles ul li *{
     display: inline-block;
     vertical-align: middle;
+
   }
+  .rsmt-bigfiles ul li  a {
+    vertical-align: top;
+  }
+
     .rsmt-bigfiles ul li img{
       height: auto;
       width: 50px;
@@ -263,11 +286,11 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     background: #F4F4F4;
-  }  
+  }
   .rsmt-news h3{
     margin: 5px 0 3px;
     font-size: 1.2em;
-  }  
+  }
   .rsmt-news h3 a{
     text-decoration: none;
   }

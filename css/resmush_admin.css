@@ -1,0 +1,113 @@
+.header-panel {
+  margin-top: 25px;
+}
+.header-panel h2 {
+  margin-top: 0;
+  color: #fff;
+  font-size: 26px;
+  margin-bottom: 12px;
+}
+.header-panel span {
+  color: #fff;
+}
+.header-panel span a {
+  color: #fff;
+}
+.header-panel .rsmt-panel {
+  background-color: #91cbd8;
+  background: linear-gradient(90deg, #91cbd8 72%, #96c9a0 99%);
+  border-radius: 0.5rem;
+}
+
+.resmush-settings-ui .nav-block {
+  background: #fff;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+.resmush-settings-ui .nav-block .rsmt-tabs-nav {
+  list-style: none;
+  margin-top: 50px;
+}
+.resmush-settings-ui .nav-block .rsmt-tabs-nav li {
+  font-weight: 700;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  font-size: 16px;
+  margin: 10px 0;
+  padding: 5px 5px 5px 30px;
+}
+.resmush-settings-ui .nav-block .rsmt-tabs-nav li.active {
+  color: rgb(26, 189, 202);
+}
+.resmush-settings-ui .nav-block .rsmt-tabs-nav li a {
+  text-decoration: none;
+  color: #3c434a;
+}
+.resmush-settings-ui .rsmt-cols {
+  background: #fff;
+  min-height: 500px;
+}
+.resmush-settings-ui .rsmt-cols.rsmt-tab {
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+.resmush-settings-ui .rsmt-cols .rsmt-panel {
+  margin-bottom: 0;
+  padding-left: 36px;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+.resmush-settings-ui .rsmt-cols .rsmt-panel:last-child {
+  margin-bottom: 0;
+}
+.resmush-settings-ui .rsmt-cols.message-wrapper {
+  background: none;
+}
+.resmush-settings-ui .rsmt-settings input[type=checkbox] {
+  margin-right: 6px;
+}
+.resmush-settings-ui .rsmt-settings span {
+  display: block;
+}
+.resmush-settings-ui .rsmt-settings .number-small {
+  width: 70px;
+  margin-top: 0;
+}
+.resmush-settings-ui .shortpixel-message {
+  background-color: #e6faff;
+  color: #1ABDCA;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  margin-left: 12px;
+  padding: 16px;
+}
+.resmush-settings-ui .shortpixel-message img {
+  width: 100%;
+}
+.resmush-settings-ui .shortpixel-message ul {
+  list-style: none;
+}
+.resmush-settings-ui .shortpixel-message ul li {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-align: center;
+}
+.resmush-settings-ui .shortpixel-message .button-wrapper {
+  text-align: center;
+  margin: 36px 0 26px;
+}
+.resmush-settings-ui .shortpixel-message .button-wrapper a {
+  font-size: 20px;
+  padding: 8px 8px;
+  width: 60%;
+  font-weight: 700;
+  color: #1ABDCA;
+  border-color: #1ABDCA;
+}
+.resmush-settings-ui .shortpixel-message .button-wrapper a:hover {
+  background-color: #1ABDCA;
+  color: #e6faff;
+}
+
+/*# sourceMappingURL=resmush_admin.css.map */

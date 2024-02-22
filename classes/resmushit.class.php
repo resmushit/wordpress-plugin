@@ -1,9 +1,16 @@
 <?php
 
+if (! defined('ABSPATH')) {
+    exit; // Exit if accessed directly.
+}
+
+
+use \Resmush\ShortPixelLogger\ShortPixelLogger as Log;
+
  /**
    * ReSmushit
-   * 
-   * 
+   *
+   *
    * @package    Resmush.it
    * @subpackage Controller
    * @author     Charles Bourgeaux <contact@resmush.it>
@@ -20,13 +27,13 @@ Class reSmushit {
 	 * @return array 	List of extensions
 	 */
 	public static function authorizedExtensions() {
-		return array('jpg', 'jpeg', 'gif', 'png', 'bmp', 'tif', 'tiff');
+		return array('jpg', 'jpeg', 'gif', 'png');
 	}
 
 
 	/**
 	 *
-	 * Optimize a picture according to a filepath.
+	 * Optimize an image according to a filepath.
 	 *
 	 * @param  string $file_path the path to the file on the server
 	 * @return bool 	TRUE if the resmush operation worked
@@ -44,7 +51,7 @@ Class reSmushit {
 
 	/**
 	 *
-	 * Optimize a picture according to a filepath.
+	 * Optimize an image according to a filepath.
 	 *
 	 * @param  string $file_path the path to the file on the server
 	 * @return bool 	TRUE if the resmush operation worked
@@ -52,17 +59,17 @@ Class reSmushit {
 	public static function optimize($file_path = NULL, $is_original = TRUE) {
 		global $wp_version;
 		if(!file_exists($file_path) OR !is_file($file_path)) {
-			rlog('Error! Picture ' . str_replace(ABSPATH, '/', $file_path) . ' cannot be optimized, file is not found on disk.', 'WARNING');
+			Log::addError('Error! Picture ' . str_replace(ABSPATH, '/', $file_path) . ' cannot be optimized, file is not found on disk.');
 			return false;
 		}
 		if(filesize($file_path) > self::MAX_FILESIZE){
-			rlog('Error! Picture ' . str_replace(ABSPATH, '/', $file_path) . ' cannot be optimized, file size is above 5MB ('. reSmushitUI::sizeFormat(filesize($file_path)) .')', 'WARNING');
+			Log::addError('Error! Picture ' . str_replace(ABSPATH, '/', $file_path) . ' cannot be optimized, file size is above 5MB ('. reSmushitUI::sizeFormat(filesize($file_path)) .')');
 			return false;
 		}
 		if(! in_array('curl', get_loaded_extensions())){
 			return false;
 		}
-		
+
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, RESMUSHIT_ENDPOINT);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -83,7 +90,7 @@ Class reSmushit {
 		if(get_option( 'resmushit_preserve_exif' ) && get_option( 'resmushit_preserve_exif' ) == 1) {
 			$arg['exif'] = 'true';
 		}
-		
+
 		$arg['qlty'] = self::getPictureQualitySetting();
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $arg);
 
@@ -112,14 +119,14 @@ Class reSmushit {
 			 			copy($file_path, $newPath);
 			 		}
 				  	file_put_contents($file_path, $data);
-					rlog("Optimized file " . str_replace(ABSPATH, '/', $file_path) . " from " . reSmushitUI::sizeFormat($json->src_size) . " to " . reSmushitUI::sizeFormat($json->dest_size));
+					Log::addDebug("Optimized file " . str_replace(ABSPATH, '/', $file_path) . " from " . reSmushitUI::sizeFormat($json->src_size) . " to " . reSmushitUI::sizeFormat($json->dest_size));
 				  	return $json;
 				}
 			} else {
-				rlog("Webservice returned the following error while optimizing $file_path : Code #" . $json->error . " - " . $json->error_long, 'ERROR');
+				Log::addError("Webservice returned the following error while optimizing $file_path : Code #" . $json->error . " - " . $json->error_long);
 			}
 		} else {
-			rlog("Cannot establish connection with reSmush.it webservice while optimizing $file_path (timeout of " . RESMUSHIT_TIMEOUT . "sec.)", 'ERROR');
+			Log::addError("Cannot establish connection with reSmush.it webservice while optimizing $file_path (timeout of " . RESMUSHIT_TIMEOUT . "sec.)");
 		}
 		return false;
 	}
@@ -141,14 +148,13 @@ Class reSmushit {
 
 		delete_post_meta($attachment_id, 'resmushed_quality');
 		delete_post_meta($attachment_id, 'resmushed_cumulated_original_sizes');
-		delete_post_meta($attachment_id, 'resmushed_cumulated_optimized_sizes');	
+		delete_post_meta($attachment_id, 'resmushed_cumulated_optimized_sizes');
 
 		$basepath = dirname(get_attached_file( $attachment_id )) . '/';
 		$fileInfo = pathinfo(get_attached_file( $attachment_id ));
-
 		$originalFile = $basepath . $fileInfo['filename'] . '-unsmushed.' . $fileInfo['extension'];
-		rlog('Revert original image for : ' . str_replace(ABSPATH, '/', get_attached_file( $attachment_id )));
-	
+		Log::addDebug('Revert original image for : ' . str_replace(ABSPATH, '/', get_attached_file( $attachment_id )));
+
 		if(file_exists($originalFile)) {
 			copy($originalFile, get_attached_file( $attachment_id ));
 		}
@@ -175,20 +181,20 @@ Class reSmushit {
 		$fileInfo = pathinfo(get_attached_file( $attachment_id ));
 
 		$originalFile = $basepath . $fileInfo['filename'] . '-unsmushed.' . $fileInfo['extension'];
-		rlog('Delete original image for : ' . get_attached_file( $attachment_id ));
+		Log::addDebug('Delete original image for : ' . get_attached_file( $attachment_id ));
 		if(file_exists($originalFile))
 			unlink($originalFile);
 	}
 
 	/**
-      * 
+      *
       * Detect if optimization process was already launched one time
       *
       * @return boolean
       */
 	public static function hasAlreadyRunOnce(){
 		global $wpdb;
-		$query = $wpdb->prepare( 
+		$query = $wpdb->prepare(
 			"select
 				count($wpdb->posts.ID) as count
 				from $wpdb->posts
@@ -199,7 +205,7 @@ Class reSmushit {
 		return (boolean)$wpdb->get_var($query);
 	}
 	/**
-      * 
+      *
       * Return optimization statistics
       *
       * @param int 	$attachment_id (optional)
@@ -212,26 +218,26 @@ Class reSmushit {
 		if($attachment_id)
 			$extraSQL = "where $wpdb->postmeta.post_id = ". (int)($attachment_id);
 
-		$query = $wpdb->prepare( 
+		$query = $wpdb->prepare(
 			"select
 				$wpdb->posts.ID as ID, $wpdb->postmeta.meta_value
 				from $wpdb->posts
 				inner join $wpdb->postmeta on $wpdb->posts.ID = $wpdb->postmeta.post_id and $wpdb->postmeta.meta_key = %s $extraSQL",
 				array('resmushed_cumulated_original_sizes')
-		);	
+		);
 		$original_sizes = $wpdb->get_results($query);
 		$total_original_size = 0;
 		foreach($original_sizes as $s){
 			$total_original_size += $s->meta_value;
 		}
 
-		$query = $wpdb->prepare( 
+		$query = $wpdb->prepare(
 			"select
 				$wpdb->posts.ID as ID, $wpdb->postmeta.meta_value
 				from $wpdb->posts
 				inner join $wpdb->postmeta on $wpdb->posts.ID = $wpdb->postmeta.post_id and $wpdb->postmeta.meta_key = %s $extraSQL",
 				array('resmushed_cumulated_optimized_sizes')
-		);	
+		);
 		$optimized_sizes = $wpdb->get_results($query);
 		$total_optimized_size = 0;
 		foreach($optimized_sizes as $s){
@@ -250,7 +256,7 @@ Class reSmushit {
 			$output['percent_reduction'] 		= 0;
 		else
 			$output['percent_reduction'] 		= 100*round(($total_original_size - $total_optimized_size)/$total_original_size,4) . ' %';
-		//number of thumbnails + original picture
+		//number of thumbnails + original image
 		$output['files_optimized'] 				= sizeof($optimized_sizes);
 		$output['files_optimized_with_thumbnails'] = sizeof($optimized_sizes) * (sizeof(get_intermediate_image_sizes()) + 1);
 
@@ -265,16 +271,16 @@ Class reSmushit {
 
 
 	/**
-      * 
-      * Get the count of all pictures
+      *
+      * Get the count of all images
       *
       * @param none
-      * @return json of unsmushed pictures attachments ID
+      * @return json of unsmushed image attachment IDs
       */
 	public static function getCountAllPictures(){
 		global $wpdb;
 
-		$queryAllPictures = $wpdb->prepare( 
+		$queryAllPictures = $wpdb->prepare(
 			"select
 				Count($wpdb->posts.ID) as count
 				from $wpdb->posts
@@ -296,11 +302,11 @@ Class reSmushit {
 
 
 	/**
-      * 
-      * Get a list of non optimized pictures
+      *
+      * Get a list of unoptimized images
       *
       * @param none
-      * @return json of unsmushed pictures attachments ID
+      * @return json of unsmushed image attachment IDs
       */
 	public static function getNonOptimizedPictures($id_only = FALSE){
 		global $wpdb;
@@ -317,59 +323,64 @@ Class reSmushit {
 
 		$queryUnoptimizedPicture = $wpdb->prepare(
 			"SELECT ATTACHMENTS.* FROM (
-				select 
+				select
 					POSTS.ID as ID, METAQLTY.meta_value as qlty, METADISABLED.meta_value as disabled
 					$extra_select
 				from $wpdb->posts as POSTS
-				inner join 
-					$wpdb->postmeta as METAATTACH on POSTS.ID = METAATTACH.post_id 
-					and METAATTACH.meta_key = %s 
-				left join 
-					$wpdb->postmeta as METAQLTY on POSTS.ID = METAQLTY.post_id 
+				inner join
+					$wpdb->postmeta as METAATTACH on POSTS.ID = METAATTACH.post_id
+					and METAATTACH.meta_key = %s
+				left join
+					$wpdb->postmeta as METAQLTY on POSTS.ID = METAQLTY.post_id
 					and METAQLTY.meta_key = %s
-				left join 
-					$wpdb->postmeta as METADISABLED on POSTS.ID = METADISABLED.post_id 
+				left join
+					$wpdb->postmeta as METADISABLED on POSTS.ID = METADISABLED.post_id
 					and METADISABLED.meta_key = %s
-				where 
+				where
 					POSTS.post_type = %s
 					and (POSTS.post_mime_type = 'image/jpeg' OR POSTS.post_mime_type = 'image/gif' OR POSTS.post_mime_type = 'image/png')
+        ORDER BY POSTS.post_date desc
+
 				) as ATTACHMENTS
-				WHERE 
+				WHERE
 					(ATTACHMENTS.qlty != '%s' OR ATTACHMENTS.qlty IS NULL)
 					AND ATTACHMENTS.disabled IS NULL
 				LIMIT %d",
-				array('_wp_attachment_metadata','resmushed_quality','resmushed_disabled','attachment', self::getPictureQualitySetting(), self::MAX_ATTACHMENTS_REQ)
+    		array('_wp_attachment_metadata','resmushed_quality','resmushed_disabled','attachment', self::getPictureQualitySetting(), self::MAX_ATTACHMENTS_REQ)
 		);
 		// Get the images in the attachement table
+		//
+		Log::addTemp('UnOptimizedPictures Query' . $queryUnoptimizedPicture, debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 5));
+
 		$all_images = $wpdb->get_results($queryUnoptimizedPicture);
 
 		foreach($all_images as $image){
 			$tmp = array();
 			$tmp['ID'] = $image->ID;
 			$tmp['attachment_metadata'] = isset($image->file_meta) ? unserialize($image->file_meta) : array();
-			
+
 			if( !file_exists(get_attached_file( $image->ID )) ) {
 				$files_not_found[] = $tmp;
 				continue;
 			}
-			//If filesize > 5MB, we do not optimize this picture
+			//If filesize > 5MB, we do not optimize this image
 			if( filesize(get_attached_file( $image->ID )) > self::MAX_FILESIZE ){
 				$files_too_big[] = $tmp;
 				continue;
 			}
-			
+
 			$unsmushed_images[] = $tmp;
 		}
-		return json_encode(array('nonoptimized' => $unsmushed_images, 'filestoobig' => $files_too_big, 'filesnotfound' => $files_not_found));
+		return json_encode(array('nonoptimized' => $unsmushed_images, 'filestoobig' => $files_too_big, 'filesnotfound' => $files_not_found, 'totalresult' => count($all_images) ));
 	}
 
 
 	/**
-      * 
-      * Return the number of non optimized pictures
+      *
+      * Return the number of unoptimized images
       *
       * @param none
-      * @return number of non optimized pictures to the current quality factor
+      * @return number of unoptimized images to the current quality factor
       */
 	public static function getCountNonOptimizedPictures(){
 		$data = json_decode(self::getNonOptimizedPictures());
@@ -377,12 +388,13 @@ Class reSmushit {
 		$output['nonoptimized'] = is_array($data->nonoptimized) ? sizeof($data->nonoptimized) : 0;
 		$output['filesnotfound'] = is_array($data->filesnotfound) ? sizeof($data->filesnotfound) : 0;
 		$output['filestoobig'] = is_array($data->filestoobig) ? sizeof($data->filestoobig) : 0;
+    $output['totalresult'] = property_exists($data, 'totalresult') ?  : 0;
 		return $output;
 	}
 
 
 	/**
-      * 
+      *
       * Record in DB new status for optimization disabled state
       *
       * @param int 		$id 	ID of postID
@@ -404,7 +416,7 @@ Class reSmushit {
 
 
 	/**
-      * 
+      *
       * Get Disabled State
       *
       * @param int 		$attachment_id 	Post ID
@@ -416,11 +428,66 @@ Class reSmushit {
 		return false;
 	}
 
+	/**
+	*
+	* Detect unsmushed files by browsing the library directory
+	*
+	* @param none
+	* @return none
+	*/
+	public static function detect_unsmushed_files() {
+		$wp_upload_dir=wp_upload_dir();
+		return self::glob_recursive($wp_upload_dir['basedir'] . '/*-unsmushed.*');
+	}
 
 
 	/**
-      * 
-      * Get Last Quality Factor attached to a picture
+	*
+	* Find recursively files based on pattern
+	*
+	* @param string $pattern file search
+	* @param boolean $flags
+	* @return array
+	* @author Mike
+	* @link https://www.php.net/manual/en/function.glob.php#106595
+	*/
+	protected static function glob_recursive($pattern, $flags = 0) {
+	    $files = glob($pattern, $flags);
+
+	    foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir)
+	    {
+	        $files = array_merge($files, self::glob_recursive($dir.'/'.basename($pattern), $flags));
+	    }
+
+	    return $files;
+	}
+
+
+
+	/**
+	*
+	* retrieve Attachment ID from Path
+	* from : https://pippinsplugins.com/retrieve-attachment-id-from-image-url/
+	*
+	* @param imageURL
+	* @return json object
+	*/
+	public static function resmushit_get_image_id($image_url) {
+		global $wpdb;
+		$attachment = $wpdb->get_col($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE guid='%s';", $image_url ));
+Log::addTemp('Attachment', $attachment);
+		if (! isset($attachment[0]))
+		{
+
+			 return false;
+		}
+	  return $attachment[0];
+	}
+
+
+	/**
+      *
+      * Get Last Quality Factor attached to an image
       *
       * @param int 		$attachment_id 	Post ID
       * @return int 	quality setting for this attachment
@@ -435,7 +502,7 @@ Class reSmushit {
 
 
 	/**
-      * 
+      *
       * Check if this Attachment was successfully optimized
       *
       * @param int 		$attachment_id 	Post ID
@@ -445,15 +512,19 @@ Class reSmushit {
 		if( self::getDisabledState( $attachment_id ))
 			return 'disabled';
 		if (!file_exists(get_attached_file( $attachment_id ))) {
-			rlog("Error! File " . get_attached_file( $attachment_id ) . " not found on disk.", 'WARNING');
+			Log::addError("Error! File " . get_attached_file( $attachment_id ) . " not found on disk.");
 			return 'file_not_found';
 		}
 		if( filesize(get_attached_file( $attachment_id )) > self::MAX_FILESIZE){
+			Log::addDebug('File too big' . $attachment_id);
 			return 'file_too_big';
 		}
 
 		if( self::getPictureQualitySetting() != self::getAttachmentQuality( $attachment_id ))
+		{
+			Log::addDebug('Quality setting failed');
 			return 'failed';
+		}
 		return 'success';
 	}
 }
