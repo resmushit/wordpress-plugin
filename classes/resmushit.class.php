@@ -27,7 +27,7 @@ Class reSmushit {
 	 * @return array 	List of extensions
 	 */
 	public static function authorizedExtensions() {
-		return array('jpg', 'jpeg', 'gif', 'png', 'bmp', 'tif', 'tiff');
+		return array('jpg', 'jpeg', 'gif', 'png');
 	}
 
 
