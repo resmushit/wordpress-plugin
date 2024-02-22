@@ -7,6 +7,7 @@
       margin-top: 0;
       color: #fff;
       font-size: 26px;
+      margin-bottom: 12px;
     }
     span {
       color: #fff;
@@ -31,8 +32,8 @@
   .nav-block
   {
     background: #fff;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
 
     .rsmt-tabs-nav
     {
@@ -69,18 +70,23 @@
   {
     background: #fff;
     min-height: 500px;
+    &.rsmt-tab
+    {
+      border-top-right-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+    }
     .rsmt-panel
     {
-        border-left: 0 !important;
         margin-bottom: 0;
     //    border-bottom: 1px solid #ccc;
         padding-left: 36px;
+        border-radius: 0 0.5rem 0.5rem 0;
+
     }
 
     .rsmt-panel:last-child
     {
        margin-bottom: 0;
-      border-radius: 0 5px 5px 0;
     }
     &.message-wrapper
     {
