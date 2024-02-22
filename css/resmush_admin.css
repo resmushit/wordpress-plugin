@@ -56,7 +56,7 @@
   margin-bottom: 0;
   border-radius: 0 5px 5px 0;
 }
-.resmush-settings-ui .rsmt-cols.ad-wrapper {
+.resmush-settings-ui .rsmt-cols.message-wrapper {
   background: none;
 }
 .resmush-settings-ui .rsmt-settings input[type=checkbox] {
@@ -69,7 +69,7 @@
   width: 70px;
   margin-top: 0;
 }
-.resmush-settings-ui .shortpixel-ad {
+.resmush-settings-ui .shortpixel-message {
   background-color: #e6faff;
   color: #1ABDCA;
   border: 1px solid #ccc;
@@ -77,23 +77,23 @@
   margin-left: 12px;
   padding: 16px;
 }
-.resmush-settings-ui .shortpixel-ad img {
+.resmush-settings-ui .shortpixel-message img {
   width: 100%;
 }
-.resmush-settings-ui .shortpixel-ad ul {
+.resmush-settings-ui .shortpixel-message ul {
   list-style: none;
 }
-.resmush-settings-ui .shortpixel-ad ul li {
+.resmush-settings-ui .shortpixel-message ul li {
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 12px;
   text-align: center;
 }
-.resmush-settings-ui .shortpixel-ad .button-wrapper {
+.resmush-settings-ui .shortpixel-message .button-wrapper {
   text-align: center;
   margin: 36px 0 26px;
 }
-.resmush-settings-ui .shortpixel-ad .button-wrapper a {
+.resmush-settings-ui .shortpixel-message .button-wrapper a {
   font-size: 20px;
   padding: 8px 8px;
   width: 60%;
@@ -101,7 +101,7 @@
   color: #1ABDCA;
   border-color: #1ABDCA;
 }
-.resmush-settings-ui .shortpixel-ad .button-wrapper a:hover {
+.resmush-settings-ui .shortpixel-message .button-wrapper a:hover {
   background-color: #1ABDCA;
   color: #e6faff;
 }
