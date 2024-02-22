@@ -239,12 +239,14 @@ Class reSmushitUI {
 				. __('List of images above 5MB', 'resmushit-image-optimizer')
 				. "</h4><ul>");
 
+        echo "<li><h3>" .
+          sprintf(__('You can optimize these images with %s ShortPixel Image Optimizer %s','resmushit-image-optimizer'), '<a href="https://shortpixel.com/wp/af/ZGBQINU28044" target="_blank">', '</a>') . "</h3></li>";
+          
 		foreach($getNonOptimizedPictures->filestoobig as $file){
 			$fileInfo = pathinfo(get_attached_file( $file->ID ));
 			$filesize = reSmushitUI::sizeFormat(filesize(get_attached_file( $file->ID )));
 
-      echo "<li><h3>" .
-        sprintf(__('You can optimize these images with %s ShortPixel Image Optimizer %s','resmushit-image-optimizer'), '<a href="https://shortpixel.com/wp/af/ZGBQINU28044" target="_blank">', '</a>') . "</h3></li>";
+
 			echo wp_kses_post("<li><a href='"
 					. esc_url(wp_get_attachment_url( $file->ID ))
 					. "' target='_blank'>"
