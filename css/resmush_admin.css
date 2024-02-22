@@ -37,8 +37,7 @@
   padding: 5px 5px 5px 30px;
 }
 .resmush-settings-ui .nav-block .rsmt-tabs-nav li.active {
-  background-color: rgb(26, 189, 202);
-  color: #fff;
+  color: rgb(26, 189, 202);
 }
 .resmush-settings-ui .nav-block .rsmt-tabs-nav li a {
   text-decoration: none;
