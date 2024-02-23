@@ -1,9 +1,11 @@
 === reSmush.it : The original free image compressor and optimizer plugin  ===
 Contributors: ShortPixel, resmushit
+Donate link: https://ko-fi.com/resmushit
 Tags: image, optimizer, image optimization, resmush.it, smush, jpg, png, gif, optimization, compression, Compress, Images, Pictures, Reduce Image Size, Smush, Smush.it, free image optimization
 Requires at least: 4.0.0
-Tested up to: 6.4.3
-Stable tag: 0.4.14
+Tested up to: 6.4
+Requires PHP: 5.6
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +24,7 @@ reSmush.it has earned the reputation of being the best free, fast and easy image
 - Automatic image optimization on upload
 - Keep or remove EXIF data
 - Image quality selector
+- Exclude images from optimization
 - Powerful and free image optimizer API
 - Customizable settings for image quality
 - Automatic image optimization with CRON
@@ -62,15 +65,15 @@ Yes, you can optimize your images with cronjobs for large (and also for small) m
 
 = Can I choose an optimization level? =
 
-Yes, by default the optimization level is set to 92. However, you can further optimize your images by reducing the optimization level.
+Yes, by default the optimization level is set to 82. However, you can further optimize your images by reducing the optimization level.
 
 = Can I return to my original images? =
 
-Yes, by excluding/reverting this asset, you will have your original image available again.
+Yes, by excluding/reverting an image, you will have your original image available again.
 
 = Is it possible to exclude some images from the optimizer? =
 
-Yes, since version 0.1.2, you can easily exclude an asset from the optimizer.
+Yes, since version 0.1.2, you can easily exclude an image from the optimizer.
 
 = Am I at risk of losing my existing images? =
 
@@ -80,11 +83,33 @@ No! reSmush.it Image Optimizer creates a copy of the original images and perform
 
 Yes ! Absolutely free, the only restriction is that the images must not be larger than 5 MB.
 
+= Where do I report security bugs found in this plugin? =
+
+Please report security bugs found in the source code of the reSmush.it Image Optimizer plugin through the [Patchstack Vulnerability Disclosure Program](https://patchs
+tack.com/database/vdp/resmushit-image-optimizer). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
+
 == Screenshots ==
 
 1. The simple interface
 
 == Changelog ==
+= 1.0.0 =
+Release date February 22, 2024
+* New: The plugin settings have been moved to the "Settings" menu and the layout has been updated;
+* New: Added a Restore button next to each item in the Media Library;
+* New: An improved logging mechanism has been added;
+* New: The columns of the Media Library have been restructured and the layout and texts have been updated;
+* New: A dedicated reSmush.it box has been added on the image edit screen, with all the plugin actions;
+* Compat: The plugin is compatible and tested with PHP versions up to 8.3;
+* Fix: The exclude function can now be used directly in the list view of the Media Library;
+* Fix: The bulk restore function has been improved and should now work better;
+* Fix: The wording of the plugin has been updated and the JS messages have been converted to translatable strings;
+* Fix: The languages folder has been removed so that the plugin can be translated via the <a href="https://translate.wordpress.org/projects/wp-plugins/resmushit-image
+-optimizer/" target="_blank">Translate WordPress project</a>;
+* Fix: The JS part has been updated to fix the deprecated jQuery JSON parser;
+* Fix: The jQuery events are now associated with the "click" action instead of "mouseup";
+* Fix: The plugin actions of files that cannot be processed (PDF, SVG, etc.) have been removed;
+
 = 0.4.14 =
 * Fix Optimize button in listing
 

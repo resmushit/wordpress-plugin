@@ -89,7 +89,7 @@ class AdminController
   {
       add_meta_box(
           'rsi_info_box',          // this is HTML id of the box on edit screen
-          __('Resmush.IT', ''),    // title of the box
+          __('reSmush.it', ''),    // title of the box
           array( $this, 'displayMetaBox'),   // function to be called to display the info
           null,//,        // on which edit screen the box should appear
           'side'//'normal',      // part of page where the box should appear
@@ -122,7 +122,7 @@ class AdminController
   */
   public function media_list_add_column( $columns ) {
 //  	$columns["resmushit_disable"] 	= __('Disable of reSmush.it', 'resmushit-image-optimizer');
-  	$columns["resmushit_status"] 	= __('reSmush.it status', 'resmushit-image-optimizer');
+	$columns["resmushit_status"] 	= __('reSmush.it Status', 'resmushit-image-optimizer');
   	return $columns;
   }
 
@@ -214,10 +214,10 @@ echo "</div>";
   	);
 
   	$form_fields["rsmt-status-button"] = array(
-  		"label" => __("reSmush.it status", "resmushit-image-optimizer"),
-  		"input" => "html",
-  		"value" => '',
-  		"html"  => reSmushitUI::mediaListCustomValuesStatus($post->ID, true)
+		"label" => __("reSmush.it Status", "resmushit-image-optimizer"),
+		"input" => "html",
+		"value" => '',
+		"html"  => reSmushitUI::mediaListCustomValuesStatus($post->ID, true)
   	);
   	return $form_fields;
   }
@@ -240,7 +240,7 @@ echo "</div>";
 
      <div class="rsmt-cols w10 iln-block nav-block">
         <ul class='rsmt-tabs-nav'>
-          <li data-tab='actions' class='active'><?php _e('Actions','resmushit-image-optimizer'); ?></li>
+          <li data-tab='actions' class='active'><?php _e('Dashboard','resmushit-image-optimizer'); ?></li>
           <li data-tab='settings'><?php _e('Settings', 'resmushit-image-optimizer'); ?></li>
           <li data-tab='feedback'><?php _e('Support', 'resmushit-image-optimizer'); ?> </a></li>
         </ul>
