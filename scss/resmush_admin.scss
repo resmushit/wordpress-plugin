@@ -1,3 +1,4 @@
+@import 'mixins';
 
 .header-panel
 {
@@ -60,6 +61,10 @@
               color: #3c434a;
           }
        }
+       @include breakpoint (0, 1100px)
+       {
+          li { float: left; }
+       }
     }
 
   }
@@ -91,6 +96,11 @@
     &.message-wrapper
     {
        background: none;
+    }
+
+    @include breakpoint(0, 1100px)
+    {
+       min-height: 0;
     }
   }
 

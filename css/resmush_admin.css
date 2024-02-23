@@ -44,6 +44,11 @@
   text-decoration: none;
   color: #3c434a;
 }
+@media (max-width: 1100px) {
+  .resmush-settings-ui .nav-block .rsmt-tabs-nav li {
+    float: left;
+  }
+}
 .resmush-settings-ui .rsmt-cols {
   background: #fff;
   min-height: 500px;
@@ -62,6 +67,11 @@
 }
 .resmush-settings-ui .rsmt-cols.message-wrapper {
   background: none;
+}
+@media (max-width: 1100px) {
+  .resmush-settings-ui .rsmt-cols {
+    min-height: 0;
+  }
 }
 .resmush-settings-ui .rsmt-settings input[type=checkbox] {
   margin-right: 6px;
