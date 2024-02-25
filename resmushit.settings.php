@@ -4,7 +4,6 @@ define('RESMUSHIT_ENDPOINT', 'http://api.resmush.it/');
 define('RESMUSHIT_VERSION', '1.0.0');
 define('RESMUSHIT_DEFAULT_QLTY', '82');
 define('RESMUSHIT_TIMEOUT', '10');
-define('RESMUSHIT_LOGS_MAX_FILESIZE', '102400');
 define('RESMUSHIT_NEWSFEED', 'https://feed.resmush.it/');
 define('RESMUSHIT_FEEDBACK_URL', 'https://resmush.it/contact/');
 define('RESMUSHIT_BASE_URL', plugin_dir_url( __FILE__ ));
