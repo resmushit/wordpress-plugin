@@ -67,7 +67,7 @@
        }
     }
 
-  }
+  } //nav-block
 
 
   // The last panel of a view should have no margin, so the left menu and items line up.
@@ -87,6 +87,10 @@
         padding-left: 36px;
         border-radius: 0 0.5rem 0.5rem 0;
 
+				h2.unoptimizedimages
+				{
+					 margin-top: 0;
+				}
     }
 
     .rsmt-panel:last-child
@@ -160,6 +164,22 @@
      }
   }
 
+	.rsmt-tab-feedback
+	{
+			ul {
+				list-style:none;
+				li:before {
+//					content: '✓';
+				content: "\f147";
+				font-family: 'dashicons';
+				font-size: 18px;
+				vertical-align: bottom;
+				line-height: 18px;
+				margin-right: 4px;
+				}
+			}
+
+	}
 
 
-}
+} // resmush-settings-ui

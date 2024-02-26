@@ -9,5 +9,3 @@ define('RESMUSHIT_FEEDBACK_URL', 'https://resmush.it/contact/');
 define('RESMUSHIT_BASE_URL', plugin_dir_url( __FILE__ ));
 define('RESMUSHIT_CRON_FREQUENCY', 600);
 define('RESMUSHIT_CRON_TIMEOUT', 60);
-
-global $is_cron;

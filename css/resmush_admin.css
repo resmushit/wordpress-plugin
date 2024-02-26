@@ -38,7 +38,7 @@
   padding: 5px 5px 5px 30px;
 }
 .resmush-settings-ui .nav-block .rsmt-tabs-nav li.active {
-  color: rgb(26, 189, 202);
+  color: #1abdca;
 }
 .resmush-settings-ui .nav-block .rsmt-tabs-nav li a {
   text-decoration: none;
@@ -61,6 +61,9 @@
   margin-bottom: 0;
   padding-left: 36px;
   border-radius: 0 0.5rem 0.5rem 0;
+}
+.resmush-settings-ui .rsmt-cols .rsmt-panel h2.unoptimizedimages {
+  margin-top: 0;
 }
 .resmush-settings-ui .rsmt-cols .rsmt-panel:last-child {
   margin-bottom: 0;
@@ -118,6 +121,17 @@
 .resmush-settings-ui .shortpixel-message .button-wrapper a:hover {
   background-color: #1ABDCA;
   color: #e6faff;
+}
+.resmush-settings-ui .rsmt-tab-feedback ul {
+  list-style: none;
+}
+.resmush-settings-ui .rsmt-tab-feedback ul li:before {
+  content: "\f147";
+  font-family: "dashicons";
+  font-size: 18px;
+  vertical-align: bottom;
+  line-height: 18px;
+  margin-right: 4px;
 }
 
 /*# sourceMappingURL=resmush_admin.css.map */

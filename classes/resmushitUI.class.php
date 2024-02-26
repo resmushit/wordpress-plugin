@@ -48,10 +48,13 @@ Class reSmushitUI {
 	public static function fullWidthPanelWrapper($title = null, $html = null, $border = null) {
 		$borderClass = NULL;
 
-		if($border) {
+		/*if($border) {
 			$borderClass = ' brdr-'.$border;
-		}
-		echo wp_kses_post("<div class='rsmt-panel w100 $borderClass'><h2>$title</h2>");
+		} */
+
+		$titleClass = str_replace(' ', '', $title);
+		$titleClass = strtolower($titleClass);
+		echo wp_kses_post("<div class='rsmt-panel w100 $borderClass'><h2 class='" . $titleClass . "'>$title</h2>");
 	}
 
 	/**

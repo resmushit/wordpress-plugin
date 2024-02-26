@@ -38,8 +38,11 @@ class ProcessController
     	add_action('add_attachment', array($this,'get_meta_id') );
     }
 
+		$cronController = CronController::getInstance();
+		$doing_cron = $cronController->doing_cron();
+
     //Automatically optimize images if option is checked
-    if(get_option('resmushit_on_upload') OR ( isset($_POST['action']) AND ($_POST['action'] === "resmushit_bulk_process_image" OR $_POST['action'] === "resmushit_optimize_single_attachment" )) OR (defined( 'WP_CLI' ) && WP_CLI ) OR ($is_cron) )
+    if(get_option('resmushit_on_upload') OR ( isset($_POST['action']) AND ($_POST['action'] === "resmushit_bulk_process_image" OR $_POST['action'] === "resmushit_optimize_single_attachment" )) OR (defined( 'WP_CLI' ) && WP_CLI ) OR ($doing_cron) )
     {
       Log::addTemp('Gen Attachment metadta filter set');
     	add_filter('wp_generate_attachment_metadata', array($this,'process_images') );
