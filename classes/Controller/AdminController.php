@@ -270,6 +270,7 @@ echo "</div>";
           <li>Unlimited image optimization</li>
           <li>Unlimited domains</li>
           <li>WebP&AVIF conversion<li>
+					<li>500GB CDN Traffic</li>
           <li>$9.99 / month</li>
         </ul>
         <div class='button-wrapper'>
