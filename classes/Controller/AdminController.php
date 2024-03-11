@@ -243,6 +243,13 @@ echo "</div>";
           <li data-tab='actions' class='active'><?php _e('Dashboard','resmushit-image-optimizer'); ?></li>
           <li data-tab='settings'><?php _e('Settings', 'resmushit-image-optimizer'); ?></li>
           <li data-tab='feedback'><?php _e('Support', 'resmushit-image-optimizer'); ?> </a></li>
+          <li>
+            <span class='kofi-support'>
+              <a href="https://ko-fi.com/E1E51PW00" target="_blank">
+                <img width=22 height=15 src="<?php echo plugins_url('images/kofi.png', RESMUSH_PLUGIN_FILE); ?>">
+                <span class='text'><?php _e('Support Us', 'resmushit-image-optimizer'); ?></span>
+              </a>
+            </span>
         </ul>
 
      </div>
@@ -344,6 +351,7 @@ echo "</div>";
         wp_localize_script('resmushit-js', 'reSmush', array(
           'strings' => $translations,
         ));
+
 
         //Admin
         if (in_array( $current_page->id, $admin_pages ) ) {

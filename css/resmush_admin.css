@@ -1,3 +1,32 @@
+@keyframes kofi-wiggle {
+  0% {
+    transform: rotate(0) scale(1);
+  }
+  60% {
+    transform: rotate(0) scale(1);
+  }
+  75% {
+    transform: rotate(0) scale(1.12);
+  }
+  80% {
+    transform: rotate(0) scale(1.1);
+  }
+  84% {
+    transform: rotate(-10deg) scale(1.1);
+  }
+  88% {
+    transform: rotate(10deg) scale(1.1);
+  }
+  92% {
+    transform: rotate(-10deg) scale(1.1);
+  }
+  96% {
+    transform: rotate(10deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(0) scale(1);
+  }
+}
 .header-panel {
   margin-top: 25px;
 }
@@ -38,11 +67,32 @@
   padding: 5px 5px 5px 30px;
 }
 .resmush-settings-ui .nav-block .rsmt-tabs-nav li.active {
-  color: #1abdca;
+  color: rgb(26, 189, 202);
 }
 .resmush-settings-ui .nav-block .rsmt-tabs-nav li a {
   text-decoration: none;
   color: #3c434a;
+}
+.resmush-settings-ui .nav-block .rsmt-tabs-nav li .kofi-support {
+  padding: 8px;
+  line-height: 15px;
+  vertical-align: bottom;
+  border: 1px solid #1abdca;
+  border-radius: 6px;
+  width: 120px;
+  box-sizing: border-box;
+  display: inline-block;
+  white-space: nowrap;
+}
+.resmush-settings-ui .nav-block .rsmt-tabs-nav li .kofi-support img {
+  vertical-align: bottom;
+  animation: kofi-wiggle 3s infinite;
+}
+.resmush-settings-ui .nav-block .rsmt-tabs-nav li .kofi-support .text {
+  font-size: 14px;
+  letter-spacing: -0.15px;
+  margin-left: 4px;
+  color: #1abdca;
 }
 @media (max-width: 1100px) {
   .resmush-settings-ui .nav-block .rsmt-tabs-nav li {
@@ -132,6 +182,9 @@
   vertical-align: bottom;
   line-height: 18px;
   margin-right: 4px;
+}
+.resmush-settings-ui .rsmt-tab-actions .support {
+  padding-left: 60px;
 }
 
 /*# sourceMappingURL=resmush_admin.css.map */

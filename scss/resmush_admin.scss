@@ -60,6 +60,28 @@
               text-decoration: none;
               color: #3c434a;
           }
+          .kofi-support {
+             padding: 8px;
+             line-height: 15px;
+             vertical-align: bottom;
+             border: 1px solid #1abdca;
+             border-radius: 6px;
+             width: 120px;
+             box-sizing: border-box;
+             display: inline-block;
+             white-space: nowrap;
+
+             img {
+                vertical-align: bottom;
+                animation: kofi-wiggle 3s infinite;
+             }
+             .text {
+                font-size: 14px;
+                letter-spacing: -0.15px;
+                margin-left: 4px;
+                color: #1abdca;
+             }
+          }
        }
        @include breakpoint (0, 1100px)
        {
@@ -178,8 +200,16 @@
 				margin-right: 4px;
 				}
 			}
-
 	}
+
+  .rsmt-tab-actions {
+     .support {
+        padding-left: 60px;
+     }
+
+  }
+
+
 
 
 } // resmush-settings-ui
