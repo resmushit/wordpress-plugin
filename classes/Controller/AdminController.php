@@ -338,7 +338,7 @@ echo "</div>";
             'picture_too_big' => __('image(s) cannot be optimized (>5MB). All others have been optimized.', "resmushit-image-optimizer"),
             'error_webservice' => __('An error occured when contacting the API. Please try again later.', "resmushit-image-optimizer"),
             'restoring' => __('Restoring...', 'resmushit-image-optimizer'),
-            'stop_optimization' => __('Stop bulk', 'resmushit-image-optimizer'),
+            'stop_optimization' => __('Stop bulk optimization', 'resmushit-image-optimizer'),
 
         );
         wp_localize_script('resmushit-js', 'reSmush', array(
