@@ -21,7 +21,7 @@
     },
     "scripts": {
         "post-update-cmd" : "\\ShortPixel\\Build\\Build::BuildIt",
-        "buildLoader": "\\Resmush\\Helper\\BuildAutoLoader::buildJSON",
+        "buildLoader": "\\Resmush\\Helper\\BuildAutoLoader::buildJSON"
     },
     "extra": {
          "targetNamespace" : "Resmush",

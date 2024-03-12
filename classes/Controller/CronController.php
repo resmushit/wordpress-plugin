@@ -14,6 +14,8 @@ class CronController
 {
   protected static $instance;
 
+	protected $doing_cron = false;
+
 
   public static function getInstance()
   {
@@ -77,12 +79,17 @@ class CronController
   	return $schedules;
   }
 
+	public function doing_cron()
+	{
+		 return $this->doing_cron;
+	}
+
   /**
    * Declare a new crontask for optimization bulk
    */
   public function cron_process() {
-  	global $is_cron;
-  	$is_cron = TRUE;
+
+		$this->doing_cron = true;
 
   	if((time() - get_option('resmushit_cron_lastaction')) < RESMUSHIT_CRON_TIMEOUT) {
   		Log::addWarn('Another CRON process is running, process aborted.');

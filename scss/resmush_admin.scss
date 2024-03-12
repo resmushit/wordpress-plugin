@@ -1,3 +1,4 @@
+@import 'mixins';
 
 .header-panel
 {
@@ -59,10 +60,45 @@
               text-decoration: none;
               color: #3c434a;
           }
+          .kofi-support {
+             padding: 8px;
+             line-height: 15px;
+             vertical-align: bottom;
+             border: 1px solid #1abdca;
+             border-radius: 6px;
+             width: 120px;
+             box-sizing: border-box;
+             display: inline-block;
+             white-space: nowrap;
+
+             img {
+                vertical-align: bottom;
+                animation: kofi-wiggle 3s infinite;
+             }
+             .text {
+                font-size: 14px;
+                letter-spacing: -0.15px;
+                margin-left: 2px;
+                color: #1abdca;
+             }
+          }
+       }
+       @include breakpoint (0, 1100px)
+       {
+          li { float: left; }
+           .kofi-support {
+             margin-top: -5px;
+          }
+       }
+       @include breakpoint(0, 560px)
+       {
+          li {
+            float: none;
+          }
        }
     }
 
-  }
+  } //nav-block
 
 
   // The last panel of a view should have no margin, so the left menu and items line up.
@@ -82,6 +118,10 @@
         padding-left: 36px;
         border-radius: 0 0.5rem 0.5rem 0;
 
+				h2.unoptimizedimages
+				{
+					 margin-top: 0;
+				}
     }
 
     .rsmt-panel:last-child
@@ -91,6 +131,11 @@
     &.message-wrapper
     {
        background: none;
+    }
+
+    @include breakpoint(0, 1100px)
+    {
+       min-height: 0;
     }
   }
 
@@ -148,8 +193,37 @@
             }
         }
      }
+     @include breakpoint (0, 1100px)
+     {
+        max-width: 500px;
+        margin: 50px auto;
+     }
+  } // Shortpixel-message
+
+	.rsmt-tab-feedback
+	{
+			ul {
+				list-style:none;
+				li:before {
+//					content: '✓';
+				content: "\f147";
+				font-family: 'dashicons';
+				font-size: 18px;
+				vertical-align: bottom;
+				line-height: 18px;
+				margin-right: 4px;
+				}
+			}
+	}
+
+  .rsmt-tab-actions {
+     .support {
+        padding-left: 60px;
+     }
+
   }
 
 
 
-}
+
+} // resmush-settings-ui

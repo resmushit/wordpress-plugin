@@ -48,10 +48,13 @@ Class reSmushitUI {
 	public static function fullWidthPanelWrapper($title = null, $html = null, $border = null) {
 		$borderClass = NULL;
 
-		if($border) {
+		/*if($border) {
 			$borderClass = ' brdr-'.$border;
-		}
-		echo wp_kses_post("<div class='rsmt-panel w100 $borderClass'><h2>$title</h2>");
+		} */
+
+		$titleClass = str_replace(' ', '', $title);
+		$titleClass = strtolower($titleClass);
+		echo wp_kses_post("<div class='rsmt-panel w100 $borderClass'><h2 class='" . $titleClass . "'>$title</h2>");
 	}
 
 	/**
@@ -201,10 +204,13 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 			echo wp_kses_post(__('Optimize all images', 'resmushit-image-optimizer'));
 		}
 
-		echo wp_kses_post("</button></p><div id='bulk_resize_image_list'></div></div>"
+
+		echo ("</button></p><div id='bulk_resize_image_list'></div></div>"
 		. "<div class='optimized-wrapper $additionnalClassNoNeedOptimization'><h3 class='icon_message ok'>"
 		. __('Congratulations! All your images are optimized correctly!', 'resmushit-image-optimizer')
-		. "</h3></div></div>");
+		. "</h3>
+      <h3 class='support'><a href='https://wordpress.org/support/plugin/resmushit-image-optimizer/reviews/#new-post' target='_blank'>" . __('Please support us! Leave a review','resmushit-image-optimizer') . " ★★★★★</a></h3>
+    </div></div>");
 		self::fullWidthPanelEndWrapper();
 	}
 

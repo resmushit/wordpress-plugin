@@ -179,6 +179,7 @@
   position: relative;
   text-align: center;
   margin: 10px 0;
+  border-radius: 0.5rem;
 }
   .rsmt-bulk .resmushit--progress--bar p{
     font-size: 15px;
@@ -191,10 +192,11 @@
     transform: translate(-50%,0%);
   }
   .rsmt-bulk .resmushit--progress--bar{
-    background: #234C71;
+    background: #1abdca;
     position:absolute;
     transition: all 1s ease-out;
     height:100%;
+	border-radius: 0.5rem;
   }
   .rsmt-bulk .resmushit--progress--bar:after{
     content: "";
@@ -202,8 +204,6 @@
     position: absolute;
     bottom: 0;
     height: 50%;
-    background: rgb(0,0,0);
-    background: rgba(0,0,0,0.2);
     left: 0;
     color: white;
   }
