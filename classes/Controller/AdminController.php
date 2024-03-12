@@ -243,7 +243,7 @@ echo "</div>";
           <li data-tab='actions' class='active'><?php _e('Dashboard','resmushit-image-optimizer'); ?></li>
           <li data-tab='settings'><?php _e('Settings', 'resmushit-image-optimizer'); ?></li>
           <li data-tab='feedback'><?php _e('Support', 'resmushit-image-optimizer'); ?> </a></li>
-          <li>
+          <li class='kofi-li'>
             <span class='kofi-support'>
               <a href="https://ko-fi.com/E1E51PW00" target="_blank">
                 <img width=22 height=15 src="<?php echo plugins_url('images/kofi.png', RESMUSH_PLUGIN_FILE); ?>">

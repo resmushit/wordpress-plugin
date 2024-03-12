@@ -98,6 +98,14 @@
   .resmush-settings-ui .nav-block .rsmt-tabs-nav li {
     float: left;
   }
+  .resmush-settings-ui .nav-block .rsmt-tabs-nav .kofi-support {
+    margin-top: -5px;
+  }
+}
+@media (max-width: 560px) {
+  .resmush-settings-ui .nav-block .rsmt-tabs-nav li {
+    float: none;
+  }
 }
 .resmush-settings-ui .rsmt-cols {
   background: #fff;
@@ -171,6 +179,12 @@
 .resmush-settings-ui .shortpixel-message .button-wrapper a:hover {
   background-color: #1ABDCA;
   color: #e6faff;
+}
+@media (max-width: 1100px) {
+  .resmush-settings-ui .shortpixel-message {
+    max-width: 500px;
+    margin: 50px auto;
+  }
 }
 .resmush-settings-ui .rsmt-tab-feedback ul {
   list-style: none;

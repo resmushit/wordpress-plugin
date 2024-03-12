@@ -86,6 +86,15 @@
        @include breakpoint (0, 1100px)
        {
           li { float: left; }
+           .kofi-support {
+             margin-top: -5px;
+          }
+       }
+       @include breakpoint(0, 560px)
+       {
+          li {
+            float: none;
+          }
        }
     }
 
@@ -184,7 +193,12 @@
             }
         }
      }
-  }
+     @include breakpoint (0, 1100px)
+     {
+        max-width: 500px;
+        margin: 50px auto;
+     }
+  } // Shortpixel-message
 
 	.rsmt-tab-feedback
 	{

@@ -209,7 +209,7 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 		. "<div class='optimized-wrapper $additionnalClassNoNeedOptimization'><h3 class='icon_message ok'>"
 		. __('Congratulations! All your images are optimized correctly!', 'resmushit-image-optimizer')
 		. "</h3>
-      <h3 class='support'>Please support us! Leave a review <a href='https://wordpress.org/support/plugin/resmushit-image-optimizer/reviews/#new-post' target='_blank'>★★★★★</a></h3>
+      <h3 class='support'><a href='https://wordpress.org/support/plugin/resmushit-image-optimizer/reviews/#new-post' target='_blank'>" . __('Please support us! Leave a review','resmushit-image-optimizer') . " ★★★★★</a></h3>
     </div></div>");
 		self::fullWidthPanelEndWrapper();
 	}
