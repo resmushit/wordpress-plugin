@@ -1,11 +1,11 @@
 === reSmush.it : The original free image compressor and optimizer plugin  ===
 Contributors: ShortPixel, resmushit
 Donate link: https://ko-fi.com/resmushit
-Tags: image, optimizer, image optimization, resmush.it, smush, jpg, png, gif, optimization, compression, Compress, Images, Pictures, Reduce Image Size, Smush, Smush.it, free image optimization
+Tags: image, optimizer, image optimization, smush, free image optimization
 Requires at least: 4.0.0
 Tested up to: 6.4
 Requires PHP: 5.6
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,11 @@ tack.com/database/vdp/resmushit-image-optimizer). The Patchstack team will assis
 1. The simple interface
 
 == Changelog ==
+= 1.0.1 =
+Release date March 12, 2024
+* Fix: A PHP Notice was displayed in the logs for certain settings;
+* Tweak: Updated the settings page and added a "Support Us" button.
+
 = 1.0.0 =
 Release date February 22, 2024
 * New: The plugin settings have been moved to the "Settings" menu and the layout has been updated;
