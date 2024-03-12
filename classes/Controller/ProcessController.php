@@ -89,7 +89,6 @@ class ProcessController
   * @return attachment object
   */
   public function process_images($attachments, $force_keep_original = TRUE) {
-    Log::addTemp('Process Images Function');
   	global $attachment_id;
   	$cumulated_original_sizes = 0;
   	$cumulated_optimized_sizes = 0;
