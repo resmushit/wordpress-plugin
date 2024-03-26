@@ -166,8 +166,6 @@ Class reSmushitUI {
       $limitReached = true;
 		}
 
-
-
 		echo wp_kses_post("<div class='rsmt-bulk' data-csrf='" . wp_create_nonce( 'bulk_process_image' ) . "'><div class='non-optimized-wrapper $additionnalClassNeedOptimization'><h3 class='icon_message warning'>");
 
 		if(get_option('resmushit_cron') && get_option('resmushit_cron') == 1) {
@@ -203,7 +201,6 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 		} else {
 			echo wp_kses_post(__('Optimize all images', 'resmushit-image-optimizer'));
 		}
-
 
 		echo ("</button></p><div id='bulk_resize_image_list'></div></div>"
 		. "<div class='optimized-wrapper $additionnalClassNoNeedOptimization'><h3 class='icon_message ok'>"
