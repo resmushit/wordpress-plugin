@@ -166,7 +166,7 @@
 }
 .resmush-settings-ui .shortpixel-message .button-wrapper {
   text-align: center;
-  margin: 36px 0 26px;
+  margin: 36px 0 10px;
 }
 .resmush-settings-ui .shortpixel-message .button-wrapper a {
   font-size: 20px;
@@ -179,6 +179,13 @@
 .resmush-settings-ui .shortpixel-message .button-wrapper a:hover {
   background-color: #1ABDCA;
   color: #e6faff;
+}
+.resmush-settings-ui .shortpixel-message .link-under {
+  text-align: center;
+  margin-bottom: 16px;
+}
+.resmush-settings-ui .shortpixel-message .link-under a {
+  color: #1ABDCA;
 }
 @media (max-width: 1100px) {
   .resmush-settings-ui .shortpixel-message {

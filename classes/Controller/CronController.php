@@ -101,7 +101,7 @@ class CronController
   	// required if launch through wp-cron.php
   	include_once( ABSPATH . 'wp-admin/includes/image.php' );
 
-  	add_filter('wp_generate_attachment_metadata', array(\Resmush()->process(), 'process_images') );
+  	add_filter('wp_generate_attachment_metadata', array(\Resmush()->process(), 'process_images'), 10, 2);
   	Log::addDebug('Gathering unoptimized pictures from CRON');
   	$unoptimized_pictures = json_decode(reSmushit::getNonOptimizedPictures(TRUE));
   	Log::addDebug('Found ' . count($unoptimized_pictures->nonoptimized) . ' attachments');

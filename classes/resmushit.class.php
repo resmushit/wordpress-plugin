@@ -54,6 +54,8 @@ Class reSmushit {
 	 * Optimize an image according to a filepath.
 	 *
 	 * @param  string $file_path the path to the file on the server
+	 * @param  boolean The is_original param doesn't make any sense, since it's always true. Also before it was hooked to regenerate attachment metadata, hoping it wouldnt send a second param. This whole thing can probl. go
+	 *
 	 * @return bool 	TRUE if the resmush operation worked
 	 */
 	public static function optimize($file_path = NULL, $is_original = TRUE) {
