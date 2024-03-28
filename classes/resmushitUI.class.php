@@ -135,7 +135,7 @@ Class reSmushitUI {
 
         . self::addSetting("checkbox", __("Generate Webp/Avif", 'resmushit-image-optimizer'), sprintf(__("Create WebP/AVIF versions of the images. %s Request access %s ", 'resmushit-image-optimizer'), '<a href="https://resmush.it/contact/" target="_blank">', '</a>'), "resmushit_webpavif")
 
-				. self::addSetting("checkbox", __("Activate logs", 'resmushit-image-optimizer'), sprintf(__("Activate logging in a file. Useful for debugging/developers. <a href='%s' title='Details about logs' target='_blank'>More information</a>", 'resmushit-image-optimizer'), 'https://resmush.it/features/'), "resmushit_logs")
+
 				. self::addSetting("checkbox", __("Activate statistics", 'resmushit-image-optimizer'), __("Generates statistics about optimized images.", 'resmushit-image-optimizer'), "resmushit_statistics")
 				. '</table>';
 		submit_button();
@@ -563,7 +563,7 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 				$output .= $label . "<input type='text' name='$machine_name' id='$machine_name' value='". get_option( $machine_name ) ."'/>";
 				break;
       case 'number':
-        $more = ($machine_name == 'resmushit_qlty') ? '&nbsp;&nbsp;<a href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank">' . __('What is the best way to optimize images?', 'resmushit-image-optimizer') . '</a></p></div>' : ''; 
+        $more = ($machine_name == 'resmushit_qlty') ? '&nbsp;&nbsp;<a href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank">' . __('What is the best way to optimize images?', 'resmushit-image-optimizer') . '</a></p></div>' : '';
 
         $output .= $label . "<span><input type='number' class='number-small' name='$machine_name' id='$machine_name' value='". get_option( $machine_name ) ."'/>$more</span>";
       break;
