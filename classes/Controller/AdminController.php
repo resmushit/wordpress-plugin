@@ -250,6 +250,15 @@ echo "</div>";
                 <span class='text'><?php _e('Support Us', 'resmushit-image-optimizer'); ?></span>
               </a>
             </span>
+          </li>
+          <li>
+          <span class="kofi-support">
+              <a href="https://wordpress.org/support/plugin/resmushit-image-optimizer/reviews/#new-post" target="_blank">
+                <img width="22" height="15" src="<?php echo plugins_url('images/star.png', RESMUSH_PLUGIN_FILE); ?>">
+                <span class="text">Rate Us</span>
+              </a>
+            </span>
+          </li>
         </ul>
 
      </div>
@@ -281,10 +290,13 @@ echo "</div>";
           <li>$9.99 / month</li>
         </ul>
         <div class='button-wrapper'>
-          <a class='button' href=" https://shortpixel.com/ms/af/C34DUIL28044" target="_blank">Buy now</a>
+          <a class='button' href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank">Buy now</a>
         </div>
-        </div>
+          <div class='link-under'>
+            <a href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank"><?php _e('Why is premium optimization better?', 'resmushit-image-optimizer'); ?></a>
+          </div>
       </div>
+    </div>
 
   	</div> <!-- // ui -->
   	<?php
