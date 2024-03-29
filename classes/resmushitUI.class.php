@@ -133,7 +133,7 @@ Class reSmushitUI {
 				. self::addSetting("checkbox",  __("Deactivate backup", 'resmushit-image-optimizer'), sprintf(__("If you select this option, you choose not to keep the original version of the images. This is helpful to save disk space, but we strongly recommend having a backup of the entire website on hand. <a href='%s' title='Should I remove backups?' target='_blank'>More information</a>.", "resmushit-image-optimizer"), "https://resmush.it/why-preserving-backup-files/"), "resmushit_remove_unsmushed")
 				. self::addSetting("checkbox",  __("Optimize images using CRON", 'resmushit-image-optimizer'), sprintf(__("Image optimization is performed automatically via CRON tasks. <a href='%s' title='How to configure Cronjobs?' target='_blank'>More information</a>", 'resmushit-image-optimizer'), 'https://resmush.it/how-to-configure-cronjobs/'), "resmushit_cron")
 
-        . self::addSetting("checkbox", __("Generate Webp/Avif", 'resmushit-image-optimizer'), sprintf(__("Create WebP/AVIF versions of the images. %s Request access %s ", 'resmushit-image-optimizer'), '<a href="https://resmush.it/contact/" target="_blank">', '</a>'), "resmushit_webpavif")
+        . self::addSetting("checkbox", __("Generate WebP/AVIF", 'resmushit-image-optimizer'), sprintf(__("Create WebP/AVIF versions of the images. %s Request access %s ", 'resmushit-image-optimizer'), '<a href="https://resmush.it/contact/" target="_blank">', '</a>'), "resmushit_webpavif")
 
 
 				. self::addSetting("checkbox", __("Activate statistics", 'resmushit-image-optimizer'), __("Generates statistics about optimized images.", 'resmushit-image-optimizer'), "resmushit_statistics")
@@ -339,6 +339,9 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
     </li>
     <li>
       <a href="https://resmush.it/how-to-configure-cronjobs/" target="_blank"><?php _e('How to configure CRON jobs','resmushit-image-optimizer'); ?></a>
+    </li>
+    <li>
+      <a href="https://shortpixel.com/knowledge-base/article/582-an-error-occured-during-the-optimization-self-debugging" target="_blank"><?php _e('"An error occured during the optimization" - Self debugging','resmushit-image-optimizer'); ?></a>
     </li>
     <p>&nbsp;</p>
 
