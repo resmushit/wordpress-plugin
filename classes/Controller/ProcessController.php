@@ -44,15 +44,14 @@ class ProcessController
     //Automatically optimize images if option is checked
     if(get_option('resmushit_on_upload') OR ( isset($_POST['action']) AND ($_POST['action'] === "resmushit_bulk_process_image" OR $_POST['action'] === "resmushit_optimize_single_attachment" )) OR (defined( 'WP_CLI' ) && WP_CLI ) OR ($doing_cron) )
     {
-      Log::addTemp('Gen Attachment metadta filter set');
-    	add_filter('wp_generate_attachment_metadata', array($this,'process_images') );
+    	add_filter('wp_generate_attachment_metadata', array($this,'process_images'), 10, 2);
     }
   }
 
   public function unHookProcessor()
   {
     Log::addTemp('Unhooking Process Filter');
-    remove_filter('wp_generate_attachment_metadata', array($this,'process_images') );
+    remove_filter('wp_generate_attachment_metadata', array($this,'process_images'), 10, 2 );
 
   }
 
@@ -88,8 +87,7 @@ class ProcessController
   * @param boolean preserve original file
   * @return attachment object
   */
-  public function process_images($attachments, $force_keep_original = TRUE) {
-  	global $attachment_id;
+  public function process_images($attachments, $attachment_id) {
   	$cumulated_original_sizes = 0;
   	$cumulated_optimized_sizes = 0;
   	$error = FALSE;
@@ -121,14 +119,22 @@ class ProcessController
   	}
   	$basefile = basename($attachments[ 'file' ]);
 
-  	$statistics[] = reSmushit::optimize($basepath . $basefile, $force_keep_original );
+  	$statsObj = reSmushit::optimize($basepath . $basefile,true );
+    $attachments['filesize'] = $statsObj->dest_size;
+    $statistics[]  = $statsObj;
 
   	if(!isset($attachments[ 'sizes' ])) {
 		Log::addError("Error! Unable to find image sizes." . print_r($attachments, TRUE), 'WARNING');
   		return $attachments;
   	}
-  	foreach($attachments['sizes'] as $image_style) {
-  		$statistics[] = reSmushit::optimize($basepath . $image_style['file'], FALSE );
+  	foreach($attachments['sizes'] as $thumbnail_name => $image_style) {
+        $statsObj = reSmushit::optimize($basepath . $image_style['file'], FALSE );
+        // Update Filesize in the WP metadata
+        if (isset($attachments['sizes'][$thumbnail_name]))
+        {
+          $attachments['sizes'][$thumbnail_name]['filesize'] = $statsObj->dest_size;
+        }
+        $statistics[] = $statsObj;
   	}
 
   	$count = 0;
@@ -148,6 +154,7 @@ class ProcessController
   		update_post_meta($attachment_id,'resmushed_cumulated_original_sizes', $cumulated_original_sizes);
   		update_post_meta($attachment_id,'resmushed_cumulated_optimized_sizes', $cumulated_optimized_sizes);
   	}
+    update_post_meta( $attachment_id, '_wp_attachment_metadata', $attachments );
   	return $attachments;
   }
 

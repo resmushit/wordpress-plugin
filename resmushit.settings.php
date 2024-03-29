@@ -1,7 +1,7 @@
 <?php
 
 define('RESMUSHIT_ENDPOINT', 'http://api.resmush.it/');
-define('RESMUSHIT_VERSION', '1.0.1');
+define('RESMUSHIT_VERSION', '1.0.2');
 define('RESMUSHIT_DEFAULT_QLTY', '82');
 define('RESMUSHIT_TIMEOUT', '10');
 define('RESMUSHIT_NEWSFEED', 'https://feed.resmush.it/');

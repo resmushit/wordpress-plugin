@@ -73,7 +73,7 @@ class Plugin
         $uploaddir = wp_upload_dir(null, false, false);
         if (isset($uploaddir['basedir']))
         {
-          $log->setLogPath($uploaddir['basedir'] . "/resmush_log");
+          $log->setLogPath($uploaddir['basedir'] . "/resmushit.log");
         }
       }
     }

@@ -3,9 +3,9 @@ Contributors: ShortPixel, resmushit
 Donate link: https://ko-fi.com/resmushit
 Tags: image, optimizer, image optimization, smush, free image optimization
 Requires at least: 4.0.0
-Tested up to: 6.4
+Tested up to: 6.5
 Requires PHP: 5.6
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,14 +85,18 @@ Yes ! Absolutely free, the only restriction is that the images must not be large
 
 = Where do I report security bugs found in this plugin? =
 
-Please report security bugs found in the source code of the reSmush.it Image Optimizer plugin through the [Patchstack Vulnerability Disclosure Program](https://patchs
-tack.com/database/vdp/resmushit-image-optimizer). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
+Please report security bugs found in the source code of the reSmush.it Image Optimizer plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/resmushit-image-optimizer). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
 
 == Screenshots ==
 
 1. The simple interface
 
 == Changelog ==
+= 1.0.2 =
+Release date March 29, 2024
+* Fix: The new image size after compressing/restoring the image is now saved correctly in WordPress;
+* Tweak: Updated the settings page and added more support links and a "Rate Us" button;
+
 = 1.0.1 =
 Release date March 12, 2024
 * Fix: A PHP Notice was displayed in the logs for certain settings;

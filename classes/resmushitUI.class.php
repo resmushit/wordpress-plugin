@@ -127,11 +127,15 @@ Class reSmushitUI {
 
 		echo '<table class="form-table">'
 				. self::addSetting("number", __("Image quality", 'resmushit-image-optimizer'), __("A lower value means a smaller image size, a higher value means better image quality. A value between 50 and 85 is normally recommended.", 'resmushit-image-optimizer'), "resmushit_qlty")
+
 				. self::addSetting("checkbox", __("Optimize on upload", 'resmushit-image-optimizer'), __("Once activated, newly uploaded images are automatically optimized.", 'resmushit-image-optimizer'), "resmushit_on_upload")
 				. self::addSetting("checkbox", __("Preserve EXIF", 'resmushit-image-optimizer'), __("Activate this option to retain the original EXIF data in the images.", 'resmushit-image-optimizer'), "resmushit_preserve_exif")
 				. self::addSetting("checkbox",  __("Deactivate backup", 'resmushit-image-optimizer'), sprintf(__("If you select this option, you choose not to keep the original version of the images. This is helpful to save disk space, but we strongly recommend having a backup of the entire website on hand. <a href='%s' title='Should I remove backups?' target='_blank'>More information</a>.", "resmushit-image-optimizer"), "https://resmush.it/why-preserving-backup-files/"), "resmushit_remove_unsmushed")
 				. self::addSetting("checkbox",  __("Optimize images using CRON", 'resmushit-image-optimizer'), sprintf(__("Image optimization is performed automatically via CRON tasks. <a href='%s' title='How to configure Cronjobs?' target='_blank'>More information</a>", 'resmushit-image-optimizer'), 'https://resmush.it/how-to-configure-cronjobs/'), "resmushit_cron")
-				. self::addSetting("checkbox", __("Activate logs", 'resmushit-image-optimizer'), sprintf(__("Activate logging in a file. Useful for debugging/developers. <a href='%s' title='Details about logs' target='_blank'>More information</a>", 'resmushit-image-optimizer'), 'https://resmush.it/features/'), "resmushit_logs")
+
+        . self::addSetting("checkbox", __("Generate WebP/AVIF", 'resmushit-image-optimizer'), sprintf(__("Create WebP/AVIF versions of the images. %s Request access %s ", 'resmushit-image-optimizer'), '<a href="https://resmush.it/contact/" target="_blank">', '</a>'), "resmushit_webpavif")
+
+
 				. self::addSetting("checkbox", __("Activate statistics", 'resmushit-image-optimizer'), __("Generates statistics about optimized images.", 'resmushit-image-optimizer'), "resmushit_statistics")
 				. '</table>';
 		submit_button();
@@ -165,8 +169,6 @@ Class reSmushitUI {
 			$countNonOptimizedPictures .= '+';
       $limitReached = true;
 		}
-
-
 
 		echo wp_kses_post("<div class='rsmt-bulk' data-csrf='" . wp_create_nonce( 'bulk_process_image' ) . "'><div class='non-optimized-wrapper $additionnalClassNeedOptimization'><h3 class='icon_message warning'>");
 
@@ -203,7 +205,6 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 		} else {
 			echo wp_kses_post(__('Optimize all images', 'resmushit-image-optimizer'));
 		}
-
 
 		echo ("</button></p><div id='bulk_resize_image_list'></div></div>"
 		. "<div class='optimized-wrapper $additionnalClassNoNeedOptimization'><h3 class='icon_message ok'>"
@@ -338,6 +339,9 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
     </li>
     <li>
       <a href="https://resmush.it/how-to-configure-cronjobs/" target="_blank"><?php _e('How to configure CRON jobs','resmushit-image-optimizer'); ?></a>
+    </li>
+    <li>
+      <a href="https://shortpixel.com/knowledge-base/article/582-an-error-occured-during-the-optimization-self-debugging" target="_blank"><?php _e('"An error occured during the optimization" - Self debugging','resmushit-image-optimizer'); ?></a>
     </li>
     <p>&nbsp;</p>
 
@@ -555,17 +559,22 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 					";
     $label = "<label for='$machine_name'>$name<p>$extra</p></label>";
 
+
+
   	switch($type){
 			case 'text':
 				$output .= $label . "<input type='text' name='$machine_name' id='$machine_name' value='". get_option( $machine_name ) ."'/>";
 				break;
       case 'number':
-        $output .= $label . "<span><input type='number' class='number-small' name='$machine_name' id='$machine_name' value='". get_option( $machine_name ) ."'/></span>";
+        $more = ($machine_name == 'resmushit_qlty') ? '&nbsp;&nbsp;<a href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank">' . __('What is the best way to optimize images?', 'resmushit-image-optimizer') . '</a></p></div>' : '';
+
+        $output .= $label . "<span><input type='number' class='number-small' name='$machine_name' id='$machine_name' value='". get_option( $machine_name ) ."'/>$more</span>";
       break;
 			case 'checkbox':
 				$additionnal = null;
 				if ( 1 == get_option( $machine_name ) ) $additionnal = 'checked="checked"';
-				$output .= "<input type='checkbox' name='$machine_name' id='$machine_name' value='1' ".  $additionnal ."/>";
+        $disabled = ($machine_name == 'resmushit_webpavif') ? 'disabled' : '';
+				$output .= "<input type='checkbox' name='$machine_name' id='$machine_name' ' $disabled . ' value='1' ".  $additionnal ."/>";
         $output .= $label;
 				break;
 			default:
