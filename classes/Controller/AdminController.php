@@ -290,7 +290,7 @@ echo "</div>";
           <li>$9.99 / month</li>
         </ul>
         <div class='button-wrapper'>
-          <a class='button' href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank">Buy now</a>
+          <a class='button' href="https://shortpixel.com/pricing" target="_blank">Buy now</a>
         </div>
           <div class='link-under'>
             <a href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank"><?php _e('Why is premium optimization better?', 'resmushit-image-optimizer'); ?></a>
