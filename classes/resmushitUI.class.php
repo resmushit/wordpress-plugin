@@ -174,16 +174,16 @@ Class reSmushitUI {
 
 		if(get_option('resmushit_cron') && get_option('resmushit_cron') == 1) {
 			echo  wp_kses_post("<em>$countNonOptimizedPictures "
-			. __('unoptimized images will be optimized automatically', 'resmushit-image-optimizer')
-			. "</em>.</h3><p>"
+			. __('unoptimized images will be optimized automatically.', 'resmushit-image-optimizer')
+			. "</em></h3><p>"
 			. __('These images will be optimized automatically using scheduled tasks (cronjobs).', 'resmushit-image-optimizer')
 			. " "
 			. __('You can also start the image optimization <b>manually</b> by clicking on the button below:', 'resmushit-image-optimizer'));
 		} else {
 			echo  wp_kses_post(__('There are currently', 'resmushit-image-optimizer')
 			. " <em>$countNonOptimizedPictures "
-			. __('images that need optimization', 'resmushit-image-optimizer')
-			. "</em>.</h3><p>"
+			. __('images that need optimization.', 'resmushit-image-optimizer')
+			. "</em></h3><p>"
 			. __('This action resmushes all images that have not yet been optimized with the image quality specified in the settings. If the image quality has been changed and backups are activated, images that have already been optimized are resmushed with the new image quality rate.', 'resmushit-image-optimizer'));
       if ($limitReached)
       {
@@ -351,8 +351,8 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 
 
     $html = '
-    <p>Leave us feedback or suggest a new feature!</p>
-    <ul><li><a href='. RESMUSHIT_FEEDBACK_URL . ' target="_blank">Feedback form</a></li></ul>';
+    <p>' . esc_html__( 'Leave us feedback or suggest a new feature!', 'resmushit-image-optimizer' ) . '</p>
+    <ul><li><a href='. RESMUSHIT_FEEDBACK_URL . ' target="_blank">' . esc_html__( 'Feedback form', 'resmushit-image-optimizer' ) . '</a></li></ul>';
 
 
     echo wp_kses_post($html);
@@ -489,7 +489,7 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 
 			echo wp_kses_post("<div class='rsmt-alert'>"
 			. "<h3 class='icon_message warning'>"
-			. __('Cronjobs are not configured correctly', 'resmushit-image-optimizer')
+			. __('Cronjobs are not configured correctly.', 'resmushit-image-optimizer')
 			. "</h3>");
 
 			if ($cron_status == 'MISCONFIGURED') {
@@ -528,7 +528,7 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 				. __('Backup files can be removed.', 'resmushit-image-optimizer')
 				. "</h3>"
 				.	'<p>'
-				. sprintf(__('Keep these files and turn off the option "Disable backup" if you want to restore your unoptimized files in the future. Please <a href="%s" title="Should I remove backups? target="_blank">read instructions</a> before clicking.', 'resmushit-image-optimizer'), 'https://resmush.it/why-preserving-backup-files/')
+				. sprintf(__('Keep these files and turn off the option "Disable backup" if you want to restore your unoptimized files in the future. Please <a href="%s" title="Should I remove backups?" target="_blank">read instructions</a> before clicking.', 'resmushit-image-optimizer'), 'https://resmush.it/why-preserving-backup-files/')
 				. '</p><p>'
 				. sprintf( __( 'We have found %s files ready to be removed', 'resmushit-image-optimizer' ), count(reSmushit::detect_unsmushed_files()) )
 				. '</p><p>'
