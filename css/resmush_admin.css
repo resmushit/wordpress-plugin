@@ -207,5 +207,102 @@
 .resmush-settings-ui .rsmt-tab-actions .support {
   padding-left: 60px;
 }
+/*select quality buttons*/
+.quality-buttons {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.quality-button {
+  background-color: #e0f7fa;
+  border: 1px solid #00796b;
+  color: #00796b;
+  font-weight: bold;
+  padding: 8px 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  flex-grow: 1;
+  text-align: center;
+  border-radius: 0;
+  margin: 0;
+  box-sizing: border-box;
+  flex: 1 1 100%;
+}
+
+.quality-button:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.quality-button:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.quality-button:not(:last-child) {
+  border-right: none;
+}
+
+.quality-button:hover {
+  background-color: #b2ebf2;
+  color: #004d40;
+}
+
+.quality-button.active {
+  background-color: #00796b;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+@media (min-width: 600px) {
+  .quality-button {
+    flex: 1;
+  }
+
+  .quality-button:not(:last-child) {
+    border-right: 1px solid #00796b;
+  }
+
+  .quality-button:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+
+  .quality-button:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+}
+
+/*notice to seleect new quality settings*/
+.update-nag {
+
+  background-color: #ffffe0;
+  border-color: #e6db55;
+  color: #333;
+  position: relative;
+  margin: 0;
+  padding: 10px 20px;
+}
+
+.update-nag p {
+  margin: 0;
+}
+
+.update-nag p:last-child {
+  margin-bottom: 0;
+}
+
+.update-nag a {
+  color: #0073aa;
+  text-decoration: none;
+  border-bottom: 1px dotted #0073aa;
+}
+
+.update-nag a:hover {
+  border-bottom-style: solid;
+}
+
+
 
 /*# sourceMappingURL=resmush_admin.css.map */

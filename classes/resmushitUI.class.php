@@ -124,14 +124,22 @@ Class reSmushitUI {
 		settings_fields( 'resmushit-settings' );
 		do_settings_sections( 'resmushit-settings' );
 
+        $current_quality = get_option('resmushit_qlty');
+        $new_quality_values = array(87, 80, 74, 65, 58);
+
+        if (!in_array($current_quality, $new_quality_values)) {
+            echo '<div class="update-nag">Please select one of the 5 new image quality setting below. Only your future picture quality will be replaced.</div>';
+        }
+
 
 		echo '<table class="form-table">'
-				. self::addSetting("number", __("Image quality", 'resmushit-image-optimizer'), __("A lower value means a smaller image size, a higher value means better image quality. A value between 50 and 85 is normally recommended.", 'resmushit-image-optimizer'), "resmushit_qlty")
+            //. self::addSetting("number", __("Image quality", 'resmushit-image-optimizer'), __("A lower value means a smaller image size, a higher value means better image quality. A value between 50 and 85 is normally recommended.", 'resmushit-image-optimizer'), "resmushit_qlty")
+            . self::addSetting("radio", __("Image quality", 'resmushit-image-optimizer'), __("Choose the compression level for images. A lower value means a smaller image size, a higher value means better image quality.", 'resmushit-image-optimizer'), "resmushit_qlty")
 
-				. self::addSetting("checkbox", __("Optimize on upload", 'resmushit-image-optimizer'), __("Once activated, newly uploaded images are automatically optimized.", 'resmushit-image-optimizer'), "resmushit_on_upload")
-				. self::addSetting("checkbox", __("Preserve EXIF", 'resmushit-image-optimizer'), __("Activate this option to retain the original EXIF data in the images.", 'resmushit-image-optimizer'), "resmushit_preserve_exif")
-				. self::addSetting("checkbox",  __("Deactivate backup", 'resmushit-image-optimizer'), sprintf(__("If you select this option, you choose not to keep the original version of the images. This is helpful to save disk space, but we strongly recommend having a backup of the entire website on hand. <a href='%s' title='Should I remove backups?' target='_blank'>More information</a>.", "resmushit-image-optimizer"), "https://resmush.it/why-preserving-backup-files/"), "resmushit_remove_unsmushed")
-				. self::addSetting("checkbox",  __("Optimize images using CRON", 'resmushit-image-optimizer'), sprintf(__("Image optimization is performed automatically via CRON tasks. <a href='%s' title='How to configure Cronjobs?' target='_blank'>More information</a>", 'resmushit-image-optimizer'), 'https://resmush.it/how-to-configure-cronjobs/'), "resmushit_cron")
+            . self::addSetting("checkbox", __("Optimize on upload", 'resmushit-image-optimizer'), __("Once activated, newly uploaded images are automatically optimized.", 'resmushit-image-optimizer'), "resmushit_on_upload")
+            . self::addSetting("checkbox", __("Preserve EXIF", 'resmushit-image-optimizer'), __("Activate this option to retain the original EXIF data in the images.", 'resmushit-image-optimizer'), "resmushit_preserve_exif")
+            . self::addSetting("checkbox",  __("Deactivate backup", 'resmushit-image-optimizer'), sprintf(__("If you select this option, you choose not to keep the original version of the images. This is helpful to save disk space, but we strongly recommend having a backup of the entire website on hand. <a href='%s' title='Should I remove backups?' target='_blank'>More information</a>.", "resmushit-image-optimizer"), "https://resmush.it/why-preserving-backup-files/"), "resmushit_remove_unsmushed")
+            . self::addSetting("checkbox",  __("Optimize images using CRON", 'resmushit-image-optimizer'), sprintf(__("Image optimization is performed automatically via CRON tasks. <a href='%s' title='How to configure Cronjobs?' target='_blank'>More information</a>", 'resmushit-image-optimizer'), 'https://resmush.it/how-to-configure-cronjobs/'), "resmushit_cron")
 
         . self::addSetting("checkbox", __("Generate WebP/AVIF", 'resmushit-image-optimizer'), sprintf(__("Create WebP/AVIF versions of the images. %s Request access %s ", 'resmushit-image-optimizer'), '<a href="https://resmush.it/contact/" target="_blank">', '</a>'), "resmushit_webpavif")
 
@@ -554,39 +562,55 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 	 * @param  string $machine_name 	setting machine name
 	 * @return none
 	 */
-	public static function addSetting($type, $name, $extra, $machine_name) {
-		$output = "	<div class='setting-row type-$type'>
-					";
-    $label = "<label for='$machine_name'>$name<p>$extra</p></label>";
+    public static function addSetting($type, $name, $extra, $machine_name) {
+        $output = "<div class='setting-row type-$type'>";
+        $label = "<label for='$machine_name'>$name<p>$extra</p></label>";
 
+        switch ($type) {
+            case 'text':
+                $output .= $label . "<input type='text' name='$machine_name' id='$machine_name' value='" . get_option($machine_name) . "'/>";
+                break;
+            case 'number':
+                $more = ($machine_name == 'resmushit_qlty') ? '&nbsp;&nbsp;<a href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank">' . __('What is the best way to optimize images?', 'resmushit-image-optimizer') . '</a></p></div>' : '';
+                $output .= $label . "<span><input type='number' class='number-small' name='$machine_name' id='$machine_name' value='" . get_option($machine_name) . "'/>$more</span>";
+                break;
+            case 'radio':
+                $output .= $label;
+                $compression_levels = array(
+                    array('name' => 'Best Quality', 'value' => '87'),
+                    array('name' => 'Good Quality', 'value' => '80'),
+                    array('name' => 'Balanced', 'value' => '74'),
+                    array('name' => 'Good Compression', 'value' => '65'),
+                    array('name' => 'Best Compression', 'value' => '58'),
+                );
 
+                $current_value = get_option($machine_name);
 
-  	switch($type){
-			case 'text':
-				$output .= $label . "<input type='text' name='$machine_name' id='$machine_name' value='". get_option( $machine_name ) ."'/>";
-				break;
-      case 'number':
-        $more = ($machine_name == 'resmushit_qlty') ? '&nbsp;&nbsp;<a href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank">' . __('What is the best way to optimize images?', 'resmushit-image-optimizer') . '</a></p></div>' : '';
+                $output .= "<div class='quality-buttons'>";
+                foreach ($compression_levels as $level) {
+                    $checked = ($current_value == $level['value']) ? 'checked' : '';
+                    $active_class = ($current_value == $level['value']) ? 'active' : '';
+                    $output .= "<button type='button' class='quality-button $active_class' data-value='{$level['value']}'>{$level['name']}</button>";
+                }
+                $output .= "</div>";
+                $output .= "<input type='hidden' name='$machine_name' id='$machine_name' value='$current_value'>";
+                break;
+            case 'checkbox':
+                $additionnal = null;
+                if (1 == get_option($machine_name)) $additionnal = 'checked="checked"';
+                $disabled = ($machine_name == 'resmushit_webpavif') ? 'disabled' : '';
+                $output .= "<input type='checkbox' name='$machine_name' id='$machine_name' $disabled value='1' " . $additionnal . "/>";
+                $output .= $label;
+                break;
+            default:
+                break;
+        }
 
-        $output .= $label . "<span><input type='number' class='number-small' name='$machine_name' id='$machine_name' value='". get_option( $machine_name ) ."'/>$more</span>";
-      break;
-			case 'checkbox':
-				$additionnal = null;
-				if ( 1 == get_option( $machine_name ) ) $additionnal = 'checked="checked"';
-        $disabled = ($machine_name == 'resmushit_webpavif') ? 'disabled' : '';
-				$output .= "<input type='checkbox' name='$machine_name' id='$machine_name' ' $disabled . ' value='1' ".  $additionnal ."/>";
-        $output .= $label;
-				break;
-			default:
-				break;
-		}
+        $output .= '</div>';
+        return $output;
+    }
 
-		$output .= '</div>';
-		return $output;
-	}
-
-
-	/**
+    /**
 	 *
 	 * Generate checkbox "disabled" on media list
 	 *
