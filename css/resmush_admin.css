@@ -207,6 +207,7 @@
 .resmush-settings-ui .rsmt-tab-actions .support {
   padding-left: 60px;
 }
+
 /*select quality buttons*/
 .quality-buttons {
   display: flex;
@@ -223,24 +224,8 @@
   transition: background-color 0.3s ease, color 0.3s ease;
   flex-grow: 1;
   text-align: center;
-  border-radius: 0;
   margin: 0;
   box-sizing: border-box;
-  flex: 1 1 100%;
-}
-
-.quality-button:first-child {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
-
-.quality-button:last-child {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
-.quality-button:not(:last-child) {
-  border-right: none;
 }
 
 .quality-button:hover {
@@ -254,13 +239,17 @@
   font-weight: bold;
 }
 
-@media (min-width: 600px) {
+@media (max-width: 600px) {
+  .quality-button {
+    flex: 1 1 100%;
+    border-radius: 5px;
+  }
+}
+
+@media (min-width: 601px) {
   .quality-button {
     flex: 1;
-  }
-
-  .quality-button:not(:last-child) {
-    border-right: 1px solid #00796b;
+    border-radius: 0;
   }
 
   .quality-button:first-child {
@@ -272,7 +261,12 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
   }
+
+  .quality-button:not(:last-child) {
+    border-right: none;
+  }
 }
+
 
 /*notice to seleect new quality settings*/
 .update-nag {
