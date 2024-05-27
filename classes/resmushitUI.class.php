@@ -128,7 +128,7 @@ Class reSmushitUI {
         $new_quality_values = array(87, 80, 74, 65, 58);
 
         if (!in_array($current_quality, $new_quality_values)) {
-            echo '<div class="update-nag">Please select one of the 5 new image quality setting below. Only your future picture quality will be replaced.</div>';
+            echo '<div class="update-nag">Please select one of the 5 new image quality settings below. Your current quality settings will be kept for previously uploaded images. If you need to set a value outside those 5 values, you can add a filter.</div>';
         }
 
 
@@ -575,25 +575,31 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
                 $output .= $label . "<span><input type='number' class='number-small' name='$machine_name' id='$machine_name' value='" . get_option($machine_name) . "'/>$more</span>";
                 break;
             case 'radio':
-                $output .= $label;
-                $compression_levels = array(
-                    array('name' => 'Best Quality', 'value' => '87'),
-                    array('name' => 'Good Quality', 'value' => '80'),
-                    array('name' => 'Balanced', 'value' => '74'),
-                    array('name' => 'Good Compression', 'value' => '65'),
-                    array('name' => 'Best Compression', 'value' => '58'),
-                );
+                if ($machine_name === 'resmushit_qlty' && has_filter('resmushit_quality_setting_output_filter')) {
+                    // preparing for user filter here: if filter is in use, display the message and apply it, else, no filter == continue as normal
+                    $output .= $label . "<p>" . __('Quality level is set through a filter and cannot be changed here.', 'resmushit-image-optimizer') . "</p>";
+                    $output = apply_filters('resmushit_quality_setting_output_filter', $output, $type, $name, $extra, $machine_name);
+                } else {
+                    $output .= $label;
+                    $compression_levels = array(
+                        array('name' => 'Best Quality', 'value' => '87'),
+                        array('name' => 'Good Quality', 'value' => '80'),
+                        array('name' => 'Balanced', 'value' => '74'),
+                        array('name' => 'Good Compression', 'value' => '65'),
+                        array('name' => 'Best Compression', 'value' => '58'),
+                    );
 
-                $current_value = get_option($machine_name);
+                    $current_value = get_option($machine_name);
 
-                $output .= "<div class='quality-buttons'>";
-                foreach ($compression_levels as $level) {
-                    $checked = ($current_value == $level['value']) ? 'checked' : '';
-                    $active_class = ($current_value == $level['value']) ? 'active' : '';
-                    $output .= "<button type='button' class='quality-button $active_class' data-value='{$level['value']}'>{$level['name']}</button>";
+                    $output .= "<div class='quality-buttons'>";
+                    foreach ($compression_levels as $level) {
+                        $checked = ($current_value == $level['value']) ? 'checked' : '';
+                        $active_class = ($current_value == $level['value']) ? 'active' : '';
+                        $output .= "<button type='button' class='quality-button $active_class' data-value='{$level['value']}' title='Quality level: {$level['value']}'>{$level['name']}</button>";
+                    }
+                    $output .= "</div>";
+                    $output .= "<input type='hidden' name='$machine_name' id='$machine_name' value='$current_value'>";
                 }
-                $output .= "</div>";
-                $output .= "<input type='hidden' name='$machine_name' id='$machine_name' value='$current_value'>";
                 break;
             case 'checkbox':
                 $additionnal = null;
@@ -609,6 +615,9 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
         $output .= '</div>';
         return $output;
     }
+
+
+
 
     /**
 	 *
