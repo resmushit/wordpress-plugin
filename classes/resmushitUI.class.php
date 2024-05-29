@@ -680,9 +680,9 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 			$output = __('Reduced by', 'resmushit-image-optimizer') . " ". $statistics['total_saved_size_nice'] ." <br>(". $statistics['percent_reduction'] . ' ' . __('saved', 'resmushit-image-optimizer') . ")";
 
 			$output .= '<p><button type="button" data-csrf="' . wp_create_nonce( 'single_attachment' ) . '" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send">'. __('Force re-optimize', 'resmushit-image-optimizer') .'</button></p>';
-
-			$output .= '<p><button type="button" data-csrf="' . wp_create_nonce( 'single_attachment' ) . '" class="rsmt-trigger--restore-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send">'. __('Restore', 'resmushit-image-optimizer') .'</button></p>';
-
+            if (reSmushit::hasBackup($attachment_id)) {
+                $output .= '<p><button type="button" data-csrf="' . wp_create_nonce('single_attachment') . '" class="rsmt-trigger--restore-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="' . $attachment_id . '" class="button wp-smush-send">' . __('Restore', 'resmushit-image-optimizer') . '</button></p>';
+            }
 		}
 
 		if($return)

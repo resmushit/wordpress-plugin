@@ -188,6 +188,19 @@ Class reSmushit {
 			unlink($originalFile);
 	}
 
+    /**
+     * Checking   that we have  backup
+     *
+     * @param int $attachment_id ID of the attachment
+     * @return bool TRUE if there is the original file, FALSE otherwise
+     */
+    public static function hasBackup($attachment_id) {
+        $basepath = dirname(get_attached_file($attachment_id)) . '/';
+        $fileInfo = pathinfo(get_attached_file($attachment_id));
+        $originalFile = $basepath . $fileInfo['filename'] . '-unsmushed.' . $fileInfo['extension'];
+        return file_exists($originalFile);
+    }
+
 	/**
       *
       * Detect if optimization process was already launched one time
