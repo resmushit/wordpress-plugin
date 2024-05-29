@@ -572,13 +572,12 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
                 break;
             case 'number':
                 $more = ($machine_name == 'resmushit_qlty') ? '&nbsp;&nbsp;<a href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank">' . __('What is the best way to optimize images?', 'resmushit-image-optimizer') . '</a></p></div>' : '';
-                $output .= $label . "<span><input type='number' class='number-small' name='$machine_name' id='$machine_name' value='" . get_option($machine_name) . "'/>$more</span>";
+                $output .= $label . "<span><input type='number' class='number-small' name='$machine_name' id='$machine_name' value=''" . get_option($machine_name) . "'/>$more</span>";
                 break;
             case 'radio':
-                if ($machine_name === 'resmushit_qlty' && has_filter('resmushit_quality_setting_output_filter')) {
-                    // preparing for user filter here: if filter is in use, display the message and apply it, else, no filter == continue as normal
+                if ($machine_name === 'resmushit_qlty' && has_filter('resmushit_image_quality')) {
+                    // preparing for user filter here: if filter is in use, display the message, else, no filter == continue as normal
                     $output .= $label . "<p>" . __('Quality level is set through a filter and cannot be changed here.', 'resmushit-image-optimizer') . "</p>";
-                    $output = apply_filters('resmushit_quality_setting_output_filter', $output, $type, $name, $extra, $machine_name);
                 } else {
                     $output .= $label;
                     $compression_levels = array(
