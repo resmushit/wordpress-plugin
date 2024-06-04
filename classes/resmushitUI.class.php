@@ -77,7 +77,7 @@ Class reSmushitUI {
 	 */
 	public static function headerPanel() {
 		//$html = "<img src='". RESMUSHIT_BASE_URL . "images/header.png' />";
-		$html = sprintf("<span class='byline'>By %s ShortPixel %s</span>", '<a href="https://shortpixel.com/" target="_blank">', '</a>');
+		$html = sprintf(esc_html__("%s By %s ShortPixel %s"), '<span class="byline">', '<a href="https://shortpixel.com/" target="_blank">', '</a></span>');
 		self::fullWidthPanel('reSmush.it', $html);
 	}
 
