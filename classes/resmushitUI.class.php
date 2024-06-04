@@ -568,11 +568,11 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 
         switch ($type) {
             case 'text':
-                $output .= $label . "<input type='text' name='$machine_name' id='$machine_name' value='" . get_option($machine_name) . "'/>";
+                $output .= $label . "<input type='text' name='$machine_name' id='$machine_name' value='" . esc_attr(get_option($machine_name)) . "'/>";
                 break;
             case 'number':
                 $more = ($machine_name == 'resmushit_qlty') ? '&nbsp;&nbsp;<a href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank">' . __('What is the best way to optimize images?', 'resmushit-image-optimizer') . '</a></p></div>' : '';
-                $output .= $label . "<span><input type='number' class='number-small' name='$machine_name' id='$machine_name' value=''" . get_option($machine_name) . "'/>$more</span>";
+                $output .= $label . "<span><input type='number' class='number-small' name='$machine_name' id='$machine_name' value=''" . esc_attr(get_option($machine_name)) . "'/>$more</span>";
                 break;
             case 'radio':
                 if ($machine_name === 'resmushit_qlty' && has_filter('resmushit_image_quality')) {
@@ -581,11 +581,11 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
                 } else {
                     $output .= $label;
                     $compression_levels = array(
-                        array('name' => 'Best Quality', 'value' => '87'),
-                        array('name' => 'Good Quality', 'value' => '80'),
-                        array('name' => 'Balanced', 'value' => '74'),
-                        array('name' => 'Good Compression', 'value' => '65'),
-                        array('name' => 'Best Compression', 'value' => '58'),
+                        array('name' => __('Best Quality', 'resmushit-image-optimizer'), 'value' => '87'),
+                        array('name' => __('Good Quality', 'resmushit-image-optimizer'), 'value' => '80'),
+                        array('name' => __('Balanced', 'resmushit-image-optimizer'), 'value' => '74'),
+                        array('name' => __('Good Compression', 'resmushit-image-optimizer'), 'value' => '65'),
+                        array('name' => __('Best Compression', 'resmushit-image-optimizer'), 'value' => '58'),
                     );
 
                     $current_value = get_option($machine_name);
@@ -594,7 +594,12 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
                     foreach ($compression_levels as $level) {
                         $checked = ($current_value == $level['value']) ? 'checked' : '';
                         $active_class = ($current_value == $level['value']) ? 'active' : '';
-                        $output .= "<button type='button' class='quality-button $active_class' data-value='{$level['value']}' title='Quality level: {$level['value']}'>{$level['name']}</button>";
+
+                        $title = sprintf(esc_html__('Quality level: %s', 'resmushit-image-optimizer'), esc_attr($level['value']) );
+
+                        $output .= "<button type='button' class='quality-button $active_class'
+                        data-value='" . esc_attr($level['value']) . "'
+                        title='" . $title . "'>{$level['name']}</button>";
                     }
                     $output .= "</div>";
                     $output .= "<input type='hidden' name='$machine_name' id='$machine_name' value='$current_value'>";

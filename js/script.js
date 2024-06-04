@@ -29,6 +29,7 @@ jQuery(document).delegate(".rsmt-notice button.notice-dismiss","click",function(
 /*Hide notice about 5 quality setting, after one of them gets selected*/
 
 document.addEventListener('DOMContentLoaded', function() {
+
 	const qualityButtons = document.querySelectorAll('.quality-button');
 	const qualityInput = document.querySelector('input[name="resmushit_qlty"]');
 	const notification = document.querySelector('.update-nag');
@@ -104,7 +105,7 @@ function ChangePanelEvent(event)
 		var searchClass = 'rsmt-tab-' + tabTarget;
 
 		// Hide everything else.
-		var tabs = document.querySelectorAll('.rsmt-tab');
+		var tabs = document.querySelectorAll('.rsmt-panels .rsmt-tab');
 		for (var i = 0; i < tabs.length; i++)
 		{
 			 tabs[i].style.display = 'none';
@@ -115,7 +116,6 @@ function ChangePanelEvent(event)
 					tabs[i].classList.add('active');
 			 }
 		}
-
 }
 
 var tabNavs = document.querySelectorAll('.rsmt-tabs-nav li');

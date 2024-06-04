@@ -232,6 +232,86 @@
   }
 
 
+// This needs moving somewhere probs.
+/*select quality buttons*/
+.quality-buttons {
+  display: flex;
+  flex-wrap: wrap;
+
+  .quality-button {
+    background-color: #e0f7fa;
+    border: 1px solid #00796b;
+    color: #00796b;
+    font-weight: bold;
+    padding: 8px 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    flex-grow: 1;
+    text-align: center;
+    margin: 0;
+    box-sizing: border-box;
+    &:hover {
+      background-color: #b2ebf2;
+      color: #004d40;
+    }
+    &.active {
+      background-color: #00796b;
+      color: #ffffff;
+      font-weight: bold;
+    }
+    @include breakpoint(0, 600px)
+    {
+      flex: 1 1 100%;
+      border-radius: 5px;
+    }
+    @include breakpoint(601px)
+    {
+      flex: 1;
+      border-radius: 0;
+      &:first-child {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+      }
+
+      &:last-child {
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+
+      &:not(:last-child) {
+        border-right: none;
+      }
+    }
+
+  } // quality-button
+
+}
+
+
+/*notice to seleect new quality settings*/
+.update-nag {
+
+  background-color: #ffffe0;
+  border-color: #e6db55;
+  color: #333;
+  position: relative;
+  margin: 0;
+  padding: 10px 20px;
+  p {
+    margin: 0;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  a {
+    color: #0073aa;
+    text-decoration: none;
+    border-bottom: 1px dotted #0073aa;
+    &:hover {
+      border-bottom-style: solid;
+    }
+  }
+}
 
 
 } // resmush-settings-ui
