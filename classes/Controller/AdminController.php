@@ -290,7 +290,7 @@ echo "</div>";
           <li><?php esc_html_e( '$9.99 / month', 'resmushit-image-optimizer' ); ?></li>
         </ul>
         <div class='button-wrapper'>
-          <a class='button' href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank"><?php esc_html_e( 'Buy now', 'resmushit-image-optimizer' ); ?></a>
+          <a class='button' href="https://shortpixel.com/pricing" target="_blank"><?php esc_html_e( 'Buy now', 'resmushit-image-optimizer' ); ?></a>
         </div>
           <div class='link-under'>
             <a href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank"><?php _e('Why is premium optimization better?', 'resmushit-image-optimizer'); ?></a>
