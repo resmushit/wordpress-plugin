@@ -77,7 +77,7 @@ Class reSmushitUI {
 	 */
 	public static function headerPanel() {
 		//$html = "<img src='". RESMUSHIT_BASE_URL . "images/header.png' />";
-		$html = sprintf(esc_html__("%s By %s ShortPixel %s"), '<span class="byline">', '<a href="https://shortpixel.com/" target="_blank">', '</a></span>');
+		$html = sprintf(esc_html__("%s By %s ShortPixel %s", 'resmushit-image-optimizer' ), '<span class="byline">', '<a href="https://shortpixel.com/" target="_blank">', '</a></span>');
 		self::fullWidthPanel('reSmush.it', $html);
 	}
 
@@ -128,7 +128,7 @@ Class reSmushitUI {
         $new_quality_values = array(87, 80, 74, 65, 58);
 
         if (!in_array($current_quality, $new_quality_values)) {
-            echo '<div class="update-nag">Please select one of the 5 new image quality settings below. Your current quality settings will be kept for previously uploaded images. If you need to set a value outside those 5 values, you can add a filter.</div>';
+            echo '<div class="update-nag">' . esc_html__( 'Please select one of the 5 new image quality settings below. Your current quality settings will be kept for previously uploaded images. If you need to set a value outside those 5 values, you can add a filter.', 'resmushit-image-optimizer' ) . '</div>';
         }
 
 
