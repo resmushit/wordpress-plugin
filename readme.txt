@@ -5,7 +5,7 @@ Tags: image, optimizer, image optimization, smush, free image optimization
 Requires at least: 4.0.0
 Tested up to: 6.5
 Requires PHP: 5.6
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -92,6 +92,13 @@ Please report security bugs found in the source code of the reSmush.it Image Opt
 1. The simple interface
 
 == Changelog ==
+= 1.0.3 =
+Release date June 7, 2024
+* Tweak: Added 5 compression options to choose from and a filter instead of the numeric quality selector;
+* Fix: Restore and Force Optimize options are no longer displayed for images without backups;
+* Fix: Internationalization now also works for ShortPixel modules (thanks @alexclassroom);
+* Fix: Links, texts and mobile layout in the settings have been improved;
+
 = 1.0.2 =
 Release date March 29, 2024
 * Fix: The new image size after compressing/restoring the image is now saved correctly in WordPress;
