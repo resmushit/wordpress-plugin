@@ -25,6 +25,8 @@
     },
     "extra": {
          "targetNamespace" : "Resmush",
-         "targetFilter" : "resmush"
+         "targetFilter" : "resmush",
+         "targetTextDomain": "resmushit-image-optimizer"
+
     }
 }

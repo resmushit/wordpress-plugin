@@ -48,6 +48,10 @@
   border-radius: 0.5rem;
 }
 
+.resmush-settings-ui {
+  /*select quality buttons*/
+  /*notice to seleect new quality settings*/
+}
 .resmush-settings-ui .nav-block {
   background: #fff;
   border-top-left-radius: 0.5rem;
@@ -206,6 +210,77 @@
 }
 .resmush-settings-ui .rsmt-tab-actions .support {
   padding-left: 60px;
+}
+.resmush-settings-ui .quality-buttons {
+  display: flex;
+  flex-wrap: wrap;
+}
+.resmush-settings-ui .quality-buttons .quality-button {
+  background-color: #e0f7fa;
+  border: 1px solid #00796b;
+  color: #00796b;
+  font-weight: bold;
+  padding: 8px 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  flex-grow: 1;
+  text-align: center;
+  margin: 0;
+  box-sizing: border-box;
+}
+.resmush-settings-ui .quality-buttons .quality-button:hover {
+  background-color: #b2ebf2;
+  color: #004d40;
+}
+.resmush-settings-ui .quality-buttons .quality-button.active {
+  background-color: #00796b;
+  color: #ffffff;
+  font-weight: bold;
+}
+@media (max-width: 600px) {
+  .resmush-settings-ui .quality-buttons .quality-button {
+    flex: 1 1 100%;
+    border-radius: 5px;
+  }
+}
+@media (min-width: 601px) {
+  .resmush-settings-ui .quality-buttons .quality-button {
+    flex: 1;
+    border-radius: 0;
+  }
+  .resmush-settings-ui .quality-buttons .quality-button:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  .resmush-settings-ui .quality-buttons .quality-button:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  .resmush-settings-ui .quality-buttons .quality-button:not(:last-child) {
+    border-right: none;
+  }
+}
+.resmush-settings-ui .update-nag {
+  background-color: #ffffe0;
+  border-color: #e6db55;
+  color: #333;
+  position: relative;
+  margin: 0;
+  padding: 10px 20px;
+}
+.resmush-settings-ui .update-nag p {
+  margin: 0;
+}
+.resmush-settings-ui .update-nag p:last-child {
+  margin-bottom: 0;
+}
+.resmush-settings-ui .update-nag a {
+  color: #0073aa;
+  text-decoration: none;
+  border-bottom: 1px dotted #0073aa;
+}
+.resmush-settings-ui .update-nag a:hover {
+  border-bottom-style: solid;
 }
 
 /*# sourceMappingURL=resmush_admin.css.map */

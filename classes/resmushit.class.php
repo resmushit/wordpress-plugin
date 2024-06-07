@@ -40,7 +40,7 @@ Class reSmushit {
 	 */
 	public static function getPictureQualitySetting() {
 		if(get_option( 'resmushit_qlty' )) {
-			return get_option( 'resmushit_qlty' );
+          return  apply_filters('resmushit_image_quality', get_option( 'resmushit_qlty'));
 		} else {
 			if (!defined('RESMUSHIT_QLTY')) {
 			  return RESMUSHIT_DEFAULT_QLTY;
@@ -187,6 +187,19 @@ Class reSmushit {
 		if(file_exists($originalFile))
 			unlink($originalFile);
 	}
+
+    /**
+     * Checking   that we have  backup
+     *
+     * @param int $attachment_id ID of the attachment
+     * @return bool TRUE if there is the original file, FALSE otherwise
+     */
+    public static function hasBackup($attachment_id) {
+        $basepath = dirname(get_attached_file($attachment_id)) . '/';
+        $fileInfo = pathinfo(get_attached_file($attachment_id));
+        $originalFile = $basepath . $fileInfo['filename'] . '-unsmushed.' . $fileInfo['extension'];
+        return file_exists($originalFile);
+    }
 
 	/**
       *

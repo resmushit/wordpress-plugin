@@ -26,17 +26,49 @@ jQuery(document).delegate(".rsmt-notice button.notice-dismiss","click",function(
 });
 
 
+/*Hide notice about 5 quality setting, after one of them gets selected*/
+
+document.addEventListener('DOMContentLoaded', function() {
+
+	const qualityButtons = document.querySelectorAll('.quality-button');
+	const qualityInput = document.querySelector('input[name="resmushit_qlty"]');
+	const notification = document.querySelector('.update-nag');
+
+	qualityButtons.forEach(button => {
+		button.addEventListener('click', function() {
+			qualityButtons.forEach(btn => btn.classList.remove('active'));
+			this.classList.add('active');
+			qualityInput.value = this.getAttribute('data-value');
+			if (notification) {
+				notification.style.display = 'none';
+			}
+		});
+	});
+});
+
+
+
 /**
  * Form Validators
  */
-jQuery("#rsmt-options-form").submit(function(){
+/*jQuery("#rsmt-options-form").submit(function(){
 	jQuery("#resmushit_qlty").removeClass('form-error');
 	var qlty = jQuery("#resmushit_qlty").val();
 	if(!jQuery.isNumeric(qlty) || qlty > 100 || qlty < 0){
 		jQuery("#resmushit_qlty").addClass('form-error');
 		return false;
 	}
+});*/
+
+jQuery(document).ready(function($) {
+	$('.quality-button').on('click', function() {
+		$('.quality-button').removeClass('active');
+		$(this).addClass('active');
+		var value = $(this).data('value');
+		$('#resmushit_qlty').val(value);
+	});
 });
+
 
 
 jQuery( ".list-accordion h4" ).on('click', function(){
@@ -73,7 +105,7 @@ function ChangePanelEvent(event)
 		var searchClass = 'rsmt-tab-' + tabTarget;
 
 		// Hide everything else.
-		var tabs = document.querySelectorAll('.rsmt-tab');
+		var tabs = document.querySelectorAll('.rsmt-panels .rsmt-tab');
 		for (var i = 0; i < tabs.length; i++)
 		{
 			 tabs[i].style.display = 'none';
@@ -84,7 +116,6 @@ function ChangePanelEvent(event)
 					tabs[i].classList.add('active');
 			 }
 		}
-
 }
 
 var tabNavs = document.querySelectorAll('.rsmt-tabs-nav li');

@@ -89,7 +89,7 @@ class AdminController
   {
       add_meta_box(
           'rsi_info_box',          // this is HTML id of the box on edit screen
-          __('reSmush.it', ''),    // title of the box
+          __('reSmush.it', 'resmushit-image-optimizer'),    // title of the box
           array( $this, 'displayMetaBox'),   // function to be called to display the info
           null,//,        // on which edit screen the box should appear
           'side'//'normal',      // part of page where the box should appear
@@ -255,7 +255,7 @@ echo "</div>";
           <span class="kofi-support">
               <a href="https://wordpress.org/support/plugin/resmushit-image-optimizer/reviews/#new-post" target="_blank">
                 <img width="22" height="15" src="<?php echo plugins_url('images/star.png', RESMUSH_PLUGIN_FILE); ?>">
-                <span class="text">Rate Us</span>
+                <span class="text"><?php esc_html_e( 'Rate Us', 'resmushit-image-optimizer' ); ?></span>
               </a>
             </span>
           </li>
@@ -283,14 +283,14 @@ echo "</div>";
         <div class='shortpixel-message'>
           <img src='<?php echo RESMUSHIT_BASE_URL  ?>images/shortpixel-text-logo.svg' />
           <ul class='options'>
-          <li>Unlimited image optimization</li>
-          <li>Unlimited domains</li>
-          <li>WebP&AVIF conversion<li>
-					<li>500GB CDN Traffic</li>
-          <li>$9.99 / month</li>
+          <li><?php esc_html_e( 'Unlimited image optimization', 'resmushit-image-optimizer' ); ?></li>
+          <li><?php esc_html_e( 'Unlimited domains', 'resmushit-image-optimizer' ); ?></li>
+          <li><?php esc_html_e( 'WebP&amp;AVIF conversion', 'resmushit-image-optimizer' ); ?><li>
+					<li><?php esc_html_e( '500GB CDN Traffic', 'resmushit-image-optimizer' ); ?></li>
+          <li><?php esc_html_e( '$9.99 / month', 'resmushit-image-optimizer' ); ?></li>
         </ul>
         <div class='button-wrapper'>
-          <a class='button' href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank">Buy now</a>
+          <a class='button' href="https://shortpixel.com/ms/af/C34DUIL28044" target="_blank"><?php esc_html_e( 'Buy now', 'resmushit-image-optimizer' ); ?></a>
         </div>
           <div class='link-under'>
             <a href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank"><?php _e('Why is premium optimization better?', 'resmushit-image-optimizer'); ?></a>
