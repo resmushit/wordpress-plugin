@@ -82,6 +82,7 @@ class AdminController
   	register_setting( 'resmushit-settings', 'resmushit_preserve_exif' );
   	register_setting( 'resmushit-settings', 'resmushit_remove_unsmushed' );
   	register_setting( 'resmushit-settings', 'resmushit_notice_close' );
+    register_setting('resmushit-settings', 'resmushit_enable_webp');
   }
 
   // Add metabox for editmediaview sie.

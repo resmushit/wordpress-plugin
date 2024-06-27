@@ -94,6 +94,9 @@ Class reSmushit {
 		}
 
 		$arg['qlty'] = self::getPictureQualitySetting();
+        if (get_option('resmushit_enable_webp') == 1) {
+            $arg['format'] = 'webp';
+        }
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $arg);
 
 		$data = curl_exec($ch);
@@ -120,7 +123,14 @@ Class reSmushit {
 						$newPath = $originalFile['dirname'] . '/' . $originalFile['filename'] . '-unsmushed.' . $originalFile['extension'];
 			 			copy($file_path, $newPath);
 			 		}
-				  	file_put_contents($file_path, $data);
+                    // getting the optimized file saved with double extension (ex.: png.webp)
+                    if (get_option('resmushit_enable_webp') == 1) {
+                        $newPath = $originalFile['dirname'] . '/' . $originalFile['basename'] . '.webp';
+                    } else {
+                        $newPath = $file_path;
+                    }
+                    file_put_contents($newPath, $data);
+
 					Log::addDebug("Optimized file " . str_replace(ABSPATH, '/', $file_path) . " from " . reSmushitUI::sizeFormat($json->src_size) . " to " . reSmushitUI::sizeFormat($json->dest_size));
 				  	return $json;
 				}
