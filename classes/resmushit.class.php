@@ -152,14 +152,25 @@ Class reSmushit {
 		delete_post_meta($attachment_id, 'resmushed_cumulated_original_sizes');
 		delete_post_meta($attachment_id, 'resmushed_cumulated_optimized_sizes');
 
+    $fs = Resmush()->fs();
+
+
 		$basepath = dirname(get_attached_file( $attachment_id )) . '/';
 		$fileInfo = pathinfo(get_attached_file( $attachment_id ));
-		$originalFile = $basepath . $fileInfo['filename'] . '-unsmushed.' . $fileInfo['extension'];
+		$backupFile = $basepath . $fileInfo['filename'] . '-unsmushed.' . $fileInfo['extension'];
+
+
+    $backupFileObj = $fs->getFile($backupFile);
+    $targetFileObj = $fs->getFile(get_attached_file( $attachment_id ));
 		Log::addDebug('Revert original image for : ' . str_replace(ABSPATH, '/', get_attached_file( $attachment_id )));
 
-		if(file_exists($originalFile)) {
-			copy($originalFile, get_attached_file( $attachment_id ));
+		if($backupFileObj->exists()) {
+      Log::addTemp('moving ' . $backupFileObj->getFullPath() . ' to ' . $targetFileObj->getFullPath() );
+			 $res = $backupFileObj->move($targetFileObj);
 		}
+    else {
+      Log::addWarn('BackupFile not existing', $backupFileObj->getFullPath());
+    }
 
 		//Regenerate thumbnails
 		if($generateThumbnails) {
