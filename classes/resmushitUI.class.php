@@ -636,6 +636,10 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 		if ( !preg_match("/image.*/", $post->post_mime_type) )
 			return;
 
+		if (reSmushit::isImageOptimized($id) === true)
+		{ return;
+		}
+
 		global $wpdb;
 		$query = $wpdb->prepare(
 			"select
@@ -671,14 +675,16 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 		if ( !preg_match("/image.*/", $post->post_mime_type) )
 			return;	//
 
+//var_dump(reSmushit::getAttachmentQuality($attachment_id));
+//var_dump(reSmushit::getPictureQualitySetting());
 
-
-
+	 	$current_quality = reSmushit::getAttachmentQuality($attachment_id);
+		$setting_quality = reSmushit::getPictureQualitySetting();
 
 		if(reSmushit::getDisabledState($attachment_id)){
 			$output = __('Image excluded from optimization','resmushit-image-optimizer');
 		}
-		else if(reSmushit::getAttachmentQuality($attachment_id) != reSmushit::getPictureQualitySetting())
+		else if(is_null($current_quality))
 			$output = '<button type="button" data-csrf="' . wp_create_nonce( 'single_attachment' ) . '"  class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send">'. __('Optimize', 'resmushit-image-optimizer') .'</button>';
 		else{
 			$statistics = reSmushit::getStatistics($attachment_id);
@@ -686,8 +692,16 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 
 			if (reSmushit::hasBackup($attachment_id)) {
 				$output .= '<p><button type="button" data-csrf="' . wp_create_nonce( 'single_attachment' ) . '" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send">'. __('Force re-optimize', 'resmushit-image-optimizer') .'</button></p>';
-				$output .= '<p><button type="button" data-csrf="' . wp_create_nonce('single_attachment') . '" class="rsmt-trigger--restore-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="' . $attachment_id . '" class="button wp-smush-send">' . __('Restore', 'resmushit-image-optimizer') . '</button></p>';
+				$output .= '<p><button type="button" data-csrf="' . wp_create_nonce('single_attachment') . '" class="rsmt-trigger--restore-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="' . $attachment_id . '" class="button wp-smush-send">' .
+				__('Restore', 'resmushit-image-optimizer') . '</button></p>';
+
+				if ($current_quality <> $setting_quality)
+				{
+					$output .= "<div>" . 	sprintf(__('Optimized quality (%s) is different than setting (%s) . You can reoptimize to reflect current option. ', 'resmushit-image-optimizer'), $current_quality, $setting_quality) . '</div>';
+				}
+
 			}
+
 		}
 
 		if($return)
