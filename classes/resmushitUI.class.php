@@ -140,9 +140,9 @@ Class reSmushitUI {
             . self::addSetting("checkbox", __("Preserve EXIF", 'resmushit-image-optimizer'), __("Activate this option to retain the original EXIF data in the images.", 'resmushit-image-optimizer'), "resmushit_preserve_exif")
             . self::addSetting("checkbox",  __("Deactivate backup", 'resmushit-image-optimizer'), sprintf(__("If you select this option, you choose not to keep the original version of the images. This is helpful to save disk space, but we strongly recommend having a backup of the entire website on hand. <a href='%s' title='Should I remove backups?' target='_blank'>More information</a>.", "resmushit-image-optimizer"), "https://resmush.it/why-preserving-backup-files/"), "resmushit_remove_unsmushed")
             . self::addSetting("checkbox",  __("Optimize images using CRON", 'resmushit-image-optimizer'), sprintf(__("Image optimization is performed automatically via CRON tasks. <a href='%s' title='How to configure Cronjobs?' target='_blank'>More information</a>", 'resmushit-image-optimizer'), 'https://resmush.it/how-to-configure-cronjobs/'), "resmushit_cron")
-
-        . self::addSetting("checkbox", __("Generate WebP/AVIF", 'resmushit-image-optimizer'), sprintf(__("Create WebP/AVIF versions of the images. %s Request access %s ", 'resmushit-image-optimizer'), '<a href="https://resmush.it/contact/" target="_blank">', '</a>'), "resmushit_webpavif")
-
+        . self::addSetting("checkbox", __("Generate WebP/AVIF", 'resmushit-image-optimizer'), sprintf(__("Create WebP/AVIF versions of the images. %s Premium Conversion Access %s ", 'resmushit-image-optimizer'), '<a href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank">', '</a>'), "resmushit_webpavif")
+        . self::addSetting("checkbox", __("CDN Delivery", 'resmushit-image-optimizer'), sprintf(__("Deliver optimized images using our CDN. %s Get CDN Access %s ", 'resmushit-image-optimizer'), '<a href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank">', '</a>'), "resmushit_webpavif")
+        . self::addSetting("checkbox", __("SmartCropping", 'resmushit-image-optimizer'), sprintf(__("Generate subject-centered thumbnails using ShortPixel's AI Engine. %s Get Access %s ", 'resmushit-image-optimizer'), '<a href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank">', '</a>'), "resmushit_webpavif")
 
 				. self::addSetting("checkbox", __("Activate statistics", 'resmushit-image-optimizer'), __("Generates statistics about optimized images.", 'resmushit-image-optimizer'), "resmushit_statistics")
 				. '</table>';
@@ -697,7 +697,7 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 
 				if ($current_quality <> $setting_quality)
 				{
-					$output .= "<div>" . 	sprintf(__('Optimized quality (%s) is different than setting (%s) . You can reoptimize to reflect current option. ', 'resmushit-image-optimizer'), $current_quality, $setting_quality) . '</div>';
+					$output .= "<div>" . 	sprintf(__('The optimized quality (%s) differs from the setting (%s). You can change the optimization to the current setting by clicking on "Force re-optimize". ', 'resmushit-image-optimizer'), $current_quality, $setting_quality) . '</div>';
 				}
 
 			}
