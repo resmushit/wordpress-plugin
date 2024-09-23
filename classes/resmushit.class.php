@@ -40,12 +40,12 @@ Class reSmushit {
 	 */
 	public static function getPictureQualitySetting() {
 		if(get_option( 'resmushit_qlty' )) {
-          return  apply_filters('resmushit_image_quality', get_option( 'resmushit_qlty'));
+          return (int) apply_filters('resmushit_image_quality', get_option( 'resmushit_qlty'));
 		} else {
 			if (!defined('RESMUSHIT_QLTY')) {
-			  return RESMUSHIT_DEFAULT_QLTY;
+			  return (int) RESMUSHIT_DEFAULT_QLTY;
 			}
-			return RESMUSHIT_QLTY;
+			return (int) RESMUSHIT_QLTY;
 		}
 	}
 
@@ -152,14 +152,25 @@ Class reSmushit {
 		delete_post_meta($attachment_id, 'resmushed_cumulated_original_sizes');
 		delete_post_meta($attachment_id, 'resmushed_cumulated_optimized_sizes');
 
+    $fs = Resmush()->fs();
+
+
 		$basepath = dirname(get_attached_file( $attachment_id )) . '/';
 		$fileInfo = pathinfo(get_attached_file( $attachment_id ));
-		$originalFile = $basepath . $fileInfo['filename'] . '-unsmushed.' . $fileInfo['extension'];
+		$backupFile = $basepath . $fileInfo['filename'] . '-unsmushed.' . $fileInfo['extension'];
+
+
+    $backupFileObj = $fs->getFile($backupFile);
+    $targetFileObj = $fs->getFile(get_attached_file( $attachment_id ));
 		Log::addDebug('Revert original image for : ' . str_replace(ABSPATH, '/', get_attached_file( $attachment_id )));
 
-		if(file_exists($originalFile)) {
-			copy($originalFile, get_attached_file( $attachment_id ));
+		if($backupFileObj->exists()) {
+      Log::addTemp('moving ' . $backupFileObj->getFullPath() . ' to ' . $targetFileObj->getFullPath() );
+			 $res = $backupFileObj->move($targetFileObj);
 		}
+    else {
+      Log::addWarn('BackupFile not existing', $backupFileObj->getFullPath());
+    }
 
 		//Regenerate thumbnails
 		if($generateThumbnails) {
@@ -358,10 +369,10 @@ Class reSmushit {
 
 				) as ATTACHMENTS
 				WHERE
-					(ATTACHMENTS.qlty != '%s' OR ATTACHMENTS.qlty IS NULL)
+					( ATTACHMENTS.qlty IS NULL)
 					AND ATTACHMENTS.disabled IS NULL
 				LIMIT %d",
-    		array('_wp_attachment_metadata','resmushed_quality','resmushed_disabled','attachment', self::getPictureQualitySetting(), self::MAX_ATTACHMENTS_REQ)
+    		array('_wp_attachment_metadata','resmushed_quality','resmushed_disabled','attachment', self::MAX_ATTACHMENTS_REQ)
 		);
 		// Get the images in the attachement table
 		//
@@ -420,7 +431,6 @@ Class reSmushit {
 		//if we do not want this attachment to be resmushed.
 		if($state == "true"){
 			update_post_meta($id, 'resmushed_disabled', 'disabled');
-			self::revert($id);
 			return 'true';
 		} else {
 			delete_post_meta($id, 'resmushed_disabled');
@@ -441,6 +451,18 @@ Class reSmushit {
 		if(get_post_meta($attachment_id, 'resmushed_disabled'))
 			return true;
 		return false;
+	}
+
+	/* Of course stupid function.  In due time all this doing should be replaced with an Image class, where all this informatie is normally bundled */
+	public static function isImageOptimized($attachment_id)
+	{
+		  $optimized = get_post_meta($attachment_id, 'resmushed_cumulated_optimized_sizes', true);
+			if ($optimized !== false && is_numeric($optimized))
+			{
+				 return true;
+			}
+
+			return false;
 	}
 
 	/**

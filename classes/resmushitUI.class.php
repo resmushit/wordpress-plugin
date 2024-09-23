@@ -77,7 +77,7 @@ Class reSmushitUI {
 	 */
 	public static function headerPanel() {
 		//$html = "<img src='". RESMUSHIT_BASE_URL . "images/header.png' />";
-		$html = sprintf(esc_html__("%s By %s ShortPixel %s"), '<span class="byline">', '<a href="https://shortpixel.com/" target="_blank">', '</a></span>');
+		$html = sprintf(esc_html__("%s By %s ShortPixel %s", 'resmushit-image-optimizer' ), '<span class="byline">', '<a href="https://shortpixel.com/" target="_blank">', '</a></span>');
 		self::fullWidthPanel('reSmush.it', $html);
 	}
 
@@ -128,7 +128,7 @@ Class reSmushitUI {
         $new_quality_values = array(87, 80, 74, 65, 58);
 
         if (!in_array($current_quality, $new_quality_values)) {
-            echo '<div class="update-nag">Please select one of the 5 new image quality settings below. Your current quality settings will be kept for previously uploaded images. If you need to set a value outside those 5 values, you can add a filter.</div>';
+            echo '<div class="update-nag">' . esc_html__( 'Please select one of the 5 new image quality settings below. Your current quality settings will be kept for previously uploaded images. If you need to set a value outside those 5 values, you can add a filter.', 'resmushit-image-optimizer' ) . '</div>';
         }
 
 
@@ -140,9 +140,9 @@ Class reSmushitUI {
             . self::addSetting("checkbox", __("Preserve EXIF", 'resmushit-image-optimizer'), __("Activate this option to retain the original EXIF data in the images.", 'resmushit-image-optimizer'), "resmushit_preserve_exif")
             . self::addSetting("checkbox",  __("Deactivate backup", 'resmushit-image-optimizer'), sprintf(__("If you select this option, you choose not to keep the original version of the images. This is helpful to save disk space, but we strongly recommend having a backup of the entire website on hand. <a href='%s' title='Should I remove backups?' target='_blank'>More information</a>.", "resmushit-image-optimizer"), "https://resmush.it/why-preserving-backup-files/"), "resmushit_remove_unsmushed")
             . self::addSetting("checkbox",  __("Optimize images using CRON", 'resmushit-image-optimizer'), sprintf(__("Image optimization is performed automatically via CRON tasks. <a href='%s' title='How to configure Cronjobs?' target='_blank'>More information</a>", 'resmushit-image-optimizer'), 'https://resmush.it/how-to-configure-cronjobs/'), "resmushit_cron")
-
-        . self::addSetting("checkbox", __("Generate WebP/AVIF", 'resmushit-image-optimizer'), sprintf(__("Create WebP/AVIF versions of the images. %s Request access %s ", 'resmushit-image-optimizer'), '<a href="https://resmush.it/contact/" target="_blank">', '</a>'), "resmushit_webpavif")
-
+        . self::addSetting("checkbox", __("Generate WebP/AVIF", 'resmushit-image-optimizer'), sprintf(__("Create WebP/AVIF versions of the images. %s Premium Conversion Access %s ", 'resmushit-image-optimizer'), '<a href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank">', '</a>'), "resmushit_webpavif")
+        . self::addSetting("checkbox", __("CDN Delivery", 'resmushit-image-optimizer'), sprintf(__("Deliver optimized images using our CDN. %s Get CDN Access %s ", 'resmushit-image-optimizer'), '<a href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank">', '</a>'), "resmushit_webpavif")
+        . self::addSetting("checkbox", __("SmartCropping", 'resmushit-image-optimizer'), sprintf(__("Generate subject-centered thumbnails using ShortPixel's AI Engine. %s Get Access %s ", 'resmushit-image-optimizer'), '<a href="https://shortpixel.com/compare/resmushit-vs-shortpixel" target="_blank">', '</a>'), "resmushit_webpavif")
 
 				. self::addSetting("checkbox", __("Activate statistics", 'resmushit-image-optimizer'), __("Generates statistics about optimized images.", 'resmushit-image-optimizer'), "resmushit_statistics")
 				. '</table>';
@@ -636,6 +636,10 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 		if ( !preg_match("/image.*/", $post->post_mime_type) )
 			return;
 
+		if (reSmushit::isImageOptimized($id) === true)
+		{ return;
+		}
+
 		global $wpdb;
 		$query = $wpdb->prepare(
 			"select
@@ -671,14 +675,16 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 		if ( !preg_match("/image.*/", $post->post_mime_type) )
 			return;	//
 
+//var_dump(reSmushit::getAttachmentQuality($attachment_id));
+//var_dump(reSmushit::getPictureQualitySetting());
 
-
-
+	 	$current_quality = reSmushit::getAttachmentQuality($attachment_id);
+		$setting_quality = reSmushit::getPictureQualitySetting();
 
 		if(reSmushit::getDisabledState($attachment_id)){
 			$output = __('Image excluded from optimization','resmushit-image-optimizer');
 		}
-		else if(reSmushit::getAttachmentQuality($attachment_id) != reSmushit::getPictureQualitySetting())
+		else if(is_null($current_quality))
 			$output = '<button type="button" data-csrf="' . wp_create_nonce( 'single_attachment' ) . '"  class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send">'. __('Optimize', 'resmushit-image-optimizer') .'</button>';
 		else{
 			$statistics = reSmushit::getStatistics($attachment_id);
@@ -686,8 +692,16 @@ inue the process.', 'resmushit-image-optimizer') . '</p>');
 
 			if (reSmushit::hasBackup($attachment_id)) {
 				$output .= '<p><button type="button" data-csrf="' . wp_create_nonce( 'single_attachment' ) . '" class="rsmt-trigger--optimize-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="'. $attachment_id .'" class="button wp-smush-send">'. __('Force re-optimize', 'resmushit-image-optimizer') .'</button></p>';
-				$output .= '<p><button type="button" data-csrf="' . wp_create_nonce('single_attachment') . '" class="rsmt-trigger--restore-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="' . $attachment_id . '" class="button wp-smush-send">' . __('Restore', 'resmushit-image-optimizer') . '</button></p>';
+				$output .= '<p><button type="button" data-csrf="' . wp_create_nonce('single_attachment') . '" class="rsmt-trigger--restore-attachment button media-button  select-mode-toggle-button" name="resmushit" data-attachment-id="' . $attachment_id . '" class="button wp-smush-send">' .
+				__('Restore', 'resmushit-image-optimizer') . '</button></p>';
+
+				if ($current_quality <> $setting_quality)
+				{
+					$output .= "<div>" . 	sprintf(__('The optimized quality (%s) differs from the setting (%s). You can change the optimization to the current setting by clicking on "Force re-optimize". ', 'resmushit-image-optimizer'), $current_quality, $setting_quality) . '</div>';
+				}
+
 			}
+
 		}
 
 		if($return)

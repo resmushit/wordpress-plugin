@@ -3,9 +3,9 @@ Contributors: ShortPixel, resmushit
 Donate link: https://ko-fi.com/resmushit
 Tags: image, optimizer, image optimization, smush, free image optimization
 Requires at least: 4.0.0
-Tested up to: 6.5
-Requires PHP: 5.6
-Stable tag: 1.0.3
+Tested up to: 6.6
+Requires PHP: 7.4
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,15 @@ reSmush.it has earned the reputation of being the best free, fast and easy image
 - Image statistics
 - File logging for developers
 
+**Other plugins by [ShortPixel](https://shortpixel.com):**
+
+* [FastPixel Caching](https://wordpress.org/plugins/fastpixel-website-accelerator/) - WP Optimization made easy
+* [ShortPixel Image Optimizer](https://wordpress.org/plugins/shortpixel-image-optimiser/) - Image optimization & compression for all the images on your website, including WebP & AVIF delivery
+* [ShortPixel Adaptive Images](https://wordpress.org/plugins/shortpixel-adaptive-images/) - On-the-fly image optimization & CDN delivery
+* [Enable Media Replace](https://wordpress.org/plugins/enable-media-replace/) - Easily replace images or files in Media Library
+* [reGenerate Thumbnails Advanced](https://wordpress.org/plugins/regenerate-thumbnails-advanced/) - Easily regenerate thumbnails
+* [Resize Image After Upload](https://wordpress.org/plugins/resize-image-after-upload/) - Automatically resize each uploaded image
+* [WP SVG Images](https://wordpress.org/plugins/wp-svg-images/) - Secure upload of SVG files to Media Library 
 
 == Installation ==
 
@@ -65,11 +74,11 @@ Yes, you can optimize your images with cronjobs for large (and also for small) m
 
 = Can I choose an optimization level? =
 
-Yes, by default the optimization level is set to 82. However, you can further optimize your images by reducing the optimization level.
+Yes, by default the optimization level is set to "Balanced". However, you can further optimize your images by changing the optimization level to one of the other four options.
 
 = Can I return to my original images? =
 
-Yes, by excluding/reverting an image, you will have your original image available again.
+Yes, by restoring an image, you will have your original image available again.
 
 = Is it possible to exclude some images from the optimizer? =
 
@@ -92,6 +101,15 @@ Please report security bugs found in the source code of the reSmush.it Image Opt
 1. The simple interface
 
 == Changelog ==
+
+= 1.0.4 =
+Release date September 23, 2024
+* Tweak: After changing the optimization level, the plugin no longer suggests to re-optimize the entire Media Library;
+* Fix: The backup files are correctly removed after restore in all situations;
+* Fix: The exclusion check is hidden if the image is already optimized;
+* Fix: More links without the correct namespace can now be translated;
+* Fix: The texts in the settings have been improved;
+
 = 1.0.3 =
 Release date June 7, 2024
 * Tweak: Added 5 compression options to choose from and a filter instead of the numeric quality selector;
